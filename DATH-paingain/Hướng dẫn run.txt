@@ -1,0 +1,18 @@
+﻿=================================================================
+- Import project trong eclipse
+- Chuột phải vào project => Show in => Terminal
+- Chạy lần lượt 3 command line sau :
+	+ mvn eclipse:eclispe
+	+ mvn clean install
+	+ mvn jetty:run
+- Sau khi chạy 3 command line thành công mà không có lỗi xảy ra vậy là có thể chạy đc rồi ahihi.
+- Trở ra trình duyệt nhập vào : localhost:8080/
+=================================================================
+Có cách khác để chạy project mà không cần mở eclipse lên, đó là dùng cmd
+- Move đến thư mục project (vào trong project nhé, chứ không phải là thư mục chứa project)
+- Chạy lần lượt 3 command line sau :
+	+ mvn eclipse:eclispe
+	+ mvn clean install
+	+ mvn jetty:run
+- Sau khi chạy 3 command line thành công mà không có lỗi xảy ra vậy là có thể chạy đc rồi ahihi.
+=================================================================

@@ -1,0 +1,15 @@
+﻿loai sp
+phan quyền:  chi
+---------------
+ql sp
+đơn bán hàng:  1 đang xử lý tiếp nhận,  2 tiếp nhận và giao hàng, 3 hoàn thành, 0 hủy  : huy
+---------------
+nhaan vieen thuy
+nhacc
+
+
+=================
+thêm
+sửa
+xóa (sửa trạng thái)
+
