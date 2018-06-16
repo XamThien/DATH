@@ -4,7 +4,7 @@
 	          <div class="left_col scroll-view">
 	            <div class="navbar nav_title" style="border: 0;">
 	              
-	              <img src="resources/production/images/Pain_&_Gain_Logo.png" class="site_title"></img>
+	              <img src="${pageContext.request.contextPath}/resources/production/images/Pain_&_Gain_Logo.png" class="site_title"></img>
 	              
 	            </div>
 	

@@ -28,7 +28,7 @@
 	                      </a>
 	                    </li>
 	                    <li><a href="javascript:;">Trợ giúp</a></li>
-	                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Đăng xuất</a></li>
+	                    <li><a href="logout"><i class="fa fa-sign-out pull-right"></i> Đăng xuất</a></li>
 	                  </ul>
 	                </li>
 	

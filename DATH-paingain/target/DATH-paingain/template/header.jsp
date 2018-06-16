@@ -2,7 +2,7 @@
 				HttpSession sessi = request.getSession();
 			    if(sessi.getAttribute("login")==null)
 			    {
-			    	response.sendRedirect("login.jsp");
+			    	response.sendRedirect(request.getContextPath() +"/login.jsp");
 			    	
 			    }
 			%>	
@@ -11,7 +11,7 @@
 		    <meta charset="utf-8"/>
 		    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-			<link rel="icon" href="resources/production/images/favicon.ico" type="image/ico" />
+			<link rel="icon" href="/resources/production/images/favicon.ico" type="image/ico" />
 
 	
 			

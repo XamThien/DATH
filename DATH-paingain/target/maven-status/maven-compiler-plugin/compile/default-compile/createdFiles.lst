@@ -12,5 +12,6 @@ model\PgProducts.class
 model\PgRolePermission.class
 service\PainAndGainService.class
 model\PgRoles.class
+controler\Logout.class
 controler\Login.class
 model\PgOrders.class

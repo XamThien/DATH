@@ -5,7 +5,7 @@
 	<head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  		<title></title>
+  		<title>Quản lý nhân viên</title>
 		<%@include file="/template/header.jsp"%>
 	</head>
 	<body >
@@ -56,7 +56,7 @@
 										  	
 										  <tr>
 										    <td>1</td>
-										    <td>huy</td>
+										    <td>cccc</td>
 										    <td>01662108386</td>
 										    <td>xamthien</td>
 										    <td>xxx</td>
@@ -107,6 +107,17 @@
 				                        </div>
 				                    </div>
 				                </div>
+				                
+				                <div class='col-sm-12'>
+				                   <label >Last name :</label>
+				                    <div class="form-group" >
+				                        <div class="form-group" >
+				                            <input type="text" class="form-control" name="name" placeholder="last name nhân viên" />
+				                            
+				                        </div>
+				                    </div>
+				                </div>
+				                
 			                 <div class='col-sm-12'>
 				                    <label >Số điện thoại :</label>
 				                    <div class="form-group">
@@ -143,6 +154,7 @@
 				                        </div>
 				                    </div>
 				                </div>
+				                
 			                 
                         </div>
                         <div class="clearfix"></div>
@@ -258,7 +270,7 @@
                         </div>
                         
                         <div class="modal-footer">
-                        	<form action="actionnhanvien?action=delete" method="post">
+                        	<form action="#" method="post">
                         		<div class="edit">
                         			<input type="hidden" id="txtid" name="did" />
                         		</div>
