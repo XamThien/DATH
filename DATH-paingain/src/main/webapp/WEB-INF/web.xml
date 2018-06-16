@@ -6,14 +6,7 @@
   <display-name>Archetype Created Web Application</display-name>
 
   
-  <filter>
-    <filter-name>loginFilter</filter-name>
-    <filter-class>filter.loginFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>loginFilter</filter-name>
-    <url-pattern>/index.jsp</url-pattern>
- </filter-mapping>
+  
   <servlet>
     <servlet-name>Action</servlet-name>
     <servlet-class>controler.Test</servlet-class>
