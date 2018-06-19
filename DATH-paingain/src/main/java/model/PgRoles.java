@@ -22,8 +22,7 @@ public class PgRoles implements java.io.Serializable {
 	private Integer roleId;
 	private String roleName;
 	private Integer parent;
-	private Set<PgRolePermission> pgRolePermissions = new HashSet<PgRolePermission>(0);
-	private Set<PgUsers> pgUserses = new HashSet<PgUsers>(0);
+	
 
 	public PgRoles() {
 	}
@@ -32,11 +31,10 @@ public class PgRoles implements java.io.Serializable {
 		this.roleName = roleName;
 	}
 
-	public PgRoles(String roleName, Integer parent, Set<PgRolePermission> pgRolePermissions, Set<PgUsers> pgUserses) {
+	public PgRoles(String roleName, Integer parent) {
 		this.roleName = roleName;
 		this.parent = parent;
-		this.pgRolePermissions = pgRolePermissions;
-		this.pgUserses = pgUserses;
+		
 	}
 
 	@Id
@@ -69,22 +67,6 @@ public class PgRoles implements java.io.Serializable {
 		this.parent = parent;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgRoles")
-	public Set<PgRolePermission> getPgRolePermissions() {
-		return this.pgRolePermissions;
-	}
 
-	public void setPgRolePermissions(Set<PgRolePermission> pgRolePermissions) {
-		this.pgRolePermissions = pgRolePermissions;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgRoles")
-	public Set<PgUsers> getPgUserses() {
-		return this.pgUserses;
-	}
-
-	public void setPgUserses(Set<PgUsers> pgUserses) {
-		this.pgUserses = pgUserses;
-	}
 
 }

@@ -24,7 +24,7 @@ public class PgCategories implements java.io.Serializable {
 	private String description;
 	private int sortIndex;
 	private int categoryStatus;
-	private Set<PgProducts> pgProductses = new HashSet<PgProducts>(0);
+	
 
 	public PgCategories() {
 	}
@@ -35,13 +35,12 @@ public class PgCategories implements java.io.Serializable {
 		this.categoryStatus = categoryStatus;
 	}
 
-	public PgCategories(String categoryName, String description, int sortIndex, int categoryStatus,
-			Set<PgProducts> pgProductses) {
+	public PgCategories(String categoryName, String description, int sortIndex, int categoryStatus) {
 		this.categoryName = categoryName;
 		this.description = description;
 		this.sortIndex = sortIndex;
 		this.categoryStatus = categoryStatus;
-		this.pgProductses = pgProductses;
+		
 	}
 
 	@Id
@@ -92,13 +91,5 @@ public class PgCategories implements java.io.Serializable {
 		this.categoryStatus = categoryStatus;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgCategories")
-	public Set<PgProducts> getPgProductses() {
-		return this.pgProductses;
-	}
-
-	public void setPgProductses(Set<PgProducts> pgProductses) {
-		this.pgProductses = pgProductses;
-	}
 
 }
