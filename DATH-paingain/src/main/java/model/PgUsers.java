@@ -207,6 +207,14 @@ public class PgUsers implements java.io.Serializable {
 		this.userStatus = userStatus;
 	}
 
+	@Override
+	public String toString() {
+		return "PgUsers [recordId=" + recordId + ", userId=" + userId + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", cardId=" + cardId + ", email="
+				+ email + ", sex=" + sex + ", userPassword=" + userPassword + ", createTime=" + createTime
+				+ ", modifiedTime=" + modifiedTime + ", userStatus=" + userStatus + "]";
+	}
 
+	
 
 }

@@ -104,8 +104,11 @@ public class UserDAO {
 //		 {
 //			 System.out.println(nv.getName());
 //		 }
-		 PgUsers nv = new UserDAO().getPgUsersByName("admin");
-		 System.out.println(nv.getLastName());
-		 //System.out.println(nv.getName());
+		 List<PgUsers> lst = new UserDAO().getAllPgUsers();
+		 for(PgUsers us : lst)
+		 {
+			 System.out.println(us.getFirstName());
+		 }
+		 
 	}
 }
