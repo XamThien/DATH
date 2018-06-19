@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 19, 2018 9:42:26 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 19, 2018 10:38:00 PM by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -28,6 +28,12 @@ public class PgLog implements java.io.Serializable {
 	private String logValue;
 
 	public PgLog() {
+	}
+
+	public PgLog(PgUsers pgUsers, String description, String logValue) {
+		this.pgUsers = pgUsers;
+		this.description = description;
+		this.logValue = logValue;
 	}
 
 	public PgLog(PgUsers pgUsers, Date createdTime, String description, String logValue) {
@@ -60,7 +66,7 @@ public class PgLog implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATED_TIME", nullable = false, length = 19)
+	@Column(name = "CREATED_TIME", length = 19)
 	public Date getCreatedTime() {
 		return this.createdTime;
 	}

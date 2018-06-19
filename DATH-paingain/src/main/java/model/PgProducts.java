@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 19, 2018 9:42:26 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 19, 2018 10:38:00 PM by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -43,7 +43,7 @@ public class PgProducts implements java.io.Serializable {
 	}
 
 	public PgProducts(PgCategories pgCategories, PgSuppliers pgSuppliers, String productName, int quantity,
-			int unitPrice, int unitOrder, int productStatus, Date createTime, Date modifiedTime) {
+			int unitPrice, int unitOrder, int productStatus) {
 		this.pgCategories = pgCategories;
 		this.pgSuppliers = pgSuppliers;
 		this.productName = productName;
@@ -51,8 +51,6 @@ public class PgProducts implements java.io.Serializable {
 		this.unitPrice = unitPrice;
 		this.unitOrder = unitOrder;
 		this.productStatus = productStatus;
-		this.createTime = createTime;
-		this.modifiedTime = modifiedTime;
 	}
 
 	public PgProducts(PgCategories pgCategories, PgSuppliers pgSuppliers, String productName, int quantity,
@@ -160,7 +158,7 @@ public class PgProducts implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATE_TIME", nullable = false, length = 19)
+	@Column(name = "CREATE_TIME", length = 19)
 	public Date getCreateTime() {
 		return this.createTime;
 	}
@@ -170,7 +168,7 @@ public class PgProducts implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "MODIFIED_TIME", nullable = false, length = 19)
+	@Column(name = "MODIFIED_TIME", length = 19)
 	public Date getModifiedTime() {
 		return this.modifiedTime;
 	}

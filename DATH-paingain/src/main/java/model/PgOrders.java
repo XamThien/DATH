@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 19, 2018 9:42:26 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 19, 2018 10:38:00 PM by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -34,18 +34,18 @@ public class PgOrders implements java.io.Serializable {
 	private String shipAddress;
 	private String shipPhone;
 	
+
 	public PgOrders() {
 	}
 
-	public PgOrders(PgUsers pgUsersByCustomerId, PgUsers pgUsersByEmployeeId, Date orderDate, Date approvedDate) {
+	public PgOrders(PgUsers pgUsersByCustomerId, PgUsers pgUsersByEmployeeId) {
 		this.pgUsersByCustomerId = pgUsersByCustomerId;
 		this.pgUsersByEmployeeId = pgUsersByEmployeeId;
-		this.orderDate = orderDate;
-		this.approvedDate = approvedDate;
 	}
 
 	public PgOrders(PgUsers pgUsersByCustomerId, PgUsers pgUsersByEmployeeId, Date orderDate, Date approvedDate,
-			Integer orderStatus, String shipName, String shipAddress, String shipPhone) {
+			Integer orderStatus, String shipName, String shipAddress, String shipPhone
+			) {
 		this.pgUsersByCustomerId = pgUsersByCustomerId;
 		this.pgUsersByEmployeeId = pgUsersByEmployeeId;
 		this.orderDate = orderDate;
@@ -90,7 +90,7 @@ public class PgOrders implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ORDER_DATE", nullable = false, length = 19)
+	@Column(name = "ORDER_DATE", length = 19)
 	public Date getOrderDate() {
 		return this.orderDate;
 	}
@@ -100,7 +100,7 @@ public class PgOrders implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "APPROVED_DATE", nullable = false, length = 19)
+	@Column(name = "APPROVED_DATE", length = 19)
 	public Date getApprovedDate() {
 		return this.approvedDate;
 	}
@@ -145,6 +145,5 @@ public class PgOrders implements java.io.Serializable {
 		this.shipPhone = shipPhone;
 	}
 
-	
 
 }

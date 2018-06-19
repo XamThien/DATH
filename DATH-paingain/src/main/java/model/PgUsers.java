@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 19, 2018 9:42:26 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 19, 2018 10:38:00 PM by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -39,20 +39,18 @@ public class PgUsers implements java.io.Serializable {
 	private Date createTime;
 	private Date modifiedTime;
 	private int userStatus;
-
+	
 
 	public PgUsers() {
 	}
 
 	public PgUsers(String userId, String firstName, String lastName, String phoneNumber, String userPassword,
-			Date createTime, Date modifiedTime, int userStatus) {
+			int userStatus) {
 		this.userId = userId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
 		this.userPassword = userPassword;
-		this.createTime = createTime;
-		this.modifiedTime = modifiedTime;
 		this.userStatus = userStatus;
 	}
 
@@ -179,7 +177,7 @@ public class PgUsers implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATE_TIME", nullable = false, length = 19)
+	@Column(name = "CREATE_TIME", length = 19)
 	public Date getCreateTime() {
 		return this.createTime;
 	}
@@ -189,7 +187,7 @@ public class PgUsers implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "MODIFIED_TIME", nullable = false, length = 19)
+	@Column(name = "MODIFIED_TIME", length = 19)
 	public Date getModifiedTime() {
 		return this.modifiedTime;
 	}
@@ -207,14 +205,6 @@ public class PgUsers implements java.io.Serializable {
 		this.userStatus = userStatus;
 	}
 
-	@Override
-	public String toString() {
-		return "PgUsers [recordId=" + recordId + ", userId=" + userId + ", firstName=" + firstName + ", lastName="
-				+ lastName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", cardId=" + cardId + ", email="
-				+ email + ", sex=" + sex + ", userPassword=" + userPassword + ", createTime=" + createTime
-				+ ", modifiedTime=" + modifiedTime + ", userStatus=" + userStatus + "]";
-	}
 
-	
 
 }
