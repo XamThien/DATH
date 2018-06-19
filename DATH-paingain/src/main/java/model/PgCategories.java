@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 16, 2018 10:24:04 AM by Hibernate Tools 4.3.5.Final
+// Generated Jun 19, 2018 9:42:26 PM by Hibernate Tools 4.3.5.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +24,6 @@ public class PgCategories implements java.io.Serializable {
 	private String description;
 	private int sortIndex;
 	private int categoryStatus;
-	private Set<PgRolePermission> pgRolePermissions = new HashSet<PgRolePermission>(0);
 	private Set<PgProducts> pgProductses = new HashSet<PgProducts>(0);
 
 	public PgCategories() {
@@ -37,12 +36,11 @@ public class PgCategories implements java.io.Serializable {
 	}
 
 	public PgCategories(String categoryName, String description, int sortIndex, int categoryStatus,
-			Set<PgRolePermission> pgRolePermissions, Set<PgProducts> pgProductses) {
+			Set<PgProducts> pgProductses) {
 		this.categoryName = categoryName;
 		this.description = description;
 		this.sortIndex = sortIndex;
 		this.categoryStatus = categoryStatus;
-		this.pgRolePermissions = pgRolePermissions;
 		this.pgProductses = pgProductses;
 	}
 
@@ -92,15 +90,6 @@ public class PgCategories implements java.io.Serializable {
 
 	public void setCategoryStatus(int categoryStatus) {
 		this.categoryStatus = categoryStatus;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgCategories")
-	public Set<PgRolePermission> getPgRolePermissions() {
-		return this.pgRolePermissions;
-	}
-
-	public void setPgRolePermissions(Set<PgRolePermission> pgRolePermissions) {
-		this.pgRolePermissions = pgRolePermissions;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgCategories")

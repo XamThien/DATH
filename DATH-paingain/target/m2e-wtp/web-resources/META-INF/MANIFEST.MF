@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: Mạnh Nguyễn!
-Build-Jdk: 10.0.1
+Built-By: huy
+Build-Jdk: 1.8.0_151
 Created-By: Maven Integration for Eclipse
 

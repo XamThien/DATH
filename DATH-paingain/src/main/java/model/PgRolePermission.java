@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 16, 2018 10:24:04 AM by Hibernate Tools 4.3.5.Final
+// Generated Jun 19, 2018 9:42:26 PM by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class PgRolePermission implements java.io.Serializable {
 
 	private Integer permissionId;
-	private PgCategories pgCategories;
+	private PgModules pgModules;
 	private PgRoles pgRoles;
 	private Boolean isInsert;
 	private Boolean isUpdate;
@@ -31,14 +31,14 @@ public class PgRolePermission implements java.io.Serializable {
 	public PgRolePermission() {
 	}
 
-	public PgRolePermission(PgCategories pgCategories, PgRoles pgRoles) {
-		this.pgCategories = pgCategories;
+	public PgRolePermission(PgModules pgModules, PgRoles pgRoles) {
+		this.pgModules = pgModules;
 		this.pgRoles = pgRoles;
 	}
 
-	public PgRolePermission(PgCategories pgCategories, PgRoles pgRoles, Boolean isInsert, Boolean isUpdate,
-			Boolean isDelete, Boolean isRead, Integer perStatus, String description) {
-		this.pgCategories = pgCategories;
+	public PgRolePermission(PgModules pgModules, PgRoles pgRoles, Boolean isInsert, Boolean isUpdate, Boolean isDelete,
+			Boolean isRead, Integer perStatus, String description) {
+		this.pgModules = pgModules;
 		this.pgRoles = pgRoles;
 		this.isInsert = isInsert;
 		this.isUpdate = isUpdate;
@@ -61,13 +61,13 @@ public class PgRolePermission implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CATEGORY_ID", nullable = false)
-	public PgCategories getPgCategories() {
-		return this.pgCategories;
+	@JoinColumn(name = "MODULE_ID", nullable = false)
+	public PgModules getPgModules() {
+		return this.pgModules;
 	}
 
-	public void setPgCategories(PgCategories pgCategories) {
-		this.pgCategories = pgCategories;
+	public void setPgModules(PgModules pgModules) {
+		this.pgModules = pgModules;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
