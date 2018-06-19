@@ -2,10 +2,9 @@ model\PgUsers.class
 model\PgLog.class
 model\PgSuppliers.class
 util\Test.class
-filter\loginFilter.class
+model\PgModules.class
 model\PgCategories.class
 model\PgProductSales.class
-controler\Test.class
 model\PgOrderDetails.class
 model\PgProductPictures.class
 model\PgProducts.class
@@ -14,4 +13,5 @@ service\PainAndGainService.class
 model\PgRoles.class
 controler\Logout.class
 controler\Login.class
+DAO\UserDAO.class
 model\PgOrders.class

@@ -4,7 +4,7 @@
 	          <div class="left_col scroll-view">
 	            <div class="navbar nav_title" style="border: 0;">
 	              
-	              <img src="${pageContext.request.contextPath}/resources/production/images/Pain_&_Gain_Logo.png" class="site_title"></img>
+	              <img src="/resources/production/images/Pain_&_Gain_Logo.png" class="site_title"></img>
 	              
 	            </div>
 	
@@ -15,11 +15,16 @@
 	              <div class="menu_section">
 	                <h3>Chức năng:</h3>
 	                <ul class="nav side-menu">
-	                  <li><a href="index.jsp"><i class="fa fa-home"></i> Trang chủ </span></a>
+	                  <li><a href="/index.jsp"><i class="fa fa-home"></i> Trang chủ </span></a>
 	                    
 	                  </li>
-	                  <li><a href="danhmucsach.jsp"><i class="fa fa-list"></i> Quản lý thể loại sách </span></a>
-	                    
+	                  <li><a href="danhmucsach.jsp"><i class="fa fa-list"></i> Quản lý  hàng hóa </span></a>
+	                    	<ul class="nav child_menu">
+		                      <li><a href="muonsach.jsp">Mượn sách</a></li>
+		                      <li><a href="#">Trả sách</a></li>
+		                      
+		                      
+		                    </ul>
 	                  </li>
 	                  <li><a href="sach.jsp"><i class="fa fa-book"></i>Quản lý sách  </span></a>
 	                    
@@ -31,6 +36,7 @@
 	                    <ul class="nav child_menu">
 	                      <li><a href="muonsach.jsp">Mượn sách</a></li>
 	                      <li><a href="#">Trả sách</a></li>
+	                      <li><a href="manager/nhanvien.jsp">Trả sách 3</a></li>
 	                      
 	                    </ul>
 	                  </li>

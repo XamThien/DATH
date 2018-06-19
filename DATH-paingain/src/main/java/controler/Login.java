@@ -1,12 +1,17 @@
 package controler;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import DAO.UserDAO;
+import model.PgUsers;
 
 /**
  * Servlet implementation class Login
@@ -39,50 +44,50 @@ public class Login extends HttpServlet {
     	response.setCharacterEncoding("utf-8");
 		String username = request.getParameter("username");
         String password = request.getParameter("pass");
-        //NhanVienDAO nvacess = new NhanVienDAO();
-        //NhanVien nv;
-//        try
-//        {
-//        	nv = nvacess.getNhanVienByName(username);
-//        	if(nv == null)
-//        	{
-//        		String message = "Không tồn tại tài khoản.";
-//    			RequestDispatcher xxx = request.getRequestDispatcher("login.jsp");
-//    			request.setAttribute("msg", message );
-//    			xxx.forward(request, response);
-//        	}
-//        	else
-//        	{
-//        		if(nv.getPass().equals(password))
-//        		{
-//        			HttpSession session = request.getSession();
-//                    session.setAttribute("login", nv);
-//                    
-//                    response.sendRedirect("index.jsp");
-//        		}
-//        		else
-//        		{
-//        			String message = "Sai password.";
-//        			RequestDispatcher xxx = request.getRequestDispatcher("login.jsp");
-//        			request.setAttribute("msg", message );
-//        			xxx.forward(request, response);
-//        		}
-//        	}
-//        }
-//        catch(Exception e) {
-//        	String message = "Không thể đăng nhập.";
-//			RequestDispatcher xxx = request.getRequestDispatcher("login.jsp");
-//			request.setAttribute("msg", message );
-//			xxx.forward(request, response);
-//		}
-        
-        if(username.equals("admin") && password.equals("admin"))
+        UserDAO nvacess = new UserDAO();
+        PgUsers nv;
+        try
         {
-        	HttpSession session = request.getSession();
-            session.setAttribute("login", "");
-          
-            response.sendRedirect("index.jsp");
+        	nv = nvacess.getPgUsersByName(username);
+        	if(nv == null)
+        	{
+        		String message = "Không tồn tại tài khoản.";
+    			RequestDispatcher xxx = request.getRequestDispatcher("login.jsp");
+    			request.setAttribute("msg", message );
+    			xxx.forward(request, response);
+        	}
+        	else
+        	{
+        		if(nv.getUserPassword().equals(password))
+        		{
+        			HttpSession session = request.getSession();
+                    session.setAttribute("login", nv);
+                    
+                    response.sendRedirect(request.getContextPath()+"/manager/index.jsp");
+        		}
+        		else
+        		{
+        			String message = "Sai password.";
+        			RequestDispatcher xxx = request.getRequestDispatcher("login.jsp");
+        			request.setAttribute("msg", message );
+        			xxx.forward(request, response);
+        		}
+        	}
         }
+        catch(Exception e) {
+        	String message = "Không thể đăng nhập.";
+			RequestDispatcher xxx = request.getRequestDispatcher("login.jsp");
+			request.setAttribute("msg", message );
+			xxx.forward(request, response);
+		}
+        
+//        if(username.equals("admin") && password.equals("admin"))
+//        {
+//        	HttpSession session = request.getSession();
+//            session.setAttribute("login", "");
+//          
+//            response.sendRedirect("index.jsp");
+//        }
 	}
 
 }

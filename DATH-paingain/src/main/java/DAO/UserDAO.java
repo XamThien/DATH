@@ -99,16 +99,15 @@ public class UserDAO {
 	    }
 	 
 	 public static void main(String[] args) {
-//		 List<PgUsers> lst = new PgUsersDAO().getAllPgUsers();
-//		 for(PgUsers nv : lst)
+
+//		 List<PgUsers> lst = new UserDAO().getAllPgUsers();
+//		 for(PgUsers us : lst)
 //		 {
-//			 System.out.println(nv.getName());
+//			 System.out.println(us.getFirstName());
 //		 }
-		 List<PgUsers> lst = new UserDAO().getAllPgUsers();
-		 for(PgUsers us : lst)
-		 {
-			 System.out.println(us.getFirstName());
-		 }
+		 PgUsers nv = new UserDAO().getPgUsersByName("admin");
+		 System.out.println(nv.getUserPassword());
+		 
 		 
 	}
 }

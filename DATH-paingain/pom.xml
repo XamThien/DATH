@@ -118,7 +118,7 @@
                 <configuration>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <webApp>
-                        <contextPath>/</contextPath>
+                        <contextPath></contextPath>
                         
                     </webApp>
                 </configuration>
