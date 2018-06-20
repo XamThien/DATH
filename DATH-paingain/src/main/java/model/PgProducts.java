@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 19, 2018 10:38:00 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 20, 2018 4:50:52 PM by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -37,7 +37,9 @@ public class PgProducts implements java.io.Serializable {
 	private Date modifiedTime;
 	private Boolean isNew;
 	private Boolean isHot;
-	
+	private Set<PgProductSales> pgProductSaleses = new HashSet<PgProductSales>(0);
+	private Set<PgOrderDetails> pgOrderDetailses = new HashSet<PgOrderDetails>(0);
+	private Set<PgProductPictures> pgProductPictureses = new HashSet<PgProductPictures>(0);
 
 	public PgProducts() {
 	}
@@ -55,7 +57,8 @@ public class PgProducts implements java.io.Serializable {
 
 	public PgProducts(PgCategories pgCategories, PgSuppliers pgSuppliers, String productName, int quantity,
 			int unitPrice, int unitOrder, String description, int productStatus, Date createTime, Date modifiedTime,
-			Boolean isNew, Boolean isHot) {
+			Boolean isNew, Boolean isHot, Set<PgProductSales> pgProductSaleses, Set<PgOrderDetails> pgOrderDetailses,
+			Set<PgProductPictures> pgProductPictureses) {
 		this.pgCategories = pgCategories;
 		this.pgSuppliers = pgSuppliers;
 		this.productName = productName;
@@ -68,7 +71,9 @@ public class PgProducts implements java.io.Serializable {
 		this.modifiedTime = modifiedTime;
 		this.isNew = isNew;
 		this.isHot = isHot;
-		
+		this.pgProductSaleses = pgProductSaleses;
+		this.pgOrderDetailses = pgOrderDetailses;
+		this.pgProductPictureses = pgProductPictureses;
 	}
 
 	@Id
@@ -195,6 +200,31 @@ public class PgProducts implements java.io.Serializable {
 		this.isHot = isHot;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgProducts")
+	public Set<PgProductSales> getPgProductSaleses() {
+		return this.pgProductSaleses;
+	}
 
+	public void setPgProductSaleses(Set<PgProductSales> pgProductSaleses) {
+		this.pgProductSaleses = pgProductSaleses;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgProducts")
+	public Set<PgOrderDetails> getPgOrderDetailses() {
+		return this.pgOrderDetailses;
+	}
+
+	public void setPgOrderDetailses(Set<PgOrderDetails> pgOrderDetailses) {
+		this.pgOrderDetailses = pgOrderDetailses;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgProducts")
+	public Set<PgProductPictures> getPgProductPictureses() {
+		return this.pgProductPictureses;
+	}
+
+	public void setPgProductPictureses(Set<PgProductPictures> pgProductPictureses) {
+		this.pgProductPictureses = pgProductPictureses;
+	}
 
 }

@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 19, 2018 10:38:00 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 20, 2018 4:50:52 PM by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -33,7 +33,7 @@ public class PgOrders implements java.io.Serializable {
 	private String shipName;
 	private String shipAddress;
 	private String shipPhone;
-	
+	private Set<PgOrderDetails> pgOrderDetailses = new HashSet<PgOrderDetails>(0);
 
 	public PgOrders() {
 	}
@@ -44,8 +44,8 @@ public class PgOrders implements java.io.Serializable {
 	}
 
 	public PgOrders(PgUsers pgUsersByCustomerId, PgUsers pgUsersByEmployeeId, Date orderDate, Date approvedDate,
-			Integer orderStatus, String shipName, String shipAddress, String shipPhone
-			) {
+			Integer orderStatus, String shipName, String shipAddress, String shipPhone,
+			Set<PgOrderDetails> pgOrderDetailses) {
 		this.pgUsersByCustomerId = pgUsersByCustomerId;
 		this.pgUsersByEmployeeId = pgUsersByEmployeeId;
 		this.orderDate = orderDate;
@@ -54,7 +54,7 @@ public class PgOrders implements java.io.Serializable {
 		this.shipName = shipName;
 		this.shipAddress = shipAddress;
 		this.shipPhone = shipPhone;
-		
+		this.pgOrderDetailses = pgOrderDetailses;
 	}
 
 	@Id
@@ -145,5 +145,13 @@ public class PgOrders implements java.io.Serializable {
 		this.shipPhone = shipPhone;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgOrders")
+	public Set<PgOrderDetails> getPgOrderDetailses() {
+		return this.pgOrderDetailses;
+	}
+
+	public void setPgOrderDetailses(Set<PgOrderDetails> pgOrderDetailses) {
+		this.pgOrderDetailses = pgOrderDetailses;
+	}
 
 }

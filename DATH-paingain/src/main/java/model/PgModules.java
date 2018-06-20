@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 19, 2018 10:38:00 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 20, 2018 4:50:52 PM by Hibernate Tools 4.3.5.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +23,7 @@ public class PgModules implements java.io.Serializable {
 	private String moduleName;
 	private Integer parent;
 	private Integer moduleStatus;
-	
+	private Set<PgRolePermission> pgRolePermissions = new HashSet<PgRolePermission>(0);
 
 	public PgModules() {
 	}
@@ -32,11 +32,11 @@ public class PgModules implements java.io.Serializable {
 		this.moduleName = moduleName;
 	}
 
-	public PgModules(String moduleName, Integer parent, Integer moduleStatus) {
+	public PgModules(String moduleName, Integer parent, Integer moduleStatus, Set<PgRolePermission> pgRolePermissions) {
 		this.moduleName = moduleName;
 		this.parent = parent;
 		this.moduleStatus = moduleStatus;
-		
+		this.pgRolePermissions = pgRolePermissions;
 	}
 
 	@Id
@@ -78,6 +78,13 @@ public class PgModules implements java.io.Serializable {
 		this.moduleStatus = moduleStatus;
 	}
 
-	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgModules")
+	public Set<PgRolePermission> getPgRolePermissions() {
+		return this.pgRolePermissions;
+	}
+
+	public void setPgRolePermissions(Set<PgRolePermission> pgRolePermissions) {
+		this.pgRolePermissions = pgRolePermissions;
+	}
 
 }

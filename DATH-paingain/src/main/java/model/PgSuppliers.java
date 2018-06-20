@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 19, 2018 10:38:00 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 20, 2018 4:50:52 PM by Hibernate Tools 4.3.5.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +27,7 @@ public class PgSuppliers implements java.io.Serializable {
 	private String phone;
 	private String email;
 	private Integer supplierStatus;
-	
+	private Set<PgProducts> pgProductses = new HashSet<PgProducts>(0);
 
 	public PgSuppliers() {
 	}
@@ -39,7 +39,7 @@ public class PgSuppliers implements java.io.Serializable {
 	}
 
 	public PgSuppliers(String companyName, String contactName, String address, String region, String phone,
-			String email, Integer supplierStatus) {
+			String email, Integer supplierStatus, Set<PgProducts> pgProductses) {
 		this.companyName = companyName;
 		this.contactName = contactName;
 		this.address = address;
@@ -47,7 +47,7 @@ public class PgSuppliers implements java.io.Serializable {
 		this.phone = phone;
 		this.email = email;
 		this.supplierStatus = supplierStatus;
-		
+		this.pgProductses = pgProductses;
 	}
 
 	@Id
@@ -125,6 +125,13 @@ public class PgSuppliers implements java.io.Serializable {
 		this.supplierStatus = supplierStatus;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgSuppliers")
+	public Set<PgProducts> getPgProductses() {
+		return this.pgProductses;
+	}
 
+	public void setPgProductses(Set<PgProducts> pgProductses) {
+		this.pgProductses = pgProductses;
+	}
 
 }
