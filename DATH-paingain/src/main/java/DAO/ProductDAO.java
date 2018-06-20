@@ -29,6 +29,7 @@ public class ProductDAO {
                 .addOrder(Order.desc("isHot"))
                 .setMaxResults(9);
         productses =  criteria.list();
+        session.close();
         return productses;
     }
 }

@@ -1,6 +1,8 @@
 model\PgUsers.class
 model\PgLog.class
 model\PgSuppliers.class
+site\test.class
+database\Hibernate.class
 util\Test.class
 model\PgModules.class
 model\PgCategories.class
