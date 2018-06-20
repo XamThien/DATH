@@ -10,4 +10,12 @@
     <error-page>
         <location>/site/404page.jsp</location>
     </error-page>
+	<servlet>
+        <servlet-name>ListCategories</servlet-name>
+        <servlet-class>controler.ListCategories</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ListCategories</servlet-name>
+        <url-pattern>/danhmuc</url-pattern>
+    </servlet-mapping>
 </web-app>
