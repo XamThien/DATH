@@ -15,42 +15,25 @@
 	              <div class="menu_section">
 	                <h3>Chức năng:</h3>
 	                <ul class="nav side-menu">
-	                  <li><a href="/manager/index.jsp"><i class="fa fa-home"></i> Trang chủ </span></a>
-	                    
-	                  </li>
-	                  <li><a href="danhmucsach.jsp"><i class="fa fa-list"></i> Quản lý  hàng hóa </span></a>
+	                  <li><a href="index.jsp"><i class="fa fa-home"></i> Trang chủ </a></li>
+	                  <li><a href="#"><i class="fa fa-shopping-cart"></i>Bán hàng</a>
+	                  <li><a><i class="fa fa-cube"></i> Quản lý sản phẩm <span class="fa fa-chevron-down"></span></a>
 	                    	<ul class="nav child_menu">
-		                      <li><a href="muonsach.jsp">Mượn sách</a></li>
-		                      <li><a href="#">Trả sách</a></li>
-		                      
-		                      
+		                      <li><a href="danhmuc.jsp">Quản lý danh mục sản phẩm</a></li>
+		                      <li><a href="sanpham.jsp">Quản lý thông tin sản phẩm</a></li>
+		                      <li><a href="nhacc.jsp">Quản lý nhà cung cấp</a></li>
 		                    </ul>
 	                  </li>
-	                  <li><a href="sach.jsp"><i class="fa fa-book"></i>Quản lý sách  </span></a>
+	                  <li><a href="sach.jsp"><i class="fa fa-book"></i>Quản lý đơn hàng </a> </li>
+	                  
+	                  <li><a href="nhanvien.jsp"><i class="fa fa-users"></i> Quản lý nhân viên </a>
 	                    
 	                  </li>
-	                  <li><a href="nhanvien.jsp"><i class="fa fa-users"></i> Quản lý nhân viên </span></a>
-	                    
-	                  </li>
-	                  <li><a><i class="fa fa-bar-chart-o"></i> Quản lý mượn trả sách <span class="fa fa-chevron-down"></span></a>
-	                    <ul class="nav child_menu">
-	                      <li><a href="danhmuc.jsp">Mượn sách</a></li>
-	                      <li><a href="sanpham.jsp">Trả sách</a></li>
-	                      <li><a href="nhanvien.jsp">Trả sách 3</a></li>
-	                      
-	                    </ul>
-	                  </li>
-	                 
 	                </ul>
 	              </div>
 
 	            </div>
 	            <!-- /sidebar menu -->
-				 
-	            <div class="sidebar-footer hidden-small" style="padding-left: 36px;">
-	             		 🅰🅷🅸🅷🅸 🅳🅾` 🅽🅶🅾🅺
-	            </div>
-
 	          </div>
 	        </div>
       
