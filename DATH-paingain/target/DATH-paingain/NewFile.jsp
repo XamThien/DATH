@@ -6,7 +6,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
   		<title>Pain And Gain| Trang chủ</title>
-		<%@include file="template/header.jsp"%>
+		
 	</head>
 	<body >
 			<div class="nav-md">

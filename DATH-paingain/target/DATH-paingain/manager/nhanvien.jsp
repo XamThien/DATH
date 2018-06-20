@@ -23,7 +23,8 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
 	              	<h2><strong>Quản lý nhân viên</strong></h2>
 	              	<hr/>
-	                <span style="color:red"><i>${msg}</i></span>
+	                 <!-- <span style="color:red"><i>${msg}</i></span> -->
+	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới</button> </a>
 	                <!-- show table-->
 	                <div class="x_panel">
 		                  <div class="x_title">
@@ -41,34 +42,28 @@
 										  <thead>
 										  	<tr>
 										  		<th>Mã nhân viên</th>
-										  		<th>Tên nhân viên</th>
+										  		<th>Họ tên</th>
 										  		<th>Số điện thoại</th>
-										  		<th>Tên tài khoản</th>
-										  		<th>Mật khẩu</th>
 										  		<th>Địa chỉ</th>
-										  		<th><a href="#" style="color: white;" data-toggle="modal" data-target="#modal-add"  > <i class="fa fa-plus" ></i> Thêm mới</a></th> 
+										  		<th>Ngày tạo</th>
+										  		<th>Trạng thái</th>
+										  		<th>Tùy chọn</th> 
 										  		
 										  	</tr>
 										  </thead>
 										   <tbody>
-										  
-										 
-										  	
+										   
 										  <tr>
 										    <td>1</td>
-										    <td>cccc</td>
-										    <td>01662108386</td>
-										    <td>xamthien</td>
-										    <td>xxx</td>
-										    <td>296 minh khai</td>
+										    <td><a href="#" data-toggle="modal" data-target="#modal-edit" class="btn-link"><b>Nguyễn Văn A</b></a></td>
+										    <td>01662108326</td>
+										    <td>NUCE</td>
+										    <td>18/06/2018</td>
+										    <td>Đang làm việc</td>
 										    <td>
-										    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" > <i class="fa fa-edit"></i> Sửa</a>
 										    	<a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" > <i class="fa fa-trash-o" ></i> Xóa</a>
-										    	
 										    </td>
 										  </tr>
-										  
-										  
 										  </tbody>
 										</table>
 					                </div>
@@ -109,21 +104,60 @@
 				                </div>
 				                
 				                <div class='col-sm-12'>
-				                   <label >Last name :</label>
+				                   <label >Họ:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="name" placeholder="last name nhân viên" />
+				                            <input type="text" class="form-control" name="name" placeholder="Họ" />
 				                            
 				                        </div>
 				                    </div>
 				                </div>
 				                
-			                 <div class='col-sm-12'>
+			                 	<div class='col-sm-12'>
 				                    <label >Số điện thoại :</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
 				                            <input type="text" class="form-control" name="phone" placeholder="Số điện thoại" />
 				                            
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class='col-sm-12'>
+				                    <label >Địa chỉ:</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <input type="text" class="form-control" name="phone" placeholder="Địa chỉ" />
+				                            
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class='col-sm-12'>
+				                    <label >Email:</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <input type="text" class="form-control" name="phone" placeholder="Email" />
+				                            
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class='col-sm-12'>
+				                    <label >Số CMND:</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <input type="number" class="form-control" name="phone" placeholder="Số CMND" />
+				                            
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class='col-sm-12'>
+				                    <label >Giới tính:</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <select>
+				                            	<option>--Chọn giới tính--</option>
+				                            	<option>Nam</option>
+				                            	<option>Nữ</option>
+				                            </select>
 				                        </div>
 				                    </div>
 				                </div>
@@ -141,28 +175,16 @@
 				                    <div class="form-group">
 				                        <div class="form-group" >
 				                            <input type="text" class="form-control" name="pass" placeholder="Mật khẩu" />
-				                            
 				                        </div>
 				                    </div>
 				                </div>
-				                <div class='col-sm-12'>
-				                    <label >Địa chỉ :</label>
-				                    <div class="form-group">
-				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="address" placeholder="Địa chỉ" />
-				                            
-				                        </div>
-				                    </div>
-				                </div>
-				                
-			                 
                         </div>
                         <div class="clearfix"></div>
 
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button type="reset" class="btn btn-info">Reset </button>
-                          <button type="submit" class="btn btn-info">Save </button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                          <button type="reset" class="btn btn-info">Làm mới </button>
+                          <button type="submit" class="btn btn-info">Lưu </button>
                         </div>
                     	</form>
                       </div>
@@ -182,75 +204,107 @@
                         </div>
                         <form action="actionnhanvien?action=edit" method="post">
                         <div class="modal-body">
-                        	<div class="hd_id">
-                        		<input type="hidden" id="eid" class="form-control" name="id" />
-                        	</div>
                           	 <div class='col-sm-12'>
 				                   <label >Tên nhân viên :</label>
-				                    <div class="form-group ">
-				                        <div class="form-group code" >
-				                            <input id="ename" class="form-control" name="name" placeholder="Tên nhân viên" />
+				                    <div class="form-group" >
+				                        <div class="form-group" >
+				                            <input type="text" class="form-control" name="name" placeholder="Tên nhân viên" />
 				                            
 				                        </div>
 				                    </div>
 				                </div>
-			                 
-			                 <div class='col-sm-12'>
-				                <div class="form-group status">
-					                <label >Số điên thoại :</label>
-					                <div class="form-group ">
-				                        <div class="form-group code" >
-				                            <input id="ephone" class="form-control" name="phone" placeholder="Số điện thoại" />
+				                
+				                <div class='col-sm-12'>
+				                   <label >Họ:</label>
+				                    <div class="form-group" >
+				                        <div class="form-group" >
+				                            <input type="text" class="form-control" name="name" placeholder="Họ" />
 				                            
 				                        </div>
 				                    </div>
-				                            
 				                </div>
-			                 </div>
-			                 <div class='col-sm-12'>
-				                <div class="form-group status">
-					                <label >Tên tài khoản :</label>
-					                <div class="form-group ">
-				                        <div class="form-group code" >
-				                            <input id="eusername" class="form-control" name="username" placeholder="Tài khoản" />
+				                
+			                 	<div class='col-sm-12'>
+				                    <label >Số điện thoại :</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <input type="text" class="form-control" name="phone" placeholder="Số điện thoại" />
 				                            
 				                        </div>
 				                    </div>
-				                            
 				                </div>
-			                 </div>
-			                 <div class='col-sm-12'>
-				                <div class="form-group status">
-					                <label >Mật khẩu :</label>
-					                <div class="form-group ">
-				                        <div class="form-group code" >
-				                            <input id="epass" class="form-control" name="pass" placeholder="Mật khẩu" />
+				                <div class='col-sm-12'>
+				                    <label >Địa chỉ:</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <input type="text" class="form-control" name="phone" placeholder="Địa chỉ" />
 				                            
 				                        </div>
 				                    </div>
-				                            
 				                </div>
-			                 </div>
-			                 <div class='col-sm-12'>
-				                <div class="form-group status">
-					                <label >Địa chỉ :</label>
-					                <div class="form-group ">
-				                        <div class="form-group code" >
-				                            <input id="eaddress" class="form-control" name="address" placeholder="Địa chỉ" />
+				                <div class='col-sm-12'>
+				                    <label >Email:</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <input type="text" class="form-control" name="phone" placeholder="Email" />
 				                            
 				                        </div>
 				                    </div>
-				                            
 				                </div>
-			                 </div>
-			                 
+				                <div class='col-sm-12'>
+				                    <label >Số CMND:</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <input type="number" class="form-control" name="phone" placeholder="Số CMND" />
+				                            
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class='col-sm-12'>
+				                    <label >Giới tính:</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <select>
+				                            	<option>Nam</option>
+				                            	<option>Nữ</option>
+				                            </select>
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class='col-sm-12'>
+				                    <label >Tên tài khoản :</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <input type="text" class="form-control" name="username" placeholder="Tên tài khoản" />
+				                            
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class='col-sm-12'>
+				                    <label >Mật khẩu :</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <input type="text" class="form-control" name="pass" placeholder="Mật khẩu" />
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class='col-sm-12'>
+				                    <label >Trạng thái:</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <select>
+				                            	<option>Đang làm việc</option>
+				                            	<option>Đã nghỉ việc</option>
+				                            </select>
+				                        </div>
+				                    </div>
+				                </div>
                         </div>
                         <div class="clearfix"></div>
 
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button type="reset" class="btn btn-info">Reset </button>
-                          <button type="submit" class="btn btn-info">Save </button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                          <button type="submit" class="btn btn-info">Cập nhật </button>
                           
                         </div>
                     	</form>
@@ -266,7 +320,7 @@
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                           </button>
-                          <h4 class="modal-title" id="myModalLabel">Xác nhận:</h4>
+                          <h4 class="modal-title" id="myModalLabel">Xác nhận</h4>
                         </div>
                         
                         <div class="modal-footer">
@@ -274,8 +328,8 @@
                         		<div class="edit">
                         			<input type="hidden" id="txtid" name="did" />
                         		</div>
-                          		<button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
-                          		<button type="submit" class="btn btn-info">Xác nhận </button>
+                          		<button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                          		<button type="submit" class="btn btn-info">Xóa</button>
                           
                           	</form>
                         </div>

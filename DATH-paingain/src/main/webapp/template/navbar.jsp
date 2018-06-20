@@ -34,9 +34,9 @@
 	                  </li>
 	                  <li><a><i class="fa fa-bar-chart-o"></i> Quản lý mượn trả sách <span class="fa fa-chevron-down"></span></a>
 	                    <ul class="nav child_menu">
-	                      <li><a href="muonsach.jsp">Mượn sách</a></li>
-	                      <li><a href="#">Trả sách</a></li>
-	                      <li><a href="manager/nhanvien.jsp">Trả sách 3</a></li>
+	                      <li><a href="danhmuc.jsp">Mượn sách</a></li>
+	                      <li><a href="sanpham.jsp">Trả sách</a></li>
+	                      <li><a href="nhanvien.jsp">Trả sách 3</a></li>
 	                      
 	                    </ul>
 	                  </li>

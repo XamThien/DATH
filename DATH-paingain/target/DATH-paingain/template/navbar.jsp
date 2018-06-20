@@ -15,7 +15,7 @@
 	              <div class="menu_section">
 	                <h3>Chức năng:</h3>
 	                <ul class="nav side-menu">
-	                  <li><a href="/index.jsp"><i class="fa fa-home"></i> Trang chủ </span></a>
+	                  <li><a href="/manager/index.jsp"><i class="fa fa-home"></i> Trang chủ </span></a>
 	                    
 	                  </li>
 	                  <li><a href="danhmucsach.jsp"><i class="fa fa-list"></i> Quản lý  hàng hóa </span></a>

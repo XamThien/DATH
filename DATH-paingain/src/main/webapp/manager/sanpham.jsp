@@ -23,11 +23,12 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
 	              	<h2><strong>Quản lý sản phẩm</strong></h2>
 	              	<hr/>
-	                <span style="color:red"><i>${msg}</i></span>
+	                <!-- <span style="color:red"><i>${msg}</i></span> -->
+	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới</button> </a>
 	                <!-- show table-->
 	                <div class="x_panel">
 		                  <div class="x_title">
-		                    <h2>Danh sách nhân viên</h2>
+		                    <h2>Danh sách sản phẩm</h2>
 		                    
 		                    <div class="clearfix"></div>
 		                  </div>
@@ -40,35 +41,31 @@
 					                	<table id= "datatable" class="table table-striped table-bordered dataTable no-footer">
 										  <thead>
 										  	<tr>
-										  		<th>Mã nhân viên</th>
-										  		<th>Tên nhân viên</th>
-										  		<th>Số điện thoại</th>
-										  		<th>Tên tài khoản</th>
-										  		<th>Mật khẩu</th>
-										  		<th>Địa chỉ</th>
-										  		<th><a href="#" style="color: white;" data-toggle="modal" data-target="#modal-add"  > <i class="fa fa-plus" ></i> Thêm mới</a></th> 
-										  		
+										  		<th></th>
+										  		<th>Tên sản phẩm</th>
+										  		<th>Số lượng</th>
+										  		<th>Giá bán</th>
+										  		<th>Mô tả</th>
+										  		<th>Ngày tạo</th>
+										  		<th>Ngày chỉnh sửa</th>
+										  		<th>Trạng thái</th>
+										  		<th>Tùy chọn</th> 
 										  	</tr>
 										  </thead>
-										   <tbody>
-										  
-										 
-										  	
-										  <tr>
-										    <td>1</td>
-										    <td>cccc</td>
-										    <td>01662108386</td>
-										    <td>xamthien</td>
-										    <td>xxx</td>
-										    <td>296 minh khai</td>
-										    <td>
-										    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" > <i class="fa fa-edit"></i> Sửa</a>
-										    	<a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" > <i class="fa fa-trash-o" ></i> Xóa</a>
-										    	
-										    </td>
-										  </tr>
-										  
-										  
+										  <tbody>
+											  <tr>
+											    <td><img style="max-height:40px; max-width:40px;" src="/resources/production/images/prod-1.jpg"></td>
+											    <td><a href="#" data-toggle="modal" data-target="#modal-edit" class="btn-link"><b>Áo thun Nike</b></a></td>
+											    <td>99</td>
+											    <td>200,000</td>
+											    <td>---</td>
+											    <td>10/06/2018</td>
+											    <td>18/06/2018</td>
+											    <td>Còn hàng</td>
+											    <td>
+											    	<a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" > <i class="fa fa-trash-o" ></i> Xóa</a>
+											    </td>
+											  </tr>
 										  </tbody>
 										</table>
 					                </div>
@@ -94,75 +91,105 @@
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                           </button>
-                          <h4 class="modal-title" id="myModalLabel">Thêm mới nhân viên: </h4>
+                          <h4 class="modal-title" id="myModalLabel">Thêm mới sản phẩm: </h4>
                         </div>
                         <form action="#" method="post">
                         <div class="modal-body">
-                          	 <div class='col-sm-12'>
-				                   <label >Tên nhân viên :</label>
+                        		<div>
+                        			<div style="float: left; width: 200px; height: 200px; margin-right: 50px; border: 1px solid; border-radius: 12px;">
+                        				
+                        			</div>
+                        			<div style="padding-top: 70px;">
+                        				<button style="background-color: lightblue; border:none; border-radius: 10px; font-size: 20px; width: 150px;">Tải ảnh lên</button>
+                        			</div>
+                        		</div>
+                          	 	<div class='col-sm-12'>
+				                   <label >Tên sản phẩm:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="name" placeholder="Tên nhân viên" />
+				                            <input type="text" class="form-control" name="name" placeholder="Tên sản phẩm" />
 				                            
 				                        </div>
 				                    </div>
 				                </div>
 				                
 				                <div class='col-sm-12'>
-				                   <label >Last name :</label>
+				                   <label >Danh mục:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="name" placeholder="last name nhân viên" />
-				                            
+				                            <select style="width: 200px;">
+				                            	<option>--Chọn danh mục--</option>
+				                            	<option>Áo</option>
+				                            	<option>Quần</option>
+				                            </select>
 				                        </div>
 				                    </div>
 				                </div>
 				                
-			                 <div class='col-sm-12'>
-				                    <label >Số điện thoại :</label>
-				                    <div class="form-group">
+			                 	<div class='col-sm-12'>
+				                   <label >Nhà cung cấp:</label>
+				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="phone" placeholder="Số điện thoại" />
-				                            
+				                            <select style="width: 200px;">
+				                            	<option>--Chọn nhà cung cấp--</option>
+				                            	<option>Nike</option>
+				                            	<option>Adidas</option>
+				                            	<option>Under Armour</option>
+				                            </select>
 				                        </div>
 				                    </div>
 				                </div>
 				                <div class='col-sm-12'>
-				                    <label >Tên tài khoản :</label>
+				                    <label >Số lượng:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="username" placeholder="Tên tài khoản" />
-				                            
+				                            <input type="text" class="form-control" name="username" placeholder="Số lượng" />
 				                        </div>
 				                    </div>
 				                </div>
 				                <div class='col-sm-12'>
-				                    <label >Mật khẩu :</label>
+				                    <label >Đơn giá:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="pass" placeholder="Mật khẩu" />
-				                            
+				                            <input type="text" class="form-control" name="pass" placeholder="Đơn giá" />
 				                        </div>
 				                    </div>
 				                </div>
 				                <div class='col-sm-12'>
-				                    <label >Địa chỉ :</label>
-				                    <div class="form-group">
+				                   <label >Mô tả:</label>
+				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="address" placeholder="Địa chỉ" />
-				                            
+				                            <!-- <input type="" class="form-control" name="name" placeholder="Mô tả..." />  -->
+				                            <textarea rows="4" cols="50" style="width: 450px;" placeholder="Mô tả..."></textarea>
 				                        </div>
 				                    </div>
 				                </div>
-				                
-			                 
+				                <div class='col-sm-12'>
+				                   <label>Ngày tạo:</label>
+				                    <div class="form-group" >
+				                        <div class="form-group" >
+				                            <p><script> 
+				                            	document.write(new Date().toLocaleDateString()+"\t\t---");
+				                            	document.write(new Date().toLocaleTimeString()); 
+				                            </script></p>
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class='col-sm-12'>
+				                   <label>Trạng thái:</label>
+				                    <div class="form-group" >
+				                        <input type="checkbox"> Còn hàng <br>  
+				                        <input type="checkbox"> Hết hàng <br>
+				                        <input type="checkbox"> Ẩn
+				                    </div>
+				                </div>
                         </div>
                         <div class="clearfix"></div>
 
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button type="reset" class="btn btn-info">Reset </button>
-                          <button type="submit" class="btn btn-info">Save </button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                          <button type="reset" class="btn btn-info">Làm mới </button>
+                          <button type="submit" class="btn btn-info">Lưu </button>
                         </div>
                     	</form>
                       </div>
@@ -178,79 +205,104 @@
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                           </button>
-                          <h4 class="modal-title" id="myModalLabel">Chỉnh sửa thông tin nhân viên :</h4>
+                          <h4 class="modal-title" id="myModalLabel">Chỉnh sửa thông tin sản phẩm:</h4>
                         </div>
                         <form action="#" method="post">
                         <div class="modal-body">
-                        	<div class="hd_id">
-                        		<input type="hidden" id="eid" class="form-control" name="id" />
-                        	</div>
-                          	 <div class='col-sm-12'>
-				                   <label >Tên nhân viên :</label>
-				                    <div class="form-group ">
-				                        <div class="form-group code" >
-				                            <input id="ename" class="form-control" name="name" placeholder="Tên nhân viên" />
+                        		<div>
+                        			<div style="float: left; width: 200px; height: 200px; margin-right: 50px; ">
+                        				<img style="max-height: 200px; max-width: 200px; border: 1px solid; border-radius: 12px;" src="/resources/production/images/prod-1.jpg">
+                        			</div>
+                        			<div style="padding-top: 70px;">
+                        				<button style="background-color: lightblue; border:none; border-radius: 10px; font-size: 20px; width: 150px;">Tải ảnh lên</button>
+                        			</div>
+                        		</div>
+                          	 	<div class='col-sm-12'>
+				                   <label >Tên sản phẩm:</label>
+				                    <div class="form-group" >
+				                        <div class="form-group" >
+				                            <input type="text" class="form-control" name="name" placeholder="Tên sản phẩm" />
 				                            
 				                        </div>
 				                    </div>
 				                </div>
-			                 
-			                 <div class='col-sm-12'>
-				                <div class="form-group status">
-					                <label >Số điên thoại :</label>
-					                <div class="form-group ">
-				                        <div class="form-group code" >
-				                            <input id="ephone" class="form-control" name="phone" placeholder="Số điện thoại" />
-				                            
+				                
+				                <div class='col-sm-12'>
+				                   <label >Danh mục:</label>
+				                    <div class="form-group" >
+				                        <div class="form-group" >
+				                            <select style="width: 200px;">
+				                            	<option>--Chọn danh mục--</option>
+				                            	<option>Áo</option>
+				                            	<option>Quần</option>
+				                            </select>
 				                        </div>
 				                    </div>
-				                            
 				                </div>
-			                 </div>
-			                 <div class='col-sm-12'>
-				                <div class="form-group status">
-					                <label >Tên tài khoản :</label>
-					                <div class="form-group ">
-				                        <div class="form-group code" >
-				                            <input id="eusername" class="form-control" name="username" placeholder="Tài khoản" />
-				                            
+				                
+			                 	<div class='col-sm-12'>
+				                   <label >Nhà cung cấp:</label>
+				                    <div class="form-group" >
+				                        <div class="form-group" >
+				                            <select style="width: 200px;">
+				                            	<option>--Chọn nhà cung cấp--</option>
+				                            	<option>Nike</option>
+				                            	<option>Adidas</option>
+				                            	<option>Under Armour</option>
+				                            </select>
 				                        </div>
 				                    </div>
-				                            
 				                </div>
-			                 </div>
-			                 <div class='col-sm-12'>
-				                <div class="form-group status">
-					                <label >Mật khẩu :</label>
-					                <div class="form-group ">
-				                        <div class="form-group code" >
-				                            <input id="epass" class="form-control" name="pass" placeholder="Mật khẩu" />
-				                            
+				                <div class='col-sm-12'>
+				                    <label >Số lượng:</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <input type="text" class="form-control" name="username" placeholder="Số lượng" />
 				                        </div>
 				                    </div>
-				                            
 				                </div>
-			                 </div>
-			                 <div class='col-sm-12'>
-				                <div class="form-group status">
-					                <label >Địa chỉ :</label>
-					                <div class="form-group ">
-				                        <div class="form-group code" >
-				                            <input id="eaddress" class="form-control" name="address" placeholder="Địa chỉ" />
-				                            
+				                <div class='col-sm-12'>
+				                    <label >Đơn giá:</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <input type="text" class="form-control" name="pass" placeholder="Đơn giá" />
 				                        </div>
 				                    </div>
-				                            
 				                </div>
-			                 </div>
-			                 
+				                <div class='col-sm-12'>
+				                   <label >Mô tả:</label>
+				                    <div class="form-group" >
+				                        <div class="form-group" >
+				                            <!-- <input type="" class="form-control" name="name" placeholder="Mô tả..." />  -->
+				                            <textarea rows="4" cols="50" style="width: 450px;" placeholder="Mô tả..."></textarea>
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class='col-sm-12'>
+				                   <label>Ngày chỉnh sửa cuối:</label>
+				                    <div class="form-group" >
+				                        <div class="form-group" >
+				                            <p><script> 
+				                            	document.write(new Date().toLocaleDateString()+"\t\t---");
+				                            	document.write(new Date().toLocaleTimeString()); 
+				                            </script></p>
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class='col-sm-12'>
+				                   <label>Trạng thái:</label>
+				                    <div class="form-group" >
+				                        <input type="radio"> Còn hàng <br>  
+				                        <input type="radio"> Hết hàng <br>
+				                        <input type="radio"> Ẩn
+				                    </div>
+				                </div>
                         </div>
                         <div class="clearfix"></div>
 
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                          <button type="reset" class="btn btn-info">Reset </button>
-                          <button type="submit" class="btn btn-info">Save </button>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                          <button type="submit" class="btn btn-info">Cập nhật </button>
                           
                         </div>
                     	</form>
@@ -266,7 +318,7 @@
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                           </button>
-                          <h4 class="modal-title" id="myModalLabel">Xác nhận:</h4>
+                          <h4 class="modal-title" id="myModalLabel">Xác nhận</h4>
                         </div>
                         
                         <div class="modal-footer">
@@ -274,8 +326,8 @@
                         		<div class="edit">
                         			<input type="hidden" id="txtid" name="did" />
                         		</div>
-                          		<button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
-                          		<button type="submit" class="btn btn-info">Xác nhận </button>
+                          		<button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                          		<button type="submit" class="btn btn-info">Xóa</button>
                           
                           	</form>
                         </div>
