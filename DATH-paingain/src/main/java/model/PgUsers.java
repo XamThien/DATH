@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 19, 2018 10:38:00 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 20, 2018 4:50:52 PM by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -39,7 +39,9 @@ public class PgUsers implements java.io.Serializable {
 	private Date createTime;
 	private Date modifiedTime;
 	private int userStatus;
-	
+	private Set<PgOrders> pgOrdersesForCustomerId = new HashSet<PgOrders>(0);
+	private Set<PgOrders> pgOrdersesForEmployeeId = new HashSet<PgOrders>(0);
+	private Set<PgLog> pgLogs = new HashSet<PgLog>(0);
 
 	public PgUsers() {
 	}
@@ -56,7 +58,8 @@ public class PgUsers implements java.io.Serializable {
 
 	public PgUsers(PgRoles pgRoles, String userId, String firstName, String lastName, String address,
 			String phoneNumber, String cardId, String email, Boolean sex, String userPassword, Date createTime,
-			Date modifiedTime, int userStatus) {
+			Date modifiedTime, int userStatus, Set<PgOrders> pgOrdersesForCustomerId,
+			Set<PgOrders> pgOrdersesForEmployeeId, Set<PgLog> pgLogs) {
 		this.pgRoles = pgRoles;
 		this.userId = userId;
 		this.firstName = firstName;
@@ -70,7 +73,9 @@ public class PgUsers implements java.io.Serializable {
 		this.createTime = createTime;
 		this.modifiedTime = modifiedTime;
 		this.userStatus = userStatus;
-		
+		this.pgOrdersesForCustomerId = pgOrdersesForCustomerId;
+		this.pgOrdersesForEmployeeId = pgOrdersesForEmployeeId;
+		this.pgLogs = pgLogs;
 	}
 
 	@Id
@@ -205,6 +210,31 @@ public class PgUsers implements java.io.Serializable {
 		this.userStatus = userStatus;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgUsersByCustomerId")
+	public Set<PgOrders> getPgOrdersesForCustomerId() {
+		return this.pgOrdersesForCustomerId;
+	}
 
+	public void setPgOrdersesForCustomerId(Set<PgOrders> pgOrdersesForCustomerId) {
+		this.pgOrdersesForCustomerId = pgOrdersesForCustomerId;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgUsersByEmployeeId")
+	public Set<PgOrders> getPgOrdersesForEmployeeId() {
+		return this.pgOrdersesForEmployeeId;
+	}
+
+	public void setPgOrdersesForEmployeeId(Set<PgOrders> pgOrdersesForEmployeeId) {
+		this.pgOrdersesForEmployeeId = pgOrdersesForEmployeeId;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgUsers")
+	public Set<PgLog> getPgLogs() {
+		return this.pgLogs;
+	}
+
+	public void setPgLogs(Set<PgLog> pgLogs) {
+		this.pgLogs = pgLogs;
+	}
 
 }

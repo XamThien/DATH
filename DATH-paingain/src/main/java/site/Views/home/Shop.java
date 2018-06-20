@@ -16,13 +16,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.PgCategories;
 
 /**
  *
  * @author dangt
  */
-@WebServlet(name = "Home", urlPatterns = {"/home"})
-public class Home extends HttpServlet {
+@WebServlet(name = "Shop", urlPatterns = {"/shop"})
+public class Shop extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,14 +42,13 @@ public class Home extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Home</title>");            
+            out.println("<title>Servlet Shop</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Home at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Shop at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -64,15 +64,17 @@ public class Home extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        List productList = new ProductDAO().getProductforHome();
-        Hibernate.getSessionFactory().getCurrentSession().close();
-        request.setAttribute("pList", productList);
-        request.setAttribute("title", "Home | E-Shopper");
-        request.setAttribute("cCategory", "HOT");
+        int id = Integer.parseInt(request.getParameter("id"));
         List categoriesList = new CategoryDAO().getCategories();
         Hibernate.getSessionFactory().getCurrentSession().close();
         request.setAttribute("categories", categoriesList);
-        request.getRequestDispatcher("site/index.jsp").forward(request, response);
+        PgCategories category = new CategoryDAO().getCategory(id);
+        Hibernate.getSessionFactory().getCurrentSession().close();
+        request.setAttribute("title", "Shop| "+category.getCategoryName());
+        request.setAttribute("cCategory", category.getCategoryName());
+        request.setAttribute("category", category);
+        
+        request.getRequestDispatcher("site/shop.jsp").forward(request, response);
     }
 
     /**

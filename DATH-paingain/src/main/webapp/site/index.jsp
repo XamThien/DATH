@@ -1,3 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="model.PgProductPictures"%>
+<%@page import="model.PgProducts"%>
+<%@page import="java.util.List"%>
 <%@include file="layouts/header.jsp" %>
 <section id="slider"><!--slider-->
     <div class="container">
@@ -19,8 +23,8 @@
                                 <button type="button" class="btn btn-default get">Get it now</button>
                             </div>
                             <div class="col-sm-6">
-                                <img src="/site/layouts/images/home/girl1.jpg" class="girl img-responsive" alt="" />
-                                <img src="/site/layouts/images/home/pricing.png"  class="pricing" alt="" />
+                                <img src="${pageContext.request.contextPath}/site/layouts/images/home/girl1.jpg" class="girl img-responsive" alt="" />
+                                <img src="${pageContext.request.contextPath}/site/layouts/images/home/pricing.png"  class="pricing" alt="" />
                             </div>
                         </div>
                         <div class="item">
@@ -31,8 +35,8 @@
                                 <button type="button" class="btn btn-default get">Get it now</button>
                             </div>
                             <div class="col-sm-6">
-                                <img src="/site/layouts/images/home/girl2.jpg" class="girl img-responsive" alt="" />
-                                <img src="/site/layouts/images/home/pricing.png"  class="pricing" alt="" />
+                                <img src="${pageContext.request.contextPath}/site/layouts/images/home/girl2.jpg" class="girl img-responsive" alt="" />
+                                <img src="${pageContext.request.contextPath}/site/layouts/images/home/pricing.png"  class="pricing" alt="" />
                             </div>
                         </div>
 
@@ -44,8 +48,8 @@
                                 <button type="button" class="btn btn-default get">Get it now</button>
                             </div>
                             <div class="col-sm-6">
-                                <img src="/site/layouts/images/home/girl3.jpg" class="girl img-responsive" alt="" />
-                                <img src="/site/layouts/images/home/pricing.png" class="pricing" alt="" />
+                                <img src="${pageContext.request.contextPath}/site/layouts/images/home/girl3.jpg" class="girl img-responsive" alt="" />
+                                <img src="${pageContext.request.contextPath}/site/layouts/images/home/pricing.png" class="pricing" alt="" />
                             </div>
                         </div>
 
@@ -69,66 +73,42 @@
             <%@include file="layouts/banner-left.jsp" %>
             <div class="col-sm-9 padding-right">
                 <div class="features_items"><!--features_items-->
-                    <h2 class="title text-center">Features Items</h2>
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <img src="/site/layouts/images/home/product4.jpg" alt="">
-                                    <h2>$56</h2>
-                                    <p>Easy Polo Black Edition</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                </div>
-                                <div class="product-overlay">
-                                    <div class="overlay-content">
-                                        <h2>$56</h2>
-                                        <p>Easy Polo Black Edition</p>
+                    <h2 class="title text-center">${pageContext.request.getAttribute("cCategory")}</h2>
+                    <c:forEach var="pItem" items="${pageContext.request.getAttribute('pList')}">
+
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+
+                                        <c:forEach var="pic" items="${pItem.getPgProductPictureses()}">
+                                            <c:if test="${pic.getPictureType() ==1}">
+                                                <img src="${pageContext.request.contextPath}${pic.getPath()}" alt="">
+                                            </c:if>
+                                        </c:forEach>
+                                        <h2>${pItem.getUnitOrder()} VND</h2>
+                                        <p>${pItem.getProductName()}</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                     </div>
-                                </div>
-                                <img src="/site/layouts/images/home/new.png" class="new" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <img src="/site/layouts/images/home/product5.jpg" alt="">
-                                    <h2>$56</h2>
-                                    <p>Easy Polo Black Edition</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                </div>
-                                <div class="product-overlay">
-                                    <div class="overlay-content">
-                                        <h2>$56</h2>
-                                        <p>Easy Polo Black Edition</p>
-                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    <div class="product-overlay">
+                                        <div class="overlay-content">
+                                            <h2>${pItem.getUnitOrder()} VND</h2>
+                                            <p>${pItem.getProductName()}</p>
+                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        </div>
                                     </div>
-                                </div>
-                                <img src="/site/layouts/images/home/sale.png" class="new" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <img src="/site/layouts/images/home/product5.jpg" alt="">
-                                    <h2>$56</h2>
-                                    <p>Easy Polo Black Edition</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                </div>
-                                <div class="product-overlay">
-                                    <div class="overlay-content">
-                                        <h2>$56</h2>
-                                        <p>Easy Polo Black Edition</p>
-                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                    </div>
+                                    <c:choose>
+                                        <c:when test="${pItem.getIsNew()}">
+                                            <img src="${pageContext.request.contextPath}/site/layouts/images/home/new.png" class="new" alt="">
+                                        </c:when>
+                                        <c:when test="${pItem.getIsHot()}">
+                                            <img src="${pageContext.request.contextPath}/site/layouts/images/home/sale.png" class="new" alt="">
+                                        </c:when>
+                                    </c:choose>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>

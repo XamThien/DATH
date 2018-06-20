@@ -22,6 +22,9 @@ public class test {
         List<PgProducts> products = new ProductDAO().getProductforHome();
         for(PgProducts p:products){
             System.out.println(p.getProductName()+" | "+ p.getProductId());
+            for(PgProductPictures pp: p.getPgProductPictureses()){
+                System.out.println(pp.getPath());
+            }
         }
     }
 }

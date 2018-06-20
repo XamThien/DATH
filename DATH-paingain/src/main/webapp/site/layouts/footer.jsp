@@ -79,11 +79,11 @@
 
 
 
-<script src="/site/layouts/js/jquery.js"></script>
-<script src="/site/layouts/js/bootstrap.min.js"></script>
-<script src="/site/layouts/js/jquery.scrollUp.min.js"></script>
-<script src="/site/layouts/js/price-range.js"></script>
-<script src="/site/layouts/js/jquery.prettyPhoto.js"></script>
-<script src="/site/layouts/js/main.js"></script>
+<script src="${pageContext.request.contextPath}/site/layouts/js/jquery.js"></script>
+<script src="${pageContext.request.contextPath}/site/layouts/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/site/layouts/js/jquery.scrollUp.min.js"></script>
+<script src="${pageContext.request.contextPath}/site/layouts/js/price-range.js"></script>
+<script src="${pageContext.request.contextPath}/site/layouts/js/jquery.prettyPhoto.js"></script>
+<script src="${pageContext.request.contextPath}/site/layouts/js/main.js"></script>
 </body>
 </html>
