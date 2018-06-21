@@ -57,6 +57,7 @@ public class PgProducts implements java.io.Serializable {
 		this.modifiedTime = modifiedTime;
 		this.isHot = isHot;
 		this.isNew= isNew;
+		this.productStatus =1;
 	}
 
 	public PgProducts(PgCategories pgCategories, PgSuppliers pgSuppliers, String productName, int quantity,

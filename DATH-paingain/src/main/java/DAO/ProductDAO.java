@@ -6,9 +6,15 @@
 package DAO;
 
 import database.Hibernate;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import model.PgCategories;
 import model.PgProducts;
+import model.PgSuppliers;
 import model.PgUsers;
 
 import org.hibernate.Criteria;
@@ -86,11 +92,19 @@ public class ProductDAO {
 	 public void insertPgProduct(PgProducts sp){
 		 	Configuration configuration =  new Configuration().configure();
 		 	SessionFactory sessionFactory = configuration.buildSessionFactory();
-		 	Session session = sessionFactory.openSession();
+		 	Session session ;
+		 	if(sessionFactory.getCurrentSession() != null)
+		 	{
+		 		session = sessionFactory.getCurrentSession();
+		 	}
+		 	else
+		 	{
+		 		session = sessionFactory.openSession();
+		 	}
 	        Transaction transaction = session.beginTransaction();
 	        session.save(sp);
 	        transaction.commit();
-	        session.close();
+	        //session.close();
 	    }
 	
 	 public void updatePgProduct(PgProducts sp){
@@ -102,4 +116,24 @@ public class ProductDAO {
 	        transaction.commit();
 	        session.close();
 	    }
+	 public static void main(String[] args) {
+		 try
+		 {
+			 Date Ngay = new Date();
+		     SimpleDateFormat datefrmat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		     String datestr = datefrmat.format(Ngay);
+		     Date now = datefrmat.parse(datestr);
+			
+		     
+		    PgCategories cate = new CategoryDAO().getCategory(1);
+		    
+		    PgSuppliers su = new PgSuppliersDAO().findByID(1);
+			PgProducts tl = new PgProducts(cate, su, "xax", 12, 12345, 12343, "", now, now, true, true);
+			new ProductDAO().insertPgProduct(tl);
+		 }
+		 catch(Exception e)
+		 {
+			 System.out.println(e);
+		 }
+	}
 }

@@ -112,7 +112,7 @@
                           </button>
                           <h4 class="modal-title" id="myModalLabel">Thêm mới sản phẩm: </h4>
                         </div>
-                        <form action="#" method="post" enctype="multipart/form-data">
+                        <form action="/product?action=add" method="post" enctype="multipart/form-data">
                         <div class="modal-body">
                         		<div class='col-sm-12'>
 	                        		<label >Ảnh sản phẩm:</label>
@@ -160,11 +160,13 @@
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                            <select  class="form-control" name="ncc">
-				                            	<option>--Chọn nhà cung cấp--</option>
-				                            	
-				                            	<option>Nike</option>
-				                            	<option>Adidas</option>
-				                            	<option>Under Armour</option>
+				                            	<%
+				                            		List<PgSuppliers> lstncc = new PgSuppliersDAO().getListSupplier();
+				                            		for(PgSuppliers ct : lstncc)
+				                            		{
+				                            	%>
+				                            	<option value="<%=ct.getSupplierId()%>"><%=ct.getCompanyName() %></option>
+				                            	<%} %>
 				                            </select>
 				                        </div>
 				                    </div>

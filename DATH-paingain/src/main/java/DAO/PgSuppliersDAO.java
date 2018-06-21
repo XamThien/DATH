@@ -73,7 +73,16 @@ public class PgSuppliersDAO {
 	}
 	public PgSuppliers findByID(int id) {
 		PgSuppliers supplier = null;
-		Session session = HibernateUtils.getSessionFactory().openSession();
+		//Session session = HibernateUtils.getSessionFactory().openSession();
+		Session session ;
+	 	if(HibernateUtils.getSessionFactory().getCurrentSession() != null)
+	 	{
+	 		session = HibernateUtils.getSessionFactory().getCurrentSession();
+	 	}
+	 	else
+	 	{
+	 		session = HibernateUtils.getSessionFactory().openSession();
+	 	}
 		try {
 			Transaction tx = session.beginTransaction();
 			supplier = (PgSuppliers)session.load(PgSuppliers.class, id);
