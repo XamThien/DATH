@@ -45,25 +45,25 @@
 										  		<th>Tên sản phẩm</th>
 										  		<th>Số lượng</th>
 										  		<th>Giá bán</th>
-										  		<th>Mô tả</th>
-										  		<th>Ngày tạo</th>
-										  		<th>Ngày chỉnh sửa</th>
-										  		<th>Trạng thái</th>
+										  		<th>Giá nhập</th>
+										  		<th>Hot</th>
+										  		<th>New</th>
 										  		<th>Tùy chọn</th> 
 										  	</tr>
 										  </thead>
 										  <tbody>
 											  <tr>
 											    <td><img style="max-height:40px; max-width:40px;" src="/resources/production/images/prod-1.jpg"></td>
-											    <td><a href="#" data-toggle="modal" data-target="#modal-edit" class="btn-link"><b>Áo thun Nike</b></a></td>
+											    <td>Áo thun Nike</td>
 											    <td>99</td>
 											    <td>200,000</td>
-											    <td>---</td>
-											    <td>10/06/2018</td>
-											    <td>18/06/2018</td>
-											    <td>Còn hàng</td>
+											    <td>100,000</td>
+											    <td>Siêu hot</td>
+											    <td>Like new</td>
+											    
 											    <td>
-											    	<a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" > <i class="fa fa-trash-o" ></i> Xóa</a>
+											    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" > <i class="fa fa-edit"></i> Sửa</a>
+										    	<a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" > <i class="fa fa-trash-o" ></i> Xóa</a>
 											    </td>
 											  </tr>
 										  </tbody>
