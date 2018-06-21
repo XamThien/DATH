@@ -1,3 +1,6 @@
+<%@page import="DAO.*"%>
+<%@page import="model.*"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -8,6 +11,11 @@
   		<title>Quản lý sản phẩm</title>
 		<%@include file="/template/header.jsp"%>
 	</head>
+	<%
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		session.setAttribute("cateid", id);
+	%>
 	<body >
 			<div class="nav-md">
 		    <div class="container body">
@@ -22,8 +30,9 @@
 					<div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
 	              	<h2><strong>Quản lý sản phẩm</strong></h2>
+	              	<span style="color:red"><i>${msg}</i></span>
 	              	<hr/>
-	                <!-- <span style="color:red"><i>${msg}</i></span> -->
+	                
 	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới</button> </a>
 	                <!-- show table-->
 	                <div class="x_panel">
@@ -46,26 +55,36 @@
 										  		<th>Số lượng</th>
 										  		<th>Giá bán</th>
 										  		<th>Giá nhập</th>
+										  		<th>Cập nhật</th>
 										  		<th>Hot</th>
 										  		<th>New</th>
 										  		<th>Tùy chọn</th> 
 										  	</tr>
 										  </thead>
 										  <tbody>
+										  <%
+										  		List<PgProducts> lst = new ProductDAO().getAllPgProducts(id);
+										  		for(PgProducts pr : lst)
+										  		{
+										  			
+										  		
+										  %>
 											  <tr>
 											    <td><img style="max-height:40px; max-width:40px;" src="/resources/production/images/prod-1.jpg"></td>
-											    <td>Áo thun Nike</td>
-											    <td>99</td>
-											    <td>200,000</td>
-											    <td>100,000</td>
-											    <td>Siêu hot</td>
-											    <td>Like new</td>
+											    <td><%=pr.getProductName() %></td>
+											    <td><%=pr.getQuantity() %></td>
+											    <td><%=pr.getUnitPrice() %></td>
+											    <td><%=pr.getUnitOrder() %></td>
+											    <td><%=pr.getModifiedTime() %></td>
+											    <td><input type="checkbox"  <%=(pr.getIsHot())? "checked":"" %>></td>
+											    <td><input type="checkbox"  <%=(pr.getIsNew())? "checked":"" %>></td>
 											    
 											    <td>
 											    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" > <i class="fa fa-edit"></i> Sửa</a>
 										    	<a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" > <i class="fa fa-trash-o" ></i> Xóa</a>
 											    </td>
 											  </tr>
+											  <%} %>
 										  </tbody>
 										</table>
 					                </div>
@@ -93,21 +112,26 @@
                           </button>
                           <h4 class="modal-title" id="myModalLabel">Thêm mới sản phẩm: </h4>
                         </div>
-                        <form action="#" method="post">
+                        <form action="#" method="post" enctype="multipart/form-data">
                         <div class="modal-body">
-                        		<div>
-                        			<div style="float: left; width: 200px; height: 200px; margin-right: 50px; border: 1px solid; border-radius: 12px;">
-                        				
+                        		<div class='col-sm-12'>
+	                        		<label >Ảnh sản phẩm:</label>
+	                        		<div class="clearfix"></div>
+                        			<div style="height: 200px;width:200px;overflow: hidden;" class='col-sm-5' >
+                        				<img width="200px" id="output"/>
                         			</div>
-                        			<div style="padding-top: 70px;">
-                        				<button style="background-color: lightblue; border:none; border-radius: 10px; font-size: 20px; width: 150px;">Tải ảnh lên</button>
+                        			<div class='col-sm-6'>
+                        				<br/>
+                        				<br/>
+                        				<br/>
+                        				<input type="file" name="photo"  accept="image/*" onchange="loadFile(event)" style="word-wrap: break-word;" required="required">
                         			</div>
                         		</div>
                           	 	<div class='col-sm-12'>
 				                   <label >Tên sản phẩm:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="name" placeholder="Tên sản phẩm" />
+				                            <input type="text" class="form-control" name="ten" placeholder="Tên sản phẩm" required="required" />
 				                            
 				                        </div>
 				                    </div>
@@ -117,10 +141,15 @@
 				                   <label >Danh mục:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <select style="width: 200px;">
-				                            	<option>--Chọn danh mục--</option>
-				                            	<option>Áo</option>
-				                            	<option>Quần</option>
+				                            <select  class="form-control" name="danhmuc">
+				                            	
+				                            	<%
+				                            		List<PgCategories> lstcate = new CategoryDAO().getActivePgCategories();
+				                            		for(PgCategories ct : lstcate)
+				                            		{
+				                            	%>
+				                            	<option value="<%=ct.getCategoryId()%>"><%=ct.getCategoryName() %></option>
+				                            	<%} %>
 				                            </select>
 				                        </div>
 				                    </div>
@@ -130,8 +159,9 @@
 				                   <label >Nhà cung cấp:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <select style="width: 200px;">
+				                            <select  class="form-control" name="ncc">
 				                            	<option>--Chọn nhà cung cấp--</option>
+				                            	
 				                            	<option>Nike</option>
 				                            	<option>Adidas</option>
 				                            	<option>Under Armour</option>
@@ -143,46 +173,47 @@
 				                    <label >Số lượng:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="username" placeholder="Số lượng" />
+				                            <input type="number" class="form-control" name="soluong" placeholder="Số lượng" required="required" />
 				                        </div>
 				                    </div>
 				                </div>
 				                <div class='col-sm-12'>
-				                    <label >Đơn giá:</label>
+				                    <label >Đơn giá bán:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="pass" placeholder="Đơn giá" />
+				                            <input type="number" class="form-control" name="giaban" placeholder="Đơn giá bán" required="required" />
 				                        </div>
 				                    </div>
+				                </div>
+				                <div class='col-sm-12'>
+				                    <label >Đơn giá nhập:</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <input type="number" class="form-control" name="gianhap" placeholder="Đơn giá nhập" required="required" />
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class='col-sm-12'>
+				                   <div class='col-sm-6'>
+				                   		<label> Hot:</label>
+					                    <input type="checkbox" name="hot" value="true">
+				                   </div>
+				                   <div class='col-sm-6'>
+				                   		<label> New:</label>
+					                    <input type="checkbox" name="new" value="true">
+				                   </div>
 				                </div>
 				                <div class='col-sm-12'>
 				                   <label >Mô tả:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <!-- <input type="" class="form-control" name="name" placeholder="Mô tả..." />  -->
-				                            <textarea rows="4" cols="50" style="width: 450px;" placeholder="Mô tả..."></textarea>
+				                            
+				                            <textarea rows="4" cols="50" style="width: 450px;" placeholder="Mô tả..." name="mota"></textarea>
 				                        </div>
 				                    </div>
 				                </div>
-				                <div class='col-sm-12'>
-				                   <label>Ngày tạo:</label>
-				                    <div class="form-group" >
-				                        <div class="form-group" >
-				                            <p><script> 
-				                            	document.write(new Date().toLocaleDateString()+"\t\t---");
-				                            	document.write(new Date().toLocaleTimeString()); 
-				                            </script></p>
-				                        </div>
-				                    </div>
-				                </div>
-				                <div class='col-sm-12'>
-				                   <label>Trạng thái:</label>
-				                    <div class="form-group" >
-				                        <input type="checkbox"> Còn hàng <br>  
-				                        <input type="checkbox"> Hết hàng <br>
-				                        <input type="checkbox"> Ẩn
-				                    </div>
-				                </div>
+				                
+				                
                         </div>
                         <div class="clearfix"></div>
 
@@ -336,8 +367,16 @@
                     </div>
             </div>
 			<!--  Delete modal -->
-
+			
         	<script type="text/javascript">
+	        	 var loadFile = function (event) {
+	                 var reader = new FileReader();
+	                 reader.onload = function () {
+	                     var output = document.getElementById('output');
+	                     output.src = reader.result;
+	                 };
+	                 reader.readAsDataURL(event.target.files[0]);
+	             };// code display image upload
 			    function pass_del(id) {
 			    	
 			    	document.getElementById("txtid").value = id;

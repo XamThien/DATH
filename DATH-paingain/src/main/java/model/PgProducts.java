@@ -45,14 +45,18 @@ public class PgProducts implements java.io.Serializable {
 	}
 
 	public PgProducts(PgCategories pgCategories, PgSuppliers pgSuppliers, String productName, int quantity,
-			int unitPrice, int unitOrder, int productStatus) {
+			int unitPrice, int unitOrder,String mota,Date createTime,Date modifiedTime, Boolean isHot,Boolean isNew) {
 		this.pgCategories = pgCategories;
 		this.pgSuppliers = pgSuppliers;
 		this.productName = productName;
 		this.quantity = quantity;
 		this.unitPrice = unitPrice;
 		this.unitOrder = unitOrder;
-		this.productStatus = productStatus;
+		this.description = mota;
+		this.createTime = createTime;
+		this.modifiedTime = modifiedTime;
+		this.isHot = isHot;
+		this.isNew= isNew;
 	}
 
 	public PgProducts(PgCategories pgCategories, PgSuppliers pgSuppliers, String productName, int quantity,
