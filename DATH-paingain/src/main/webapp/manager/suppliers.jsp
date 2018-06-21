@@ -118,7 +118,7 @@
 				                   <label >Tên nhà cung cấp :<div style="color: red;" id="mes1"></div></label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <input type="text" id="companyid1" class="form-control" name="companyname" placeholder="Tên nhân viên" />
+				                            <input type="text" id="companyid1" class="form-control" name="companyname" placeholder="Tên nhà cung cấp" />
 				                            
 				                        </div>
 				                    </div>
@@ -128,7 +128,7 @@
 				                   <label >Contact name :<div style="color: red;" id="mes2"></div></label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <input type="text" id="contactid1" class="form-control" name="contactname" placeholder="last name nhân viên" />                            
+				                            <input type="text" id="contactid1" class="form-control" name="contactname" placeholder="Contact name" />                            
 				                        </div>
 				                    </div>
 				                </div>
@@ -137,7 +137,7 @@
 				                   <label >Địa chỉ :</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="address" placeholder="last name nhân viên" />
+				                            <input type="text" class="form-control" name="address" placeholder="Địa chỉ" />
 				                            
 				                        </div>
 				                    </div>
@@ -147,7 +147,7 @@
 				                   <label >Khu vực :</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="region" placeholder="last name nhân viên" />
+				                            <input type="text" class="form-control" name="region" placeholder="Khu vực" />
 				                            
 				                        </div>
 				                    </div>
@@ -163,10 +163,10 @@
 				                    </div>
 				                </div>
 				                <div class='col-sm-12'>
-				                    <label >Email :</label>
+				                    <label >Email :<div style="color: red;" id="mes7"></div></label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="email" placeholder="Tên tài khoản" />
+				                            <input type="text" id="emailid1" class="form-control" name="email" placeholder="Email" />
 				                            
 				                        </div>
 				                    </div>
@@ -258,7 +258,7 @@
 				                    </div>
 				                </div>
 				                <div class='col-sm-12'>
-				                    <label >Email :</label>
+				                    <label >Email :<div style="color: red;" id="mes8"></div></label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
 				                            <input id="emailid" type="text" class="form-control" name="emailE" placeholder="Email" />
@@ -359,6 +359,28 @@
 							    document.getElementById("mes6").innerHTML = null;
 								}
 						}
+				});
+				document.getElementById("emailid1").addEventListener("blur",function(){
+					var patt = /^[a-zA-Z0-9_]+@[a-zA-Z]+/g;
+				    var result = patt.test(this.value);
+				    if(this.value === ""){
+			    		document.getElementById("mes7").innerHTML = null ;
+					} else if(result == false){
+			    		document.getElementById("mes7").innerHTML = "Định dạng email không chính xác!!!";
+						} else {
+				    		document.getElementById("mes7").innerHTML = null ;
+							}
+				});
+				document.getElementById("emailid").addEventListener("blur",function(){
+					var patt = /^[a-zA-Z0-9_]+@[a-zA-Z]+/g;
+				    var result = patt.test(this.value);
+				    if(this.value === ""){
+			    		document.getElementById("mes8").innerHTML = null ;				
+					} else if(result == false){
+			    		document.getElementById("mes8").innerHTML = "Định dạng email không chính xác!!!";
+						} else {
+				    		document.getElementById("mes8").innerHTML = null ;
+							}
 				});
 			</script>
 					<!-- ----------------------------------------------->

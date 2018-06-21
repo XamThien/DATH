@@ -43,7 +43,7 @@
 					                	<table id= "datatable" class="table table-striped table-bordered dataTable no-footer">
 										  <thead>
 										  	<tr>
-										  		<th>Mã</th>
+										  		<th>Tên đăng nhập</th>
 										  		<th>Tên nhân viên</th>
 										  		<th>Giới tính</th>
 										  		<th>Địa chỉ</th>
@@ -122,6 +122,14 @@
                         <form action="/manager/useraction?action=add" method="post">
                         <div class="modal-body">
                      		 <div class='col-sm-12'>
+				                   <label >Tên đăng nhập :<div style="color: red" id="mes10"></div></label>
+				                    <div class="form-group" >
+				                        <div class="form-group" >
+				                            <input type="text" id="usernameid1" class="form-control" name="username" placeholder="Tên đăng nhập" />    
+				                        </div>
+				                    </div>
+				                </div>						
+                     		 <div class='col-sm-12'>
 				                   <label >Họ nhân viên :<div style="color: red" id="mes1"></div></label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
@@ -144,7 +152,7 @@
 				                    <label >Địa chỉ :</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="address" placeholder="Số điện thoại" />
+				                            <input type="text" class="form-control" name="address" placeholder="Địa chỉ" />
 				                            
 				                        </div>
 				                    </div>
@@ -162,7 +170,7 @@
 				                    <label >CMND :</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="cardid" placeholder="Tên tài khoản" />
+				                            <input type="text" class="form-control" name="cardid" placeholder="Số CMND" />
 				                            
 				                        </div>
 				                    </div>
@@ -171,7 +179,7 @@
 				                    <label >Email :<div id="mes8" style="color: red;"></div></label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="text" id="emailid1" class="form-control" name="email" placeholder="Mật khẩu" />
+				                            <input type="text" id="emailid1" class="form-control" name="email" placeholder="Email" />
 				                            
 				                        </div>
 				                    </div>
@@ -188,10 +196,10 @@
 				                    <label >Giới tính :</label>
 				                    <div class="form-group">
 				                        	<div class="col-sm-6">
-				                            	<input type="radio" name="sex" value="man" />Nam
+				                            	<input type="radio" name="sex" value="man" checked="checked" />   Nam
 				  		                   	</div>
 				  		                   	<div class="col-sm-6">
-				  		                    	<input type="radio" name="sex" value="notman"/>Nữ<br>
+				  		                    	<input type="radio" name="sex" value="notman"/>     Nữ<br>
 				                            </div>			                     
 				                    </div>
 				                </div>
@@ -199,7 +207,7 @@
 				                    <label >Trạng thái:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="checkbox" name="status" />			                            
+				                            <input type="checkbox" name="status" checked="checked" />			                            
 				                        </div>
 				                    </div>
 				                </div>        
@@ -372,6 +380,7 @@
 			    		document.getElementById("mes1").innerHTML = null ;
 						}
 			});
+					
 			document.getElementById("phoneid1").addEventListener("blur",function(){
 				var patt = /[0-9]{10,11}/;
 			    var result = patt.test(this.value);
@@ -403,15 +412,21 @@
 			document.getElementById("emailid1").addEventListener("blur",function(){
 				var patt = /^[a-zA-Z0-9_]+@[a-zA-Z]+/g;
 			    var result = patt.test(this.value);
+				if(this.value === ""){
+					document.getElementById("mes8").innerHTML = null ;
+				}
 				if(result == false){
 		    		document.getElementById("mes8").innerHTML = "Định dạng email không chính xác!!!";
 					} else {
 			    		document.getElementById("mes8").innerHTML = null ;
-						}
+				}
 			});
 			document.getElementById("emailid").addEventListener("blur",function(){
 				var patt = /^[a-zA-Z0-9_]+@[a-zA-Z]+/g;
 			    var result = patt.test(this.value);
+				if(this.value === ""){
+			    		document.getElementById("mes9").innerHTML = null ;						
+				}
 				if(result == false){
 		    		document.getElementById("mes9").innerHTML = "Định dạng email không chính xác!!!";
 					} else {
@@ -419,8 +434,6 @@
 						}			
 			});
 			document.getElementById("lastnameid").addEventListener("blur",function(){
-				var patt = /^[a-zA-Z0-9_]+@[a-zA-Z]+/g;
-			    var result = patt.test(this.value);
 				if(this.value ===""){
 			    		document.getElementById("mes6").innerHTML = message ;
 					} else {
@@ -440,9 +453,27 @@
 						    document.getElementById("mes7").innerHTML = null;
 							}
 						}
-
 			});
-			    
+
+			document.getElementById("usernameid1").addEventListener("keyup",function (){
+				if(this.value.length==0){
+						document.getElementById("mes10").innerHTML = message;
+						return;
+				}else{
+						if (window.XMLHttpRequest) {
+							xmlhttp = new XMLHttpRequest();
+						} else {
+							xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+						}
+						xmlhttp.onreadystatechange = function(){
+								if(this.readyState == 4 && this.status == 200 ){
+										document.getElementById("mes10").innerHTML = this.responseText;
+									}
+							}
+					}
+				xmlhttp.open("GET","/manager/useraction?username="+this.value,true);
+				xmlhttp.send();
+			}); 
 			</script>
 					<!-- ----------------------------------------------->
 			    </div>
