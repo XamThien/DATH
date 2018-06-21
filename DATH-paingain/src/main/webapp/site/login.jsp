@@ -6,9 +6,10 @@
             <div class="col-sm-4 col-sm-offset-1">
                 <div class="login-form"><!--login form-->
                     <h2>Login to your account</h2>
-                    <form action="${pageContext.request.contextPath}/auth">
+                    <span>${msg}</span>
+                    <form action="${pageContext.request.contextPath}/auth" method="post">
                         <input type="text" placeholder="Username or email" name="username"/>
-                        <input type="password" placeholder="Password" name="email"/>
+                        <input type="password" placeholder="Password" name="lgpassword"/>
                         <span>
                             <input type="checkbox" class="checkbox"> 
                             Keep me signed in
@@ -23,7 +24,7 @@
             <div class="col-sm-4">
                 <div class="signup-form"><!--sign up form-->
                     <h2>New User Signup!</h2>
-                    <form action="${pageContext.request.contextPath}/signup">
+                    <form action="${pageContext.request.contextPath}/signup" method="post">
                         <input type="text" placeholder="Name" name="username"/>
                         <input type="email" placeholder="Email Address" name="email"/>
                         <input type="password" placeholder="Password" name="password"/>
