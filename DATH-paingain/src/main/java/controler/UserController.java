@@ -34,7 +34,20 @@ public class UserController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.setCharacterEncoding("UTF-8");
+    	response.setCharacterEncoding("UTF-8");
+		String username = request.getParameter("username");
+		PgUsers user = null;
+		try {
+			user = new UserDAO().getPgUsersByName(username);
+			if (user != null) {
+				response.getWriter().append("Tên đăng nhập đã tồn tại!!!");
+			} else {
+				response.getWriter().append("");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -50,7 +63,7 @@ public class UserController extends HttpServlet {
 			 switch (action) {
 			 case "add":
 			 //
-			 String ma = PainAndGainService.CreatePKey("US", new UserDAO().getLastPkey());
+			 String ma = request.getParameter("username");
 			 String firstname =request.getParameter("firstname");
 			 String lastname = request.getParameter("lastname");
 			 String address = request.getParameter("address");
@@ -74,19 +87,26 @@ public class UserController extends HttpServlet {
 			 {
 				 if (firstname !="" || lastname != "" || phone != "" || userpass != "")
 				 {
-					 if(new UserDAO().insertPgUsers(user))
-					 {
-						 message = "Thành công!";
+					 if(new UserDAO().getPgUsersByName(ma) == null) {
+						 if(new UserDAO().insertPgUsers(user))
+						 {
+							 message = "Thành công!";
+							 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/nhanvien.jsp");
+							 request.setAttribute("msg", message);
+							 dispatcher.forward(request, response);						 
+						 }
+						 else
+						 {
+							 message = "Không thành công!";
+							 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/nhanvien.jsp");
+							 request.setAttribute("msg", message);
+							 dispatcher.forward(request, response);
+						 }
+					 } else {
+						 message = "Tên đăng nhập đã tồn tại!";
 						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/nhanvien.jsp");
 						 request.setAttribute("msg", message);
-						 dispatcher.forward(request, response);						 
-					 }
-					 else
-					 {
-						 message = "Không thành công!";
-						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/nhanvien.jsp");
-						 request.setAttribute("msg", message);
-						 dispatcher.forward(request, response);
+						 dispatcher.forward(request, response);	
 					 }
 				 }
 				 else 
