@@ -37,18 +37,7 @@ public class Authentication extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Authentication</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Authentication at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        response.sendRedirect(request.getContextPath() + "/site/layouts/accessdenied.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -102,6 +91,7 @@ public class Authentication extends HttpServlet {
         } else {
             request.setAttribute("msg", "Username is incorrect");
         }
+        request.setAttribute("title", "Login and Signup");
         request.getRequestDispatcher("site/login.jsp").forward(request, response);
 
     }

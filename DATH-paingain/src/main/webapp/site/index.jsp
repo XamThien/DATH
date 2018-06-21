@@ -23,8 +23,8 @@
                                 <button type="button" class="btn btn-default get">Get it now</button>
                             </div>
                             <div class="col-sm-6">
-                                <img src="${pageContext.request.contextPath}/site/layouts/images/home/girl1.jpg" class="girl img-responsive" alt="" />
-                                <img src="${pageContext.request.contextPath}/site/layouts/images/home/pricing.png"  class="pricing" alt="" />
+                                <img src="${path}/site/layouts/images/home/girl1.jpg" class="girl img-responsive" alt="" />
+                                <img src="${path}/site/layouts/images/home/pricing.png"  class="pricing" alt="" />
                             </div>
                         </div>
                         <div class="item">
@@ -35,8 +35,8 @@
                                 <button type="button" class="btn btn-default get">Get it now</button>
                             </div>
                             <div class="col-sm-6">
-                                <img src="${pageContext.request.contextPath}/site/layouts/images/home/girl2.jpg" class="girl img-responsive" alt="" />
-                                <img src="${pageContext.request.contextPath}/site/layouts/images/home/pricing.png"  class="pricing" alt="" />
+                                <img src="${path}/site/layouts/images/home/girl2.jpg" class="girl img-responsive" alt="" />
+                                <img src="${path}/site/layouts/images/home/pricing.png"  class="pricing" alt="" />
                             </div>
                         </div>
 
@@ -48,8 +48,8 @@
                                 <button type="button" class="btn btn-default get">Get it now</button>
                             </div>
                             <div class="col-sm-6">
-                                <img src="${pageContext.request.contextPath}/site/layouts/images/home/girl3.jpg" class="girl img-responsive" alt="" />
-                                <img src="${pageContext.request.contextPath}/site/layouts/images/home/pricing.png" class="pricing" alt="" />
+                                <img src="${path}/site/layouts/images/home/girl3.jpg" class="girl img-responsive" alt="" />
+                                <img src="${path}/site/layouts/images/home/pricing.png" class="pricing" alt="" />
                             </div>
                         </div>
 
@@ -73,36 +73,36 @@
             <%@include file="layouts/banner-left.jsp" %>
             <div class="col-sm-9 padding-right">
                 <div class="features_items"><!--features_items-->
-                    <h2 class="title text-center">${pageContext.request.getAttribute("cCategory")}</h2>
-                    <c:forEach var="pItem" items="${pageContext.request.getAttribute('pList')}">
+                    <h2 class="title text-center">${cCategory}</h2>
+                    <c:forEach var="pItem" items="${pList}">
 
                         <div class="col-sm-4">
                             <div class="product-image-wrapper">
                                 <div class="single-products">
                                     <div class="productinfo text-center">
 
-                                        <c:forEach var="pic" items="${pItem.getPgProductPictureses()}">
-                                            <c:if test="${pic.getPictureType() ==1}">
-                                                <img src="${pageContext.request.contextPath}${pic.getPath()}" alt="">
+                                        <c:forEach var="pic" items="${pItem.pgProductPictureses}">
+                                            <c:if test="${pic.pictureType ==1}">
+                                                <img src="${path}${pic.path}" alt="">
                                             </c:if>
                                         </c:forEach>
-                                        <h2>${pItem.getUnitOrder()} VND</h2>
-                                        <p>${pItem.getProductName()}</p>
+                                        <h2>${pItem.unitOrder} VND</h2>
+                                        <p>${pItem.productName}</p>
                                         <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                     </div>
                                     <div class="product-overlay">
                                         <div class="overlay-content">
-                                            <h2>${pItem.getUnitOrder()} VND</h2>
-                                            <p>${pItem.getProductName()}</p>
+                                            <h2>${pItem.unitOrder} VND</h2>
+                                            <p>${pItem.productName}</p>
                                             <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                         </div>
                                     </div>
                                     <c:choose>
-                                        <c:when test="${pItem.getIsNew()}">
-                                            <img src="${pageContext.request.contextPath}/site/layouts/images/home/new.png" class="new" alt="">
+                                        <c:when test="${pItem.isNew}">
+                                            <img src="${path}/site/layouts/images/home/new.png" class="new" alt="">
                                         </c:when>
-                                        <c:when test="${pItem.getIsHot()}">
-                                            <img src="${pageContext.request.contextPath}/site/layouts/images/home/sale.png" class="new" alt="">
+                                        <c:when test="${pItem.isHot}">
+                                            <img src="${path}/site/layouts/images/home/sale.png" class="new" alt="">
                                         </c:when>
                                     </c:choose>
                                 </div>
