@@ -59,6 +59,7 @@ public class Login extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setAttribute("title", "Login and Signup");
         request.getRequestDispatcher("site/login.jsp").forward(request, response);
     }
 

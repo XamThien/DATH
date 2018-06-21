@@ -24,9 +24,13 @@
             <div class="col-sm-4">
                 <div class="signup-form"><!--sign up form-->
                     <h2>New User Signup!</h2>
+                    <span>${spMsg}</span>
                     <form action="${pageContext.request.contextPath}/signup" method="post">
-                        <input type="text" placeholder="Name" name="username"/>
+                        <input type="text" placeholder="Name" name="name"/>
+                        <input type="text" placeholder="Username" name="username"/>
                         <input type="email" placeholder="Email Address" name="email"/>
+                        <input type="text" placeholder="Phone number" name="phone"/>
+                        <input type="text" placeholder="Address" name="address"/>
                         <input type="password" placeholder="Password" name="password"/>
                         <input type="password" placeholder="Confirm password" name="passconfirm"/>
                         <button type="submit" class="btn btn-default">Signup</button>

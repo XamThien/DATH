@@ -58,6 +58,7 @@ public class Cart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setAttribute("title", "My Cart");
         request.getRequestDispatcher("site/cart.jsp").forward(request, response);
     }
 

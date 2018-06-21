@@ -59,6 +59,7 @@ public class Checkout extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setAttribute("title", "Checkout");
         request.getRequestDispatcher("site/checkout.jsp").forward(request, response);
     }
 

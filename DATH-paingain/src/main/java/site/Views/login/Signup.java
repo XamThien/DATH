@@ -5,13 +5,20 @@
  */
 package site.Views.login;
 
+import database.Hibernate;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.PgRoles;
+import model.PgUsers;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+import service.PGValidation;
 
 /**
  *
@@ -32,18 +39,7 @@ public class Signup extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Signup</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Signup at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        response.sendRedirect(request.getContextPath() + "/site/layouts/accessdenied.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -72,7 +68,36 @@ public class Signup extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String name = request.getParameter("name");
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+        String address = request.getParameter("address");
+        String password = request.getParameter("password");
+        String cfpass = request.getParameter("passconfirm");
+        PgUsers user = new PgUsers(username, name, name, phone, password, 1);
+        user.setAddress(address);
+        user.setEmail(email);
+        String valid = new PGValidation().validateUserInformation(user, cfpass);
+        if (valid.equals("valid")) {
+            Session session = Hibernate.getSessionFactory().openSession();
+            session.beginTransaction();
+            List rs = session.createCriteria(PgUsers.class)
+                    .add(Restrictions.or(Restrictions.eq("userId", username), Restrictions.eq("email", email)))
+                    .list();
+            if (rs == null) {
+                request.setAttribute("spMsg", "Email hoac usernam da ton tai trong he thong");
+            } else {
+                session.save(user);
+                session.getTransaction().commit();
+                session.close();
+                request.setAttribute("spMsg", "Dang ky thanh cong");
+            }
+        } else {
+            request.setAttribute("spMsg", valid);
+        }
+        request.setAttribute("title", "Login and Signup");
+        request.getRequestDispatcher("site/login.jsp").forward(request, response);
     }
 
     /**
