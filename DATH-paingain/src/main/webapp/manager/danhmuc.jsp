@@ -26,7 +26,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
 	              	<h2><strong>Quản lý danh mục sản phẩm</strong></h2>
 	              	<hr/>
-	                <!-- <span style="color:red"><i>${msg}</i></span> -->
+	               <span style="color:red"><i><%=request.getAttribute("msg") %></i></span>
 	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới</button> </a>
 	                <!-- show table-->
 	                <div class="x_panel">
@@ -111,7 +111,7 @@
                           </button>
                           <h4 class="modal-title" id="myModalLabel">Thêm mới danh mục sản phẩm: </h4>
                         </div>
-                        <form action="addcate" method="post">
+                        <form action="/categoryac?action=add" method="post">
                         <div class="modal-body">
                           	 <div class='col-sm-12'>
 				                   <label >Tên danh mục:</label>
@@ -165,7 +165,7 @@
                           </button>
                           <h4 class="modal-title" id="myModalLabel">Sửa thông tin danh mục:</h4>
                         </div>
-                        <form action="editcate" method="post">
+                        <form action="/categoryac?action=edit" method="post">
                         <div class="modal-body">
                         	<div class="hd_id">
                         		<input type="hidden" id="eid" class="form-control" name="id" />
@@ -185,7 +185,7 @@
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                            <!-- <input type="" class="form-control" name="name" placeholder="last name nhân viên" />  -->
-				                            <textarea id="edescrip" rows="4" cols="50" style="width: 450px;" placeholder="Mô tả..."></textarea>
+				                            <textarea id="edescrip" name="descrip" rows="4" cols="50" style="width: 450px;" placeholder="Mô tả..."></textarea>
 				                        </div>
 				                    </div>
 				             </div>
@@ -202,7 +202,7 @@
 				                   <label >Trạng thái:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <select class="form-control" id="estatus" name="TrangThai" >
+				                            <select class="form-control" id="estatus" name="status" >
 			                                	<option value="1" >Active</option>
 			                                
 			                                	<option value="0" >InActive</option>

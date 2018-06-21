@@ -14,6 +14,10 @@
         <servlet-name>ListCategories</servlet-name>
         <servlet-class>controler.ListCategories</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CategoryAction</servlet-name>
+        <servlet-class>controler.CategoryAction</servlet-class>
+    </servlet>
 	<servlet>
 		<servlet-name>Supplier</servlet-name>
 		<servlet-class>controler.SupplierController</servlet-class>
@@ -25,6 +29,10 @@
     <servlet-mapping>
         <servlet-name>ListCategories</servlet-name>
         <url-pattern>/danhmuc</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryAction</servlet-name>
+        <url-pattern>categoryac</url-pattern>
     </servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Supplier</servlet-name>
