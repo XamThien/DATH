@@ -8,7 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import database.Hibernate;
-import model.PgModules;;
+import model.PgModules;
+import util.HibernateUtils;;
 
 public class ModuleDAO {
 
@@ -24,7 +25,6 @@ public class ModuleDAO {
 		        Query que = session.createQuery(hql);
 		        list = que.list();
 		        transaction.commit();
-		        session.close();
 	        }
 	        catch  (HibernateException e) {
 	        	 e.printStackTrace();
@@ -43,7 +43,6 @@ public class ModuleDAO {
 		        Query que = session.createQuery(hql);
 		        list = que.list();
 		        transaction.commit();
-		        session.close();
 	        }
 	        catch  (HibernateException e) {
 	        	 e.printStackTrace();
@@ -61,7 +60,6 @@ public class ModuleDAO {
 		        Query que = session.createQuery(hql);
 		        cl = (PgModules) que.uniqueResult();
 		        transaction.commit();
-		        session.close();
 	       }
 	       catch  (HibernateException e) {
 	    	   e.printStackTrace();
@@ -70,20 +68,36 @@ public class ModuleDAO {
 	    }
 
 
-	 public void insertPgModules(PgModules sp){
-		 Session session = Hibernate.getSessionFactory().openSession();
-	        Transaction transaction = session.beginTransaction();
-	        session.save(sp);
-	        transaction.commit();
-	        session.close();
+	 public boolean insertPgModules(PgModules sp){
+		 Session session = HibernateUtils.getSessionFactory().openSession();
+	        try {
+				Transaction transaction = session.beginTransaction();
+				session.save(sp);
+				transaction.commit();
+				return true;
+			}catch (HibernateException e) {
+				e.printStackTrace();
+				return false;
+			}finally {
+				if(session.isOpen()) {
+					session.close();
+				}			
+			}
 	    }
 	
 	 public void updatePgModules(PgModules sp){
-		 Session session = Hibernate.getSessionFactory().openSession();
-	        Transaction transaction = session.beginTransaction();
-	        session.update(sp);
-	        transaction.commit();
-	        session.close();
+		 Session session = HibernateUtils.getSessionFactory().openSession();
+			try {
+				Transaction transaction = session.beginTransaction();
+				session.update(sp);
+				transaction.commit();
+			}catch (HibernateException e) {
+				e.printStackTrace();
+			} finally {
+				if(session.isOpen()) {
+					session.close();
+				}
+			}
 	    }
 	 
 	 public static void main(String[] args) {
