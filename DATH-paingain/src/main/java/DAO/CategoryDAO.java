@@ -79,7 +79,27 @@ public class CategoryDAO {
 	        }
 	        return cl;
 	    }
-	 
+	 public class CategoryDAO {
+
+		    public List<PgCategories> getCategories() {
+		        List<PgCategories> categories = new ArrayList<>();
+		        Session session = Hibernate.getSessionFactory().openSession();
+		        session.beginTransaction();
+		        categories = session.createCriteria(PgCategories.class)
+		                .add(Restrictions.eq("categoryStatus", 1))
+		                .list();
+
+		        return categories;
+		    }
+
+		    public PgCategories getCategory(int id) {
+		        Session session = Hibernate.getSessionFactory().openSession();
+		        session.beginTransaction();
+		        PgCategories category = (PgCategories) session.get(PgCategories.class, id);
+		        session.getTransaction().commit();
+
+		        return category;
+		    }
 	 public void insertPgCategories(PgCategories sp){
 		 	Configuration configuration =  new Configuration().configure();
 		 	SessionFactory sessionFactory = configuration.buildSessionFactory();
