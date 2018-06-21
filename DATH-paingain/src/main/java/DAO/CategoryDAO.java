@@ -1,14 +1,18 @@
 
 package DAO;
-
+import database.Hibernate;
+import org.hibernate.Criteria;
+import java.util.ArrayList;
 import java.util.List;
-
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import model.PgCategories;
 
@@ -79,27 +83,27 @@ public class CategoryDAO {
 	        }
 	        return cl;
 	    }
-	 public class CategoryDAO {
 
-		    public List<PgCategories> getCategories() {
-		        List<PgCategories> categories = new ArrayList<>();
-		        Session session = Hibernate.getSessionFactory().openSession();
-		        session.beginTransaction();
-		        categories = session.createCriteria(PgCategories.class)
-		                .add(Restrictions.eq("categoryStatus", 1))
-		                .list();
 
-		        return categories;
-		    }
+	 public List<PgCategories> getCategories() {
+	        List<PgCategories> categories = new ArrayList<>();
+	        Session session = Hibernate.getSessionFactory().openSession();
+	        session.beginTransaction();
+	        categories = session.createCriteria(PgCategories.class)
+	                .add(Restrictions.eq("categoryStatus", 1))
+	                .list();
 
-		    public PgCategories getCategory(int id) {
-		        Session session = Hibernate.getSessionFactory().openSession();
-		        session.beginTransaction();
-		        PgCategories category = (PgCategories) session.get(PgCategories.class, id);
-		        session.getTransaction().commit();
+	        return categories;
+	    }
 
-		        return category;
-		    }
+	    public PgCategories getCategory(int id) {
+	        Session session = Hibernate.getSessionFactory().openSession();
+	        session.beginTransaction();
+	        PgCategories category = (PgCategories) session.get(PgCategories.class, id);
+	        session.getTransaction().commit();
+
+	        return category;
+	    }
 	 public void insertPgCategories(PgCategories sp){
 		 	Configuration configuration =  new Configuration().configure();
 		 	SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -126,6 +130,7 @@ public class CategoryDAO {
 		 System.out.println(loaisp.getCategoryName());
 		 
 	}
+}
 //=======
 /*
  * To change this license header, choose License Headers in Project Properties.
