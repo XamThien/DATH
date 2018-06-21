@@ -21,12 +21,12 @@
 	                    	<ul class="nav child_menu">
 		                      <li><a href="/danhmuc">Quản lý danh mục sản phẩm</a></li>
 		                      <li><a href="sanpham.jsp">Quản lý thông tin sản phẩm</a></li>
-		                      <li><a href="nhacc.jsp">Quản lý nhà cung cấp</a></li>
+		                      <li><a href="/manager/suppliers.jsp">Quản lý nhà cung cấp</a></li>
 		                    </ul>
 	                  </li>
 	                  <li><a href="sach.jsp"><i class="fa fa-book"></i>Quản lý đơn hàng </a> </li>
 	                  
-	                  <li><a href="nhanvien.jsp"><i class="fa fa-users"></i> Quản lý nhân viên </a>
+	                  <li><a href="/manager/nhanvien.jsp"><i class="fa fa-users"></i> Quản lý nhân viên </a>
 	                    
 	                  </li>
 	                </ul>
