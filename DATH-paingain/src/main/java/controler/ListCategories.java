@@ -28,7 +28,7 @@ public class ListCategories  extends HttpServlet{
 		{
 			result = new CategoryDAO().getAllPgCategories();
 			request.setAttribute("result", result);
-			request.getRequestDispatcher("manager/danhmuc.jsp").forward(request, response);
+			request.getRequestDispatcher("/manager/danhmuc.jsp").forward(request, response);
 		}
 		catch (Exception e)
 		{
