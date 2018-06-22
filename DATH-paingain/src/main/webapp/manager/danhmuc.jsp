@@ -26,7 +26,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
 	              	<h2><strong>Quản lý danh mục sản phẩm</strong></h2>
 	              	<hr/>
-	               <span style="color:red"><i><%=request.getAttribute("msg") %></i></span>
+	               <span style="color:red"><i>${msg }</i></span>
 	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới</button> </a>
 	                <!-- show table-->
 	                <div class="x_panel">
@@ -74,7 +74,7 @@
 			                                        out.print("<td>InActive</td>");
 			                                }%>
 										    <td>
-										    	<a href="#" onclick="pass_update(<%=catg.getCategoryId() %>,<%=catg.getCategoryName() %>,<%=catg.getDescription() %>,<%=catg.getSortIndex() %>,<%=catg.getCategoryStatus() %>)" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" > <i class="fa fa-edit"></i> Sửa</a>
+										    	<a href="#" onclick="pass_update(<%=catg.getCategoryId() %>,'<%=catg.getCategoryName() %>','<%=catg.getDescription() %>',<%=catg.getSortIndex() %>,<%=catg.getCategoryStatus() %>)" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa</a>
 										    	<%-- <a href="#" onclick="pass_del(<%=catg.getCategoryId() %>)" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" > <i class="fa fa-trash-o" ></i> Xóa</a> --%>
 										    	
 										    </td>
@@ -114,7 +114,7 @@
                         <form action="/categoryac?action=add" method="post">
                         <div class="modal-body">
                           	 <div class='col-sm-12'>
-				                   <label >Tên danh mục:</label>
+				                   <label >Tên danh mục: <span style="color: red;" id="mes1"></span></label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                            <input type="text" id="aname" class="form-control" name="name" placeholder="Tên danh mục" />
@@ -133,11 +133,11 @@
 				                    </div>
 				                </div>
 				                <div class='col-sm-12'>
-				                   <label >Sort index:</label>
+				                   <label >Sort index: <span style="color: red;" id="mes2"></span></label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                            <!-- <input type="" class="form-control" name="name" placeholder="last name nhân viên" />  -->
-				                            <input type="number" min=0 id="asort" class="form-control" name="sort" placeholder="Sort index" />
+				                            <input type="number" min=0 id="asort" class="form-control" value="0" name="sort" placeholder="Sort index" />
 				                        </div>
 				                    </div>
 				                </div>
@@ -145,7 +145,7 @@
                         <div class="clearfix"></div>
 
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                         
                           <button type="reset" class="btn btn-info">Làm mới </button>
                           <button type="submit" onclick="checkadd()" class="btn btn-info">Lưu </button>
                         </div>
@@ -171,10 +171,10 @@
                         		<input type="hidden" id="eid" class="form-control" name="id" />
                         	</div>
                           	 <div class='col-sm-12'>
-				                   <label >Tên danh mục:</label>
+				                   <label >Tên danh mục: <span style="color: red;" id="mes3"></span></label>
 				                    <div class="form-group ">
 				                        <div class="form-group code" >
-				                            <input id="ename" class="form-control" name="name" placeholder="Tên nhân viên" />
+				                            <input id="ename" class="form-control" name="name" placeholder="Tên danh mục" />
 				                            
 				                        </div>
 				                    </div>
@@ -190,7 +190,7 @@
 				                    </div>
 				             </div>
 				             <div class='col-sm-12'>
-			                   <label >Sort index:</label>
+			                   <label >Sort index: <span style="color: red;" id="mes4"></span></label>
 			                    <div class="form-group" >
 			                        <div class="form-group" >
 			                            <!-- <input type="" class="form-control" name="name" placeholder="last name nhân viên" />  -->
@@ -215,7 +215,6 @@
                         <div class="clearfix"></div>
 
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                           <button type="submit" onclick="checkedit()" class="btn btn-info">Cập nhật </button>
                           
                         </div>
@@ -252,6 +251,7 @@
 			  Delete modal -->
 
         	<script type="text/javascript">
+        	var message = "Không được để trống!!!"
 			    function pass_del(id) {
 			    	
 			    	document.getElementById("txtid").value = id;
@@ -262,20 +262,38 @@
 			    	document.getElementById("edescrip").value = descript; 
 			    	document.getElementById("esort").value = sort;
 			    	if(status==1){
-			    		document.getElementById("estatus")="Active";
-			    	} else {document.getElementById("estatus")="InActive";}
+			    		document.getElementById("estatus").value="1";
+			    	} else {document.getElementById("estatus").value="0";}
 			    	
 			    };
-			    function checkadd(){
-			    	if(document.getElementById("aname").value==""){
-			    		alert("Bạn chưa điền tên danh mục sản phẩm.");
-			    		return false;
-			    	} else if (document.getElementById("asort").value==""){
-			    		alert("Bạn chưa điền mã sắp xếp danh mục sản phẩm.");
-			    		return false;
-			    	}
-			    	return true;
-			    }
+			    document.getElementById("aname").addEventListener("blur",function(){
+					if(this.value ===""){
+				    		document.getElementById("mes1").innerHTML = message ;
+						}else{
+				    		document.getElementById("mes1").innerHTML = null ;
+							}
+				});
+			    document.getElementById("ename").addEventListener("blur",function(){
+					if(this.value ===""){
+				    		document.getElementById("mes3").innerHTML = message ;
+						}else{
+				    		document.getElementById("mes3").innerHTML = null ;
+							}
+				});
+			    document.getElementById("asort").addEventListener("blur",function(){
+					if(this.value ===""){
+				    		document.getElementById("mes2").innerHTML = message ;
+						}else{
+				    		document.getElementById("mes2").innerHTML = null ;
+							}
+				});
+			    document.getElementById("esort").addEventListener("blur",function(){
+					if(this.value ===""){
+				    		document.getElementById("mes4").innerHTML = message ;
+						}else{
+				    		document.getElementById("mes4").innerHTML = null ;
+							}
+				});
 			    function checkedit(){
 			    	if(document.getElementById("ename").value==""){
 			    		alert("Bạn chưa điền tên danh mục sản phẩm.");

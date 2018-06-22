@@ -1,6 +1,8 @@
 package controler;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,6 +36,7 @@ public class CategoryAction extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
     	response.setCharacterEncoding("UTF-8");
+    	List<PgCategories> result = new ArrayList<PgCategories>();
 		String action = request.getParameter("action");
 		String message = "";
 		 try
@@ -50,7 +53,9 @@ public class CategoryAction extends HttpServlet{
 			 {
 				 if(new CategoryDAO().insertPgCategories(sup))
 				 {
-					 message = "Thành công!";
+					 message = "Thêm thành công!";
+					 result = new CategoryDAO().getAllPgCategories();
+					 request.setAttribute("result", result);
 					 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/danhmuc.jsp");
 					 request.setAttribute("msg", message);
 					 dispatcher.forward(request, response);						 
@@ -58,6 +63,8 @@ public class CategoryAction extends HttpServlet{
 				 else
 				 {
 					 message = "Không thành công!";
+					 result = new CategoryDAO().getAllPgCategories();
+					 request.setAttribute("result", result);
 					 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/danhmuc.jsp");
 					 request.setAttribute("msg", message);
 					 dispatcher.forward(request, response);
@@ -78,6 +85,8 @@ public class CategoryAction extends HttpServlet{
 				 		PgCategories cat = new PgCategories(ma,ename,edescrip,esort,statusE);
 					    new CategoryDAO().updatePgCategories(cat);
 					    message = "Cập nhật thành công!";
+					    result = new CategoryDAO().getAllPgCategories();
+						 request.setAttribute("result", result);
 						RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/danhmuc.jsp");
 						request.setAttribute("msg", message );
 						dispatcher.forward(request, response);
@@ -87,6 +96,8 @@ public class CategoryAction extends HttpServlet{
 					catch (Exception e)
 					{
 						 message = "Cập nhật không thành công!";
+						 result = new CategoryDAO().getAllPgCategories();
+						 request.setAttribute("result", result);
 						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/danhmuc.jsp");
 						 request.setAttribute("msg", message );
 						 dispatcher.forward(request, response);
