@@ -32,6 +32,7 @@ public class PgProductPictures implements java.io.Serializable {
 		this.pgProducts = pgProducts;
 		this.path = path;
 		this.orderIndex = orderIndex;
+		this.pictureStatus = 1;
 	}
 
 	public PgProductPictures(PgProducts pgProducts, String path, String pictureType, Integer pictureStatus,

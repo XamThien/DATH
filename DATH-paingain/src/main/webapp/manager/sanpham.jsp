@@ -70,7 +70,7 @@
 										  		
 										  %>
 											  <tr>
-											    <td><img style="max-height:40px; max-width:40px;" src="/resources/production/images/prod-1.jpg"></td>
+											    <td><img style="max-height:40px; max-width:40px;" src="/images/<%= new ProductPictures().getPgProductPicturesByID(pr.getProductId()).getPath()%>"></td>
 											    <td><%=pr.getProductName() %></td>
 											    <td><%=pr.getQuantity() %></td>
 											    <td><%=pr.getUnitPrice() %></td>

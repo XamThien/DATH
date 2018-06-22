@@ -48,6 +48,10 @@ public class Product extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	 public static boolean checkFolderExist(String fileName) {
+	    	File file = new File(fileName);
+	        return file.exists();
+	    }
 	private String uploadFile(HttpServletRequest request) throws IOException, ServletException {
         String fileName = "";
         try {
@@ -61,6 +65,11 @@ public class Product extends HttpServlet {
 
             //File.separator: \ 
             String basePath = applicationPath + File.separator + UPLOAD_DIR + File.separator;
+            if(checkFolderExist(basePath)==false)
+            {
+            	File f=new File(basePath);
+    			f.mkdir();
+            }
 
             InputStream inputStream = null;
             OutputStream outputStream = null;
@@ -75,7 +84,7 @@ public class Product extends HttpServlet {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                fileName = "";
+                fileName = e.toString()+"1";
             } finally {
                 if (inputStream != null) {
                     inputStream.close();
@@ -85,7 +94,7 @@ public class Product extends HttpServlet {
                 }
             }
         } catch (Exception e) {
-            fileName = "";
+            fileName = e.toString()+"2";
         }
         return fileName;
     }
