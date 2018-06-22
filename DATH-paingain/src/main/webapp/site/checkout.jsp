@@ -4,7 +4,7 @@
     <div class="container">
         <div class="breadcrumbs">
             <ol class="breadcrumb">
-                <li><a href="#">Home</a></li>
+                <li><a href="${path}/home">Home</a></li>
                 <li class="active">Check out</li>
             </ol>
         </div><!--/breadcrums-->
@@ -21,9 +21,6 @@
                 </li>
                 <li>
                     <label><input type="checkbox"> Guest Checkout</label>
-                </li>
-                <li>
-                    <a href=""><i class="fa fa-times"></i>Cancel</a>
                 </li>
             </ul>
         </div><!--/checkout-options-->
@@ -121,93 +118,49 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="cart_product">
-                            <a href=""><img src="images/cart/one.png" alt=""></a>
-                        </td>
-                        <td class="cart_description">
-                            <h4><a href="">Colorblock Scuba</a></h4>
-                            <p>Web ID: 1089772</p>
-                        </td>
-                        <td class="cart_price">
-                            <p>$59</p>
-                        </td>
-                        <td class="cart_quantity">
-                            <div class="cart_quantity_button">
-                                <a class="cart_quantity_up" href=""> + </a>
-                                <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-                                <a class="cart_quantity_down" href=""> - </a>
-                            </div>
-                        </td>
-                        <td class="cart_total">
-                            <p class="cart_total_price">$59</p>
-                        </td>
-                        <td class="cart_delete">
-                            <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="cart_product">
-                            <a href=""><img src="images/cart/two.png" alt=""></a>
-                        </td>
-                        <td class="cart_description">
-                            <h4><a href="">Colorblock Scuba</a></h4>
-                            <p>Web ID: 1089772</p>
-                        </td>
-                        <td class="cart_price">
-                            <p>$59</p>
-                        </td>
-                        <td class="cart_quantity">
-                            <div class="cart_quantity_button">
-                                <a class="cart_quantity_up" href=""> + </a>
-                                <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-                                <a class="cart_quantity_down" href=""> - </a>
-                            </div>
-                        </td>
-                        <td class="cart_total">
-                            <p class="cart_total_price">$59</p>
-                        </td>
-                        <td class="cart_delete">
-                            <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="cart_product">
-                            <a href=""><img src="images/cart/three.png" alt=""></a>
-                        </td>
-                        <td class="cart_description">
-                            <h4><a href="">Colorblock Scuba</a></h4>
-                            <p>Web ID: 1089772</p>
-                        </td>
-                        <td class="cart_price">
-                            <p>$59</p>
-                        </td>
-                        <td class="cart_quantity">
-                            <div class="cart_quantity_button">
-                                <a class="cart_quantity_up" href=""> + </a>
-                                <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-                                <a class="cart_quantity_down" href=""> - </a>
-                            </div>
-                        </td>
-                        <td class="cart_total">
-                            <p class="cart_total_price">$59</p>
-                        </td>
-                        <td class="cart_delete">
-                            <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                        </td>
-                    </tr>
+                    <c:set var="total"  value="${0}"/>
+                    <c:forEach items="${cart.pgOrderDetailses}" var="item">
+                        <tr>
+                            <td class="cart_product">
+                                <c:forEach var="pic" items="${item.pgProducts.pgProductPictureses}">
+                                    <c:if test="${pic.pictureType ==1}">
+                                        <a href=""><img src="${path}${pic.path}" alt="" style="max-width: 20%;"></a>
+                                        </c:if>
+                                    </c:forEach>
+                            </td>
+                            <td class="cart_description">
+                                <h4><a href="">${item.pgProducts.productName}</a></h4>
+                            </td>
+                            <td class="cart_price">
+                                <p>${item.unitPrice} VND</p>
+                            </td>
+                            <td class="cart_quantity">
+                                <div class="cart_quantity_button">
+                                    <a class="cart_quantity_up" href=""> + </a>
+                                    <input class="cart_quantity_input" type="text" name="quantity" value="${item.amount}" autocomplete="off" size="2">
+                                    <a class="cart_quantity_down" href=""> - </a>
+                                </div>
+                            </td>
+                            <td class="cart_total">
+                                <p class="cart_total_price">${item.amount*item.unitPrice} VND</p>
+                            </td>
+                            <c:set var="total"  value="${total+item.amount*item.unitPrice}"/>
+                            <td class="cart_delete">
+                                <a class="cart_quantity_delete" href="javascript:void(0)" itemid="${item.pgProducts.productId}"><i class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     <tr>
                         <td colspan="4">&nbsp;</td>
                         <td colspan="2">
                             <table class="table table-condensed total-result">
                                 <tr>
                                     <td>Cart Sub Total</td>
-                                    <td>$59</td>
+                                    <td>${total} VND</td>
                                 </tr>
                                 <tr>
                                     <td>Exo Tax</td>
-                                    <td>$2</td>
+                                    <td>0 VND</td>
                                 </tr>
                                 <tr class="shipping-cost">
                                     <td>Shipping Cost</td>
@@ -215,24 +168,13 @@
                                 </tr>
                                 <tr>
                                     <td>Total</td>
-                                    <td><span>$61</span></td>
+                                    <td><span>${total} VND</span></td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-        <div class="payment-options">
-            <span>
-                <label><input type="checkbox"> Direct Bank Transfer</label>
-            </span>
-            <span>
-                <label><input type="checkbox"> Check Payment</label>
-            </span>
-            <span>
-                <label><input type="checkbox"> Paypal</label>
-            </span>
         </div>
     </div>
 </section> <!--/#cart_items-->

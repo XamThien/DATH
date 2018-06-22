@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,7 +38,7 @@ public class Checkout extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Checkout</title>");            
+            out.println("<title>Servlet Checkout</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Checkout at " + request.getContextPath() + "</h1>");
@@ -60,6 +61,13 @@ public class Checkout extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setAttribute("title", "Checkout");
+        HttpSession session = request.getSession();
+        model.Cart cart = (model.Cart) session.getAttribute("mycart");
+        if (cart == null) {
+            cart = new model.Cart();
+            session.setAttribute("mycart", cart);
+        }
+        request.setAttribute("cart", cart);
         request.getRequestDispatcher("site/checkout.jsp").forward(request, response);
     }
 
