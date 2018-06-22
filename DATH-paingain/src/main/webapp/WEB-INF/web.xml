@@ -7,13 +7,39 @@
         <welcome-file>index.jsp</welcome-file>
         <welcome-file>/index</welcome-file>
     </welcome-file-list>
-    
-	<servlet>
+<!--    <error-page>
+        <location>/site/404page.jsp</location>
+    </error-page>-->
+    <servlet>
         <servlet-name>ListCategories</servlet-name>
         <servlet-class>controler.ListCategories</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoryAction</servlet-name>
+        <servlet-class>controler.CategoryAction</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Supplier</servlet-name>
+        <servlet-class>controler.SupplierController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Users</servlet-name>
+        <servlet-class>controler.UserController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ListCategories</servlet-name>
         <url-pattern>/danhmuc</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryAction</servlet-name>
+        <url-pattern>categoryac</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Supplier</servlet-name>
+        <url-pattern>/manager/supplieraction</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Users</servlet-name>
+        <url-pattern>/manager/useraction</url-pattern>
     </servlet-mapping>
 </web-app>

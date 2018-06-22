@@ -15,6 +15,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import model.PgCategories;
+import util.HibernateUtils;
 
 
 public class CategoryDAO {
@@ -23,17 +24,12 @@ public class CategoryDAO {
 		 List<PgCategories> list=null;
 	        try
 	        {
-	        	Configuration configuration =  new Configuration().configure();
-	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
-	        	Session session = sessionFactory.openSession();
-	        	
-	        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		        Transaction transaction = session.beginTransaction();
-		        String hql ="from PgCategories";
+	        	Session session = HibernateUtils.getSessionFactory().openSession();
+				Transaction transaction = session.beginTransaction();
+				 String hql ="from PgCategories";
 		        Query que = session.createQuery(hql);
 		        list = que.list();
 		        transaction.commit();
-		        session.close();
 	        }
 	        catch  (HibernateException e) {
 	        	 e.printStackTrace();
@@ -45,17 +41,12 @@ public class CategoryDAO {
 		 List<PgCategories> list=null;
 	        try
 	        {
-	        	Configuration configuration =  new Configuration().configure();
-	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
-	        	Session session = sessionFactory.openSession();
-	        	
-	        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		        Transaction transaction = session.beginTransaction();
-		        String hql ="from PgCategories where categoryStatus=1";
+	        	Session session = HibernateUtils.getSessionFactory().openSession();
+				Transaction transaction = session.beginTransaction();
+				String hql ="from PgCategories where categoryStatus=1";
 		        Query que = session.createQuery(hql);
 		        list = que.list();
 		        transaction.commit();
-		        session.close();
 	        }
 	        catch  (HibernateException e) {
 	        	 e.printStackTrace();
@@ -66,17 +57,12 @@ public class CategoryDAO {
 		 PgCategories cl = null;
 	       try
 	       {
-	    	    Configuration configuration =  new Configuration().configure();
-	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
-	        	Session session = sessionFactory.openSession();
-	        	
-	        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		        Transaction transaction = session.beginTransaction();
-		        String hql ="from PgCategories where categoryId="+id;
+	    	   Session session = HibernateUtils.getSessionFactory().openSession();
+				Transaction transaction = session.beginTransaction();
+				String hql ="from PgCategories where categoryId="+id;
 		        Query que = session.createQuery(hql);
 		        cl = (PgCategories) que.uniqueResult();
 		        transaction.commit();
-		        session.close();
 	       }
 	       catch  (HibernateException e) {
 	    	   e.printStackTrace();
@@ -97,31 +83,52 @@ public class CategoryDAO {
 	    }
 
 	    public PgCategories getCategory(int id) {
-	        Session session = Hibernate.getSessionFactory().openSession();
+	        //Session session = Hibernate.getSessionFactory().openSession();
+	        Session session ;
+		 	if(Hibernate.getSessionFactory().getCurrentSession() != null)
+		 	{
+		 		session = Hibernate.getSessionFactory().getCurrentSession();
+		 	}
+		 	else
+		 	{
+		 		session = Hibernate.getSessionFactory().openSession();
+		 	}
 	        session.beginTransaction();
 	        PgCategories category = (PgCategories) session.get(PgCategories.class, id);
 	        session.getTransaction().commit();
 
 	        return category;
 	    }
-	 public void insertPgCategories(PgCategories sp){
-		 	Configuration configuration =  new Configuration().configure();
-		 	SessionFactory sessionFactory = configuration.buildSessionFactory();
-		 	Session session = sessionFactory.openSession();
-	        Transaction transaction = session.beginTransaction();
-	        session.save(sp);
-	        transaction.commit();
-	        session.close();
+	 public boolean insertPgCategories(PgCategories sp){
+		 Session session = HibernateUtils.getSessionFactory().openSession();
+	        try {
+				Transaction transaction = session.beginTransaction();
+				session.save(sp);
+				transaction.commit();
+				return true;
+			}catch (HibernateException e) {
+				e.printStackTrace();
+				return false;
+			}finally {
+				if(session.isOpen()) {
+					session.close();
+				}			
+			}
 	    }
 	
 	 public void updatePgCategories(PgCategories sp){
-		 	Configuration configuration =  new Configuration().configure();
-	     	SessionFactory sessionFactory = configuration.buildSessionFactory();
-	     	Session session = sessionFactory.openSession();
-	        Transaction transaction = session.beginTransaction();
-	        session.update(sp);
-	        transaction.commit();
-	        session.close();
+		 Session session = HibernateUtils.getSessionFactory().openSession();
+			try {
+				Transaction transaction = session.beginTransaction();
+				session.update(sp);
+				transaction.commit();
+			}catch (HibernateException e) {
+				e.printStackTrace();
+			} finally {
+				if(session.isOpen()) {
+					session.close();
+				}
+			}
 	    }
 	 
 	 public static void main(String[] args) {

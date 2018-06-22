@@ -37,11 +37,19 @@ public class ProductPictures {
 	public void insertPgProductPictures(PgProductPictures sp){
 	 	Configuration configuration =  new Configuration().configure();
 	 	SessionFactory sessionFactory = configuration.buildSessionFactory();
-	 	Session session = sessionFactory.openSession();
+	 	Session session ;
+	 	if(sessionFactory.getCurrentSession() != null)
+	 	{
+	 		session = sessionFactory.getCurrentSession();
+	 	}
+	 	else
+	 	{
+	 		session = sessionFactory.openSession();
+	 	}
         Transaction transaction = session.beginTransaction();
         session.save(sp);
         transaction.commit();
-        session.close();
+        //session.close();
     }
 
  public void updatePgProductPictures(PgProductPictures sp){

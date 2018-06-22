@@ -78,14 +78,47 @@ public class UserDAO {
 	        return cl;
 	    }
 	 
-	 public void insertPgUsers(PgUsers sp){
+	 @SuppressWarnings("unchecked")
+	    public String getLastPkey() throws Exception {
+    	    Configuration configuration =  new Configuration().configure();
+        	SessionFactory sessionFactory = configuration.buildSessionFactory();
+        	Session session = sessionFactory.openSession();
+	        Transaction transaction = session.beginTransaction();
+			 List<PgUsers> list=null;
+			 String value = null;
+		        try
+		        {
+		        	 String hql = "from PgUsers order by userId DESC";
+		        	 Query query = session.createQuery(hql);
+		             list = query.list();
+		             if(list.isEmpty() || list == null) {
+		            	 value = "";
+		             }else {
+		            	 value = list.get(0).getUserId().toString();
+		             }
+			        transaction.commit();
+		        }
+		        catch  (HibernateException e) {
+		        	 e.printStackTrace();
+		        }
+	        return value;
+	    }
+	 
+	 public boolean insertPgUsers(PgUsers sp){
 		 	Configuration configuration =  new Configuration().configure();
 		 	SessionFactory sessionFactory = configuration.buildSessionFactory();
 		 	Session session = sessionFactory.openSession();
-	        Transaction transaction = session.beginTransaction();
-	        session.save(sp);
-	        transaction.commit();
-	        session.close();
+		 	try {
+		        Transaction transaction = session.beginTransaction();
+		        session.save(sp);
+		        transaction.commit();
+		        return true;
+		 	} catch(HibernateException e) {
+		 		e.printStackTrace();
+		 		return false;
+		 	} finally {
+		        session.close();
+			}
 	    }
 	
 	 public void updatePgUsers(PgUsers sp){
