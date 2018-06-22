@@ -75,7 +75,7 @@ public class ProductDAO {
 		        Query que = session.createQuery(hql);
 		        cl = (PgProducts) que.uniqueResult();
 		        transaction.commit();
-		        session.close();
+
 	       }
 	       catch  (HibernateException e) {
 	    	   e.printStackTrace();

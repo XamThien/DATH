@@ -38,16 +38,23 @@
                             <div class="logo pull-left">
                                 <a href="${path}/home"><img src="${path}/site/layouts/images/home/logo.png" alt="" /></a>
                             </div>
-                            
+
                         </div>
                         <div class="col-sm-8">
                             <div class="shop-menu pull-right">
                                 <ul class="nav navbar-nav">
-                                    <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+                                    <c:if test="${authentic!=null}">
+                                        <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
+                                        </c:if>
+
                                     <li><a href="${path}/checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                     <li><a href="${path}/mycart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                    <li><a href="${path}/site-login"><i class="fa fa-lock"></i> Login</a></li>
+                                        <c:if test="${authentic==null}">
+                                        <li><a href="${path}/site-login"><i class="fa fa-lock"></i> Login</a></li>
+                                        </c:if>
+                                        <c:if test="${authentic!=null}">
+                                        <li><a href="${path}/site-logout"><i class="fa fa-lock"></i> logout</a></li>
+                                        </c:if>
                                 </ul>
                             </div>
                         </div>
@@ -72,10 +79,14 @@
                                     <li><a href="${path}/home" class="active">Home</a></li>
                                     <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a href="shop.html">Products</a></li>
-                                            <li><a href="checkout.html">Checkout</a></li> 
-                                            <li><a href="cart.html">Cart</a></li> 
-                                            <li><a href="login.html">Login</a></li> 
+                                            <li><a href="${path}/checkout">Checkout</a></li> 
+                                            <li><a href="${path}/mycart">Cart</a></li> 
+                                                <c:if test="${authentic==null}">
+                                                <li><a href="${path}/site-login">Login</a></li>
+                                                </c:if>
+                                                <c:if test="${authentic!=null}">
+                                                <li><a href="${path}/site-logout">logout</a></li>
+                                                </c:if> 
                                         </ul>
                                     </li> 
                                 </ul>

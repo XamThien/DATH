@@ -1,5 +1,5 @@
 <footer id="footer"><!--Footer-->
-    
+
     <div class="footer-widget">
         <div class="container">
             <div class="row">
@@ -76,7 +76,22 @@
     </div>
 
 </footer><!--/Footer-->
+<div class="modal fade" id="notify" role="dialog">
+    <div class="modal-dialog modal-sm" style="
+    position: absolute;
+    bottom: 5px;
+    right: 0px;
+">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <p id="notify-content"></p>
+            </div>
+        </div>
 
+    </div>
+</div>
 
 
 <script src="${path}/site/layouts/js/jquery.js"></script>
@@ -85,5 +100,6 @@
 <script src="${path}/site/layouts/js/price-range.js"></script>
 <script src="${path}/site/layouts/js/jquery.prettyPhoto.js"></script>
 <script src="${path}/site/layouts/js/main.js"></script>
+<script src="${path}/site/resources/js/dath-js.js"></script>
 </body>
 </html>

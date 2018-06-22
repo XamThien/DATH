@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package site.Views.cart;
+package site.actions.cart;
 
+import DAO.ProductDAO;
+import database.Hibernate;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,13 +15,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Cart;
+import model.PgOrderDetails;
+import model.PgProducts;
 
 /**
  *
  * @author dangt
  */
-@WebServlet(name = "Cart", urlPatterns = {"/mycart"})
-public class Cart extends HttpServlet {
+@WebServlet(name = "cartajax", urlPatterns = {"/cart-action"})
+public class CartAjax extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +43,10 @@ public class Cart extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Cart</title>");
+            out.println("<title>Servlet cart</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Cart at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet cart at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,15 +64,37 @@ public class Cart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("title", "My Cart");
+        String pId = request.getParameter("pId") != null ? request.getParameter("pId") : "";
+        String action = request.getParameter("action") != null ? request.getParameter("action") : "";
+        PgProducts product = new ProductDAO().getPgProductsByID(Integer.parseInt(pId));
+        PgOrderDetails order = new PgOrderDetails();
+        order.setPgProducts(product);
+        order.setUnitPrice(product.getUnitPrice());
+        Hibernate.getSessionFactory().getCurrentSession().close();
         HttpSession session = request.getSession();
-        model.Cart cart = (model.Cart) session.getAttribute("mycart");
+        Cart cart = (Cart) session.getAttribute("mycart");
         if (cart == null) {
-            cart = new model.Cart();
-            session.setAttribute("mycart", cart);
+            cart = new Cart();
         }
-        request.setAttribute("cart", cart);
-        request.getRequestDispatcher("site/cart.jsp").forward(request, response);
+        if (!action.equals("delete")) {
+            if (action.equals("add")) {
+                order.setAmount(1);
+            } else if (action.equals("update")) {
+                String quantity = request.getParameter("quantity");
+                order.setAmount(Integer.parseInt(quantity));
+            }
+            cart.addToCart(order);
+            session.setAttribute("mycart", cart);
+            response.getWriter().print("success");
+        } else {
+            if (cart.removeFromCart(order)) {
+                session.setAttribute("mycart", cart);
+                response.getWriter().print("success");
+            }else{
+                response.getWriter().print("faild");
+            }
+        }
+
     }
 
     /**

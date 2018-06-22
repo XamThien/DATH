@@ -231,4 +231,17 @@ public class PgProducts implements java.io.Serializable {
 		this.pgProductPictureses = pgProductPictureses;
 	}
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof PgProducts){
+            return this.productId == ((PgProducts)obj).getProductId();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return productId; //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }
