@@ -74,7 +74,9 @@ public class Product extends HttpServlet {
             InputStream inputStream = null;
             OutputStream outputStream = null;
             try {
+            	
                 File outputFilePath = new File(basePath + fileName);
+                fileName = "/images/"+fileName;
                 inputStream = filePart.getInputStream();
                 outputStream = new FileOutputStream(outputFilePath);
                 int read = 0;
@@ -231,7 +233,7 @@ public class Product extends HttpServlet {
 	            try
 	            {
 	            	new ProductDAO().insertPgProduct(tl);
-	            	PgProductPictures prpic = new PgProductPictures(tl,uploadFile(request),1); 
+	            	PgProductPictures prpic = new PgProductPictures(tl,request.getContextPath()+uploadFile(request),1); 
 	            	new ProductPictures().insertPgProductPictures(prpic);
 	            	message = "Thêm sản phẩm thành công.";
 	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
