@@ -20,7 +20,11 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
 	              	<h2><strong>Quản lý nhà cung cấp</strong></h2>
 	              	<hr/>
-	                <span style="color:red"><i><%=request.getAttribute("msg") %></i></span>
+	              	<%if(request.getAttribute("msg")==null){%>
+	              		<span></span>
+	              	<%} else { %>
+	                	<span style="color:red"><i><%=request.getAttribute("msg") %></i></span>
+	                <%} %>
 	                <!-- show table-->
 	                <div class="x_panel">
 		                  <div class="x_title">
@@ -63,10 +67,22 @@
 										    <td><%=sup.getSupplierId()%></td>
 										    <td><%=sup.getCompanyName()%></td>
 										    <td><%=sup.getContactName()%></td>
-										    <td><%=sup.getAddress()%></td>
-										    <td><%=sup.getRegion()%></td>
+										    <%if(sup.getAddress()==null){ %>
+										    	<td></td>
+										    <%} else { %>
+										    	<td><%=sup.getAddress()%></td>
+										    <%} %>
+										    <% if(sup.getRegion()==null){%>
+										    	<td></td>
+										    <%} else { %>
+										    	<td><%=sup.getRegion()%></td>
+										    <%} %>
 										    <td><%=sup.getPhone()%></td>
-										    <td><%=sup.getEmail()%></td>
+										    <%if(sup.getEmail()==null){ %>
+										    	<td></td>
+										    <%} else { %>
+										    	<td><%=sup.getEmail()%></td>
+										    <%} %>
 										    <td>
 										    	<%if (sup.getSupplierStatus()==1){ %>
 										    		<input type="checkbox" checked disabled>
@@ -175,7 +191,7 @@
 				                    <label >Trạng thái:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="checkbox" name="status" />			                            
+				                            <input type="checkbox" name="status" checked="checked" />			                            
 				                        </div>
 				                    </div>
 				                </div>        
@@ -270,7 +286,7 @@
 				                    <label >Trạng thái:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input id="statusid" type="checkbox" name="statusE" />			                            
+				                            <input id="statusid" type="checkbox" name="statusE" checked="checked" />			                            
 				                        </div>
 				                    </div>
 				                </div>        

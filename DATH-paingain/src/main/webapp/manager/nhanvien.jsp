@@ -26,7 +26,11 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
 	              	<h2><strong>Quản lý nhân viên</strong></h2>
 	              	<hr/>
+	              	<%if(request.getAttribute("msg")==null){ %>
+	              		<span></span>
+	              	<%} else { %>
 	                <span style="color:red"><i><%=request.getAttribute("msg") %></i></span>
+	                <%} %>
 	                <!-- show table-->
 	                <div class="x_panel">
 		                  <div class="x_title">
@@ -59,7 +63,7 @@
 										  </thead>
 										   <tbody>
 										<%
-											ArrayList<PgUsers> list = (ArrayList<PgUsers>) new UserDAO().getAllPgUsers();
+											ArrayList<PgUsers> list = (ArrayList<PgUsers>) new UserDAO().getAllNhanvien();
 											if(list != null){
 											for(PgUsers user : list){
 										%>  	
@@ -73,12 +77,29 @@
 												out.print("Nữ");
 											}
 											%></td>
-											<td><%=user.getAddress()%></td>
+											<%if(user.getAddress()==null){ %>
+												<td> </td>
+											<%} else { %>
+												<td><%=user.getAddress()%></td>
+											<%}%>
 											<td><%=user.getPhoneNumber()%></td>
-											<td><%=user.getCardId()%></td>
+											<%if(user.getAddress()==null){ %>
+												<td></td>
+											<%} else { %>
+												<td><%=user.getCardId()%></td>
+											<%}
+											if(user.getEmail()==null){
+											%>
+												<td></td>
+											<%} else { %>
 											<td><%=user.getEmail()%></td>
+											<% } %>
 											<td><%=user.getCreateTime()%></td>
-											<td><%=user.getModifiedTime()%></td>
+											<%if (user.getModifiedTime()==null){ %>
+												<td></td>
+											<%} else { %>
+												<td><%=user.getModifiedTime()%></td>
+											<%} %>
 											<td>
 												<%if (user.getUserStatus()==1){ %>
 										    		<input type="checkbox" checked disabled>
@@ -194,7 +215,7 @@
 				                </div>
 				                <div class='col-sm-12'>
 				                    <label >Giới tính :</label>
-				                    <div class="form-group">
+				                    <div class="form-group radio">
 				                        	<div class="col-sm-6">
 				                            	<input type="radio" name="sex" value="man" checked="checked" />   Nam
 				  		                   	</div>
@@ -307,7 +328,7 @@
 				                </div>
 				                <div class='col-sm-12'>
 				                    <label >Giới tính :</label>
-				                    <div class="form-group">
+				                    <div class="form-group radio">
 				                        	<div class="col-sm-6">
 				                            	<input id="sexmaleid" type="radio" name="sexE" value="man" />Nam
 				  		                   	</div>
@@ -320,7 +341,7 @@
 				                    <label >Trạng thái:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="checkbox" id="statusid" name="statusE" />			                            
+				                            <input type="checkbox" id="statusid" name="statusE"  />			                            
 				                        </div>
 				                    </div>
 				                </div>        
@@ -414,7 +435,7 @@
 			    var result = patt.test(this.value);
 				if(this.value === ""){
 					document.getElementById("mes8").innerHTML = null ;
-				}
+				} else
 				if(result == false){
 		    		document.getElementById("mes8").innerHTML = "Định dạng email không chính xác!!!";
 					} else {
@@ -426,7 +447,7 @@
 			    var result = patt.test(this.value);
 				if(this.value === ""){
 			    		document.getElementById("mes9").innerHTML = null ;						
-				}
+				} else
 				if(result == false){
 		    		document.getElementById("mes9").innerHTML = "Định dạng email không chính xác!!!";
 					} else {

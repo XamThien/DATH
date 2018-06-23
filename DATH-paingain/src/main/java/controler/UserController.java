@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DAO.UserDAO;
+import model.PgRoles;
 import model.PgUsers;
 import service.PainAndGainService;
 
@@ -82,10 +83,19 @@ public class UserController extends HttpServlet {
 			 }
 			   String date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").format(LocalDateTime.now());
 			   Date createDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(date);
-			 PgUsers user = new PgUsers(ma,firstname,lastname,address,phone,cardId,email,sex,userpass,createDate,createDate,status);
+			   PgRoles pgRoles = new PgRoles();
+			   pgRoles.setRoleId(2);
+			 PgUsers user = new PgUsers(ma,firstname,lastname,address,phone,cardId,email,sex,userpass,createDate,createDate,status,pgRoles);
 			 try 
 			 {
-				 if (firstname !="" || lastname != "" || phone != "" || userpass != "")
+				 if(ma.equals("") || lastname.equals("") || phone.equals("") || userpass.equals("") || ma == null || lastname == null || phone == null || userpass == null)
+				 {
+					 message = "Điền đầy đủ thông tin!";
+					 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/nhanvien.jsp");
+					 request.setAttribute("msg", message);
+					 dispatcher.forward(request, response);	
+				 }
+				 else 
 				 {
 					 if(new UserDAO().getPgUsersByName(ma) == null) {
 						 if(new UserDAO().insertPgUsers(user))
@@ -108,13 +118,6 @@ public class UserController extends HttpServlet {
 						 request.setAttribute("msg", message);
 						 dispatcher.forward(request, response);	
 					 }
-				 }
-				 else 
-				 {
-					 message = "Điền đầy đủ thông tin!";
-					 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/nhanvien.jsp");
-					 request.setAttribute("msg", message);
-					 dispatcher.forward(request, response);
 				 }
 			 } catch (Exception e) {
 				response.getWriter().println("Lỗi: " + e.getMessage());

@@ -76,7 +76,7 @@ public class PgUsers implements java.io.Serializable {
 	
 	public PgUsers(String userId, String firstName, String lastName, String address,
 			String phoneNumber, String cardId, String email, Boolean sex, String userPassword, Date createTime,
-			Date modifiedTime ,int userStatus) {
+			Date modifiedTime ,int userStatus,PgRoles pgRoles) {
 		this.userId = userId;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -89,6 +89,7 @@ public class PgUsers implements java.io.Serializable {
 		this.createTime = createTime;
 		this.modifiedTime = modifiedTime;
 		this.userStatus = userStatus;
+		this.pgRoles = pgRoles;
 	}	
 	
 	
