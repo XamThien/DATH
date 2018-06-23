@@ -24,7 +24,14 @@
 		                      <li><a href="/manager/suppliers.jsp">Quản lý nhà cung cấp</a></li>
 		                    </ul>
 	                  </li>
-	                  <li><a href="sach.jsp"><i class="fa fa-book"></i>Quản lý đơn hàng </a> </li>
+	                  <li><a><i class="fa  fa-file-text-o"></i>Quản lý đơn hàng <span class="fa fa-chevron-down"></span></a>
+	                    	<ul class="nav child_menu">
+		                      <li><a href="/manager/hoadon.jsp?stt=1">Đơn hàng đang tiếp nhận</a></li>
+		                      <li><a href="/manager/hoadon.jsp?stt=2">Đơn hàng đang giao</a></li>
+							  <li><a href="/manager/hoadon.jsp?stt=3">Đơn hàng hoàn thành</a></li>
+		                      <li><a href="/manager/hoadon.jsp?stt=0">Đơn hàng hủy</a></li>
+		                    </ul>
+	                  </li>
 	                  
 	                  <li><a href="/manager/nhanvien.jsp"><i class="fa fa-users"></i>Quản lý nhân viên </a></li>
 	                  <li><a href="/manager/phanquyen.jsp"><i class="fa fa-sitemap"></i>Phân quyền</a></li>

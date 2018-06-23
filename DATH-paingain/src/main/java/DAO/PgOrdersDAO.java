@@ -10,11 +10,11 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import model.PgOrders;
-import model.PgProducts;
+
 
 public class PgOrdersDAO {
 	 @SuppressWarnings("unchecked")
-		public  List<PgOrders> getAllPgOrders(){
+		public  List<PgOrders> getAllPgOrders(int stt){
 			 List<PgOrders> list=null;
 		        try
 		        {
@@ -24,7 +24,7 @@ public class PgOrdersDAO {
 		        	
 		        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			        Transaction transaction = session.beginTransaction();
-			        String hql ="from PgOrders order by orderId DESC";
+			        String hql ="from PgOrders where orderStatus="+stt+" order by orderId DESC";
 			        Query que = session.createQuery(hql);
 			        list = que.list();
 			        transaction.commit();
