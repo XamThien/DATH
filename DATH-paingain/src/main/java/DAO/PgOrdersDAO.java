@@ -41,15 +41,7 @@ public class PgOrdersDAO {
 		       {
 		    	    Configuration configuration =  new Configuration().configure();
 		        	SessionFactory sessionFactory = configuration.buildSessionFactory();
-		        	Session session ;
-				 	if(sessionFactory.getCurrentSession() != null)
-				 	{
-				 		session = sessionFactory.getCurrentSession();
-				 	}
-				 	else
-				 	{
-				 		session = sessionFactory.openSession();
-				 	}
+		        	Session session = sessionFactory.openSession();
 		        	
 		        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			        Transaction transaction = session.beginTransaction();

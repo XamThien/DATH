@@ -40,7 +40,7 @@
 	                <!-- show table-->
 	                <div class="x_panel">
 		                  <div class="x_title">
-		                    <h2>Danh mục sản phẩm</h2>
+		                    <h2>Danh sách đơn hàng</h2>
 		                    
 		                    <div class="clearfix"></div>
 		                  </div>
@@ -82,7 +82,7 @@
 										    <td><%=or.getShipPhone() %></td>
 											<td><%=or.getPgUsersByEmployeeId().getFirstName() %> <%=or.getPgUsersByEmployeeId().getLastName() %></td>
 										    <td>
-										    	<a href="/manager/chitietdonhang.jsp?id=<%=or.getOrderId()%>"  class="btn btn-link">  Chi tiết</a>
+										    	<a href="/manager/chitiethoadon.jsp?stt=<%=stt %>&id=<%=or.getOrderId()%>"  class="btn btn-link">  Chi tiết</a>
 										    	
 										    	
 										    </td>
