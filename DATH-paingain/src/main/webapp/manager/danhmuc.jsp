@@ -74,7 +74,7 @@
 			                                    } else {
 			                                        out.print("<td>InActive</td>");
 			                                }%>
-											<td><a href="/manager/sanpham.jsp?id=<%=catg.getCategoryId()%>" class="btn btn-link"></a><td>
+											<td><a href="/manager/sanpham.jsp?id=<%=catg.getCategoryId()%>" class="btn btn-link">Danh sách sản phẩm</a></td>
 										    <td>
 										    	<a href="#" onclick="pass_update(<%=catg.getCategoryId() %>,'<%=catg.getCategoryName() %>','<%=catg.getDescription() %>',<%=catg.getSortIndex() %>,<%=catg.getCategoryStatus() %>)" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa</a>
 										    	<%-- <a href="#" onclick="pass_del(<%=catg.getCategoryId() %>)" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" > <i class="fa fa-trash-o" ></i> Xóa</a> --%>
