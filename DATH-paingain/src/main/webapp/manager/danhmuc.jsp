@@ -25,8 +25,9 @@
 					<div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
 	              	<h2><strong>Quản lý danh mục sản phẩm</strong></h2>
+					<span style="color:red"><i>${msg }</i></span>
 	              	<hr/>
-	               <span style="color:red"><i>${msg }</i></span>
+	               
 	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới</button> </a>
 	                <!-- show table-->
 	                <div class="x_panel">
