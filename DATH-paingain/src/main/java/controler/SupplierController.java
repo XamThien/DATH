@@ -59,7 +59,14 @@ public class SupplierController extends HttpServlet {
 			 PgSuppliers sup = new PgSuppliers(company,contact,add,rg,phone,email,status);
 			 try 
 			 {
-				 if (company !="" || contact != "" || phone != "")
+				 if (company ==null || contact == null || phone == null || company.equals("") || contact.equals("") || phone.equals(""))
+				 {
+					 message = "Điền đầy đủ thông tin!";
+					 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/suppliers.jsp");
+					 request.setAttribute("msg", message);
+					 dispatcher.forward(request, response);
+				 }
+				 else 
 				 {
 					 if(new PgSuppliersDAO().insert(sup))
 					 {
@@ -75,13 +82,6 @@ public class SupplierController extends HttpServlet {
 						 request.setAttribute("msg", message);
 						 dispatcher.forward(request, response);
 					 }
-				 }
-				 else 
-				 {
-					 message = "Điền đầy đủ thông tin!";
-					 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/suppliers.jsp");
-					 request.setAttribute("msg", message);
-					 dispatcher.forward(request, response);
 				 }
 			 } catch (Exception e) {
 				response.getWriter().println("Lỗi: " + e.getMessage());

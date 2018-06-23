@@ -17,7 +17,7 @@ public class PgSuppliersDAO {
 		try {
 			Session session = HibernateUtils.getSessionFactory().openSession();
 			Transaction transaction = session.beginTransaction();
-			String hql = "from PgSuppliers";
+			String hql = "from PgSuppliers where supplierStatus = 1";
 			Query que = session.createQuery(hql);
 			list = que.list();
 			transaction.commit();

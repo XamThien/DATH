@@ -17,7 +17,7 @@
 	                <ul class="nav side-menu">
 	                  <li><a href="index.jsp"><i class="fa fa-home"></i> Trang chủ </a></li>
 	                  <li><a href="#"><i class="fa fa-shopping-cart"></i>Bán hàng</a>
-	                  <li><a><i class="fa fa-cube"></i> Quản lý sản phẩm <span class="fa fa-chevron-down"></span></a>
+	                  <li><a><i class="fa fa-cube"></i>Quản lý sản phẩm <span class="fa fa-chevron-down"></span></a>
 	                    	<ul class="nav child_menu">
 		                      <li><a href="/danhmuc">Quản lý danh mục sản phẩm</a></li>
 		                      <li><a href="/manager/sanpham.jsp">Quản lý thông tin sản phẩm</a></li>
@@ -26,9 +26,8 @@
 	                  </li>
 	                  <li><a href="sach.jsp"><i class="fa fa-book"></i>Quản lý đơn hàng </a> </li>
 	                  
-	                  <li><a href="/manager/nhanvien.jsp"><i class="fa fa-users"></i> Quản lý nhân viên </a>
-	                    
-	                  </li>
+	                  <li><a href="/manager/nhanvien.jsp"><i class="fa fa-users"></i>Quản lý nhân viên </a></li>
+	                  <li><a href="/manager/phanquyen.jsp"><i class="fa fa-sitemap"></i>Phân quyền</a></li>
 	                </ul>
 	              </div>
 
