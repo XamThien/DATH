@@ -84,15 +84,8 @@ public class CategoryDAO {
 
 	    public PgCategories getCategory(int id) {
 	        //Session session = Hibernate.getSessionFactory().openSession();
-	        Session session ;
-		 	if(Hibernate.getSessionFactory().getCurrentSession() != null)
-		 	{
-		 		session = Hibernate.getSessionFactory().getCurrentSession();
-		 	}
-		 	else
-		 	{
-		 		session = Hibernate.getSessionFactory().openSession();
-		 	}
+	        Session session = Hibernate.getSessionFactory().openSession();
+		 	
 	        session.beginTransaction();
 	        PgCategories category = (PgCategories) session.get(PgCategories.class, id);
 	        session.getTransaction().commit();
