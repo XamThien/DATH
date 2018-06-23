@@ -82,7 +82,7 @@
 											    
 											    <td>
 											    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=pr.getProductId() %>,'<%=new ProductPictures().getPgProductPicturesByID(pr.getProductId()).getPath() %>','<%=pr.getProductName() %>',<%=pr.getPgCategories().getCategoryId() %>,<%=pr.getPgSuppliers().getSupplierId() %>,<%=pr.getQuantity() %>,<%=pr.getUnitPrice() %>,<%=pr.getUnitOrder() %>,'<%=pr.getIsHot() %>','<%=pr.getIsNew() %>','<%=pr.getDescription() %>')" > <i class="fa fa-edit"></i> Sửa</a>
-										    	<a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" > <i class="fa fa-trash-o" ></i> Xóa</a>
+										    		<a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" onclick="pass_del(<%=pr.getProductId() %>)" > <i class="fa fa-trash-o" ></i> Xóa</a>
 											    </td>
 											  </tr>
 											  <%dem++;} %>
@@ -241,9 +241,9 @@
                           </button>
                           <h4 class="modal-title" id="myModalLabel">Chỉnh sửa thông tin sản phẩm:</h4>
                         </div>
-                        <form action="#" method="post">
+                        <form action="/product?action=edit" method="post" enctype="multipart/form-data">
                         <div class="modal-body">
-                        		<input type="hidden" id="eid">
+                        		<input type="hidden" id="eid" name="eid">
                         		<div class='col-sm-12'>
 	                        		<label >Ảnh sản phẩm:</label>
 	                        		<div class="clearfix"></div>
@@ -254,7 +254,7 @@
                         				<br/>
                         				<br/>
                         				<br/>
-                        				<input type="file" name="photo"  accept="image/*" onchange="eloadFile(event)" style="word-wrap: break-word;" required="required">
+                        				<input type="file" name="ephoto"  accept="image/*" onchange="eloadFile(event)" style="word-wrap: break-word;">
                         			</div>
                         		</div>
                           	 	<div class='col-sm-12'>
@@ -271,7 +271,7 @@
 				                   <label >Danh mục:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <select  class="form-control" id="edanhmuc" name="danhmuc">
+				                            <select  class="form-control" id="edanhmuc" name="edanhmuc">
 				                            	
 				                            	<%
 				                            		//List<PgCategories> lstcate = new CategoryDAO().getActivePgCategories();
@@ -289,7 +289,7 @@
 				                   <label >Nhà cung cấp:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <select  class="form-control" id="encc" name="ncc">
+				                            <select  class="form-control" id="encc" name="encc">
 				                            	<%
 				                            		//List<PgSuppliers> lstncc = new PgSuppliersDAO().getListSupplier();
 				                            		for(PgSuppliers ct : lstncc)
@@ -305,7 +305,7 @@
 				                    <label >Số lượng:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="number" class="form-control" min="1" max="100" id="esoluong" name="soluong" placeholder="Số lượng" required="required" />
+				                            <input type="number" class="form-control" min="1" max="100" id="esoluong" name="esoluong" placeholder="Số lượng" required="required" />
 				                        </div>
 				                    </div>
 				                </div>
@@ -313,7 +313,7 @@
 				                    <label >Đơn giá bán:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="number" class="form-control" min="10000"  id="egiaban" name="giaban" placeholder="Đơn giá bán" required="required" />
+				                            <input type="number" class="form-control" min="10000"  id="egiaban" name="egiaban" placeholder="Đơn giá bán" required="required" />
 				                        </div>
 				                    </div>
 				                </div>
@@ -321,18 +321,18 @@
 				                    <label >Đơn giá nhập:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="number" class="form-control" min="10000"  id="egianhap" name="gianhap" placeholder="Đơn giá nhập" required="required" />
+				                            <input type="number" class="form-control" min="10000"  id="egianhap" name="egianhap" placeholder="Đơn giá nhập" required="required" />
 				                        </div>
 				                    </div>
 				                </div>
 				                <div class='col-sm-12'>
 				                   <div class='col-sm-6'>
 				                   		<label> Hot:</label>
-					                    <input type="checkbox" id="ehot" name="hot" value="true">
+					                    <input type="checkbox" id="ehot" name="ehot" value="true">
 				                   </div>
 				                   <div class='col-sm-6'>
 				                   		<label> New:</label>
-					                    <input type="checkbox" id="enew" name="new" value="true">
+					                    <input type="checkbox" id="enew" name="enew" value="true">
 				                   </div>
 				                </div>
 				                <div class='col-sm-12'>
@@ -340,7 +340,7 @@
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                            
-				                            <textarea rows="4" cols="50" id="emota" style="width: 450px;" placeholder="Mô tả..." name="mota"></textarea>
+				                            <textarea rows="4" cols="50" id="emota" style="width: 450px;" placeholder="Mô tả..." name="emota"></textarea>
 				                        </div>
 				                    </div>
 				                </div>
@@ -370,9 +370,9 @@
                         </div>
                         
                         <div class="modal-footer">
-                        	<form action="#" method="post">
+                        	<form action="/product?action=delete" method="post">
                         		<div class="edit">
-                        			<input type="hidden" id="txtid" name="did" />
+                        			<input type="hidden" id="did" name="did" />
                         		</div>
                           		<button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
                           		<button type="submit" class="btn btn-info">Xóa</button>
@@ -396,7 +396,7 @@
 	             };// code display image upload
 			    function pass_del(id) {
 			    	
-			    	document.getElementById("txtid").value = id;
+			    	document.getElementById("did").value = id;
 			    };
 			    function pass_update(id,eoutput,eten,edanhmuc,encc,esoluong,egiaban,egianhap,ehot,enew,emota) {
 			    	document.getElementById("eid").value = id; 

@@ -52,10 +52,10 @@ public class Product extends HttpServlet {
 	    	File file = new File(fileName);
 	        return file.exists();
 	    }
-	private String uploadFile(HttpServletRequest request) throws IOException, ServletException {
+	private String uploadFile(HttpServletRequest request,String name) throws IOException, ServletException {
         String fileName = "";
         try {
-            Part filePart = request.getPart("photo");
+            Part filePart = request.getPart(name);
 
             //fileName: picture-001.jpg
             fileName = (String) getFileName(filePart);
@@ -86,7 +86,7 @@ public class Product extends HttpServlet {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                fileName = e.toString()+"1";
+                fileName = null;
             } finally {
                 if (inputStream != null) {
                     inputStream.close();
@@ -96,7 +96,7 @@ public class Product extends HttpServlet {
                 }
             }
         } catch (Exception e) {
-            fileName = e.toString()+"2";
+            fileName = null;
         }
         return fileName;
     }
@@ -162,48 +162,76 @@ public class Product extends HttpServlet {
 		case "edit":
 			try
 			{
-//				String id = request.getParameter("id");
-//				String ten = request.getParameter("name");
-//				String sdt = request.getParameter("phone");
-//				String tk = request.getParameter("username");
-//				String mk = request.getParameter("pass");
-//				String dc = request.getParameter("address");
-//				
-//				
-//				PgProducts tll = db.getPgProductsByID(Integer.parseInt(id));
-//				tll.setName(ten);
-//				tll.setPhone(sdt);
-//				tll.setUserName(tk);
-//				tll.setPass(mk);
-//				tll.setAddress(dc);
-//				
-//	            
-//	            try
-//	            {
-//	            	db.updateNhanVien(tll);
-//	            	
-//	            	message = "Sửa thông tin nhân viên thành công.";
-//	            	RequestDispatcher xxx = request.getRequestDispatcher("nhanvien.jsp");
-//					request.setAttribute("msg", message );
-//					xxx.forward(request, response);
-//	            	
-//	            }
-//	            catch(Exception e)
-//				{
-//	            	message = "Sửa thông tin nhân viên không thành công 1."+e;
-//	            	RequestDispatcher xxx = request.getRequestDispatcher("nhanvien.jsp");
-//					request.setAttribute("msg", message );
-//					xxx.forward(request, response);
-//				}
+				int id = Integer.parseInt(request.getParameter("eid"));
+				String ten = request.getParameter("eten");
+				int categoryid = Integer.parseInt(request.getParameter("edanhmuc"));
+				int nccid = Integer.parseInt(request.getParameter("encc"));
+				int sl = Integer.parseInt(request.getParameter("esoluong"));
+				int gianhap = Integer.parseInt(request.getParameter("egianhap"));
+				int giaban = Integer.parseInt(request.getParameter("egiaban"));
+				boolean ishot = Boolean.parseBoolean((request.getParameter("ehot")==null || !request.getParameter("ehot").equals("true"))?"false":"true");
+				boolean isnew = Boolean.parseBoolean((request.getParameter("enew")==null || !request.getParameter("enew").equals("true"))?"false":"true");
+				String mota = request.getParameter("emota");
+				
+				 Date Ngay = new Date();
+			     SimpleDateFormat datefrmat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			     String datestr = datefrmat.format(Ngay);
+			     Date now = datefrmat.parse(datestr);
+				
+			     
+			    PgCategories cate = new CategoryDAO().getCategory(categoryid);
+			    //anh===============================
+			    //ncc 
+			    PgSuppliers su = new PgSuppliersDAO().findByID(nccid);
+				PgProducts tl = new ProductDAO().getPgProductsByID(id);//new PgProducts(cate, su, ten, sl, giaban, gianhap, mota, now, now, ishot, isnew);
+				tl.setPgCategories(cate);
+				tl.setPgSuppliers(su);
+				tl.setProductName(ten);
+				tl.setQuantity(sl);
+				tl.setUnitPrice(giaban);
+				tl.setUnitOrder(gianhap);
+				tl.setDescription(mota);
+				tl.setModifiedTime(now);
+				tl.setIsHot(ishot);
+				tl.setIsNew(isnew);
+	            try
+	            {
+	            	new ProductDAO().updatePgProduct(tl);
+	            	
+	            	String img_photo = uploadFile(request,"ephoto");
+	            	if(img_photo== null || img_photo.equals(""))
+	            	{
+	            		
+	            	}
+	            	else
+	            	{
+	            		PgProductPictures prpic = new ProductPictures().getPgProductPicturesByID(id);
+	            		prpic.setPath(request.getContextPath()+img_photo);
+	            		new ProductPictures().updatePgProductPictures(prpic);
+	            	}
+	            	
+	            	
+	            	message = "Sửa thông tin sản phẩm thành công.";
+	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
+					request.setAttribute("msg", message );
+					xxx.forward(request, response);
+	            	
+	            }
+	            catch(Exception e)
+				{
+	            	message = "Sửa thông tin sản phẩm không thành công.1";
+	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
+					request.setAttribute("msg", message );
+					xxx.forward(request, response);
+				}
 			}
 			catch(Exception e)
 			{
-				message = "Sửa thông tin nhân viên không thành công 2."+e;
+				message = "Sửa thông tin sản phẩm không thành công.2"+e;
 	        	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
 				request.setAttribute("msg", message );
 				xxx.forward(request, response);
 			}
-			
 			break;
 		case "add":
 			try
@@ -233,7 +261,7 @@ public class Product extends HttpServlet {
 	            try
 	            {
 	            	new ProductDAO().insertPgProduct(tl);
-	            	PgProductPictures prpic = new PgProductPictures(tl,request.getContextPath()+uploadFile(request),1); 
+	            	PgProductPictures prpic = new PgProductPictures(tl,request.getContextPath()+uploadFile(request,"photo"),1); 
 	            	new ProductPictures().insertPgProductPictures(prpic);
 	            	message = "Thêm sản phẩm thành công.";
 	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
