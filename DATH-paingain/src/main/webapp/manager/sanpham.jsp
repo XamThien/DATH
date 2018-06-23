@@ -50,7 +50,7 @@
 					                	<table id= "datatable" class="table table-striped table-bordered dataTable no-footer">
 										  <thead>
 										  	<tr>
-										  		<th></th>
+										  		<th>STT</th>
 										  		<th>Tên sản phẩm</th>
 										  		<th>Số lượng</th>
 										  		<th>Giá bán</th>
@@ -64,13 +64,14 @@
 										  <tbody>
 										  <%
 										  		List<PgProducts> lst = new ProductDAO().getAllPgProducts(id);
+										  		int dem=1;
 										  		for(PgProducts pr : lst)
 										  		{
 										  			
 										  		
 										  %>
 											  <tr>
-											    <td><img style="max-height:40px; max-width:40px;" src="/images/<%= new ProductPictures().getPgProductPicturesByID(pr.getProductId()).getPath()%>"></td>
+											    <td><%=dem %></td>
 											    <td><%=pr.getProductName() %></td>
 											    <td><%=pr.getQuantity() %></td>
 											    <td><%=pr.getUnitPrice() %></td>
@@ -80,11 +81,11 @@
 											    <td><input type="checkbox"  <%=(pr.getIsNew())? "checked":"" %>></td>
 											    
 											    <td>
-											    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" > <i class="fa fa-edit"></i> Sửa</a>
+											    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=pr.getProductId() %>,'<%=new ProductPictures().getPgProductPicturesByID(pr.getProductId()).getPath() %>','<%=pr.getProductName() %>',<%=pr.getPgCategories().getCategoryId() %>,<%=pr.getPgSuppliers().getSupplierId() %>,<%=pr.getQuantity() %>,<%=pr.getUnitPrice() %>,<%=pr.getUnitOrder() %>,'<%=pr.getIsHot() %>','<%=pr.getIsNew() %>','<%=pr.getDescription() %>')" > <i class="fa fa-edit"></i> Sửa</a>
 										    	<a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" > <i class="fa fa-trash-o" ></i> Xóa</a>
 											    </td>
 											  </tr>
-											  <%} %>
+											  <%dem++;} %>
 										  </tbody>
 										</table>
 					                </div>
@@ -242,19 +243,25 @@
                         </div>
                         <form action="#" method="post">
                         <div class="modal-body">
-                        		<div>
-                        			<div style="float: left; width: 200px; height: 200px; margin-right: 50px; ">
-                        				<img style="max-height: 200px; max-width: 200px; border: 1px solid; border-radius: 12px;" src="/resources/production/images/prod-1.jpg">
+                        		<input type="hidden" id="eid">
+                        		<div class='col-sm-12'>
+	                        		<label >Ảnh sản phẩm:</label>
+	                        		<div class="clearfix"></div>
+                        			<div style="height: 200px;width:200px;overflow: hidden;" class='col-sm-5' >
+                        				<img width="200px" id="eoutput"/>
                         			</div>
-                        			<div style="padding-top: 70px;">
-                        				<button style="background-color: lightblue; border:none; border-radius: 10px; font-size: 20px; width: 150px;">Tải ảnh lên</button>
+                        			<div class='col-sm-6'>
+                        				<br/>
+                        				<br/>
+                        				<br/>
+                        				<input type="file" name="photo"  accept="image/*" onchange="eloadFile(event)" style="word-wrap: break-word;" required="required">
                         			</div>
                         		</div>
                           	 	<div class='col-sm-12'>
 				                   <label >Tên sản phẩm:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="name" placeholder="Tên sản phẩm" />
+				                            <input type="text" class="form-control" id="eten" name="eten" placeholder="Tên sản phẩm" required="required" />
 				                            
 				                        </div>
 				                    </div>
@@ -264,10 +271,15 @@
 				                   <label >Danh mục:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <select style="width: 200px;">
-				                            	<option>--Chọn danh mục--</option>
-				                            	<option>Áo</option>
-				                            	<option>Quần</option>
+				                            <select  class="form-control" id="edanhmuc" name="danhmuc">
+				                            	
+				                            	<%
+				                            		//List<PgCategories> lstcate = new CategoryDAO().getActivePgCategories();
+				                            		for(PgCategories ct : lstcate)
+				                            		{
+				                            	%>
+				                            	<option value="<%=ct.getCategoryId()%>"><%=ct.getCategoryName() %></option>
+				                            	<%} %>
 				                            </select>
 				                        </div>
 				                    </div>
@@ -277,11 +289,14 @@
 				                   <label >Nhà cung cấp:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <select style="width: 200px;">
-				                            	<option>--Chọn nhà cung cấp--</option>
-				                            	<option>Nike</option>
-				                            	<option>Adidas</option>
-				                            	<option>Under Armour</option>
+				                            <select  class="form-control" id="encc" name="ncc">
+				                            	<%
+				                            		//List<PgSuppliers> lstncc = new PgSuppliersDAO().getListSupplier();
+				                            		for(PgSuppliers ct : lstncc)
+				                            		{
+				                            	%>
+				                            	<option value="<%=ct.getSupplierId()%>"><%=ct.getCompanyName() %></option>
+				                            	<%} %>
 				                            </select>
 				                        </div>
 				                    </div>
@@ -290,46 +305,46 @@
 				                    <label >Số lượng:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="username" placeholder="Số lượng" />
+				                            <input type="number" class="form-control" id="esoluong" name="soluong" placeholder="Số lượng" required="required" />
 				                        </div>
 				                    </div>
 				                </div>
 				                <div class='col-sm-12'>
-				                    <label >Đơn giá:</label>
+				                    <label >Đơn giá bán:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="pass" placeholder="Đơn giá" />
+				                            <input type="number" class="form-control" id="egiaban" name="giaban" placeholder="Đơn giá bán" required="required" />
 				                        </div>
 				                    </div>
+				                </div>
+				                <div class='col-sm-12'>
+				                    <label >Đơn giá nhập:</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                            <input type="number" class="form-control" id="egianhap" name="gianhap" placeholder="Đơn giá nhập" required="required" />
+				                        </div>
+				                    </div>
+				                </div>
+				                <div class='col-sm-12'>
+				                   <div class='col-sm-6'>
+				                   		<label> Hot:</label>
+					                    <input type="checkbox" id="ehot" name="hot" value="true">
+				                   </div>
+				                   <div class='col-sm-6'>
+				                   		<label> New:</label>
+					                    <input type="checkbox" id="enew" name="new" value="true">
+				                   </div>
 				                </div>
 				                <div class='col-sm-12'>
 				                   <label >Mô tả:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <!-- <input type="" class="form-control" name="name" placeholder="Mô tả..." />  -->
-				                            <textarea rows="4" cols="50" style="width: 450px;" placeholder="Mô tả..."></textarea>
+				                            
+				                            <textarea rows="4" cols="50" id="emota" style="width: 450px;" placeholder="Mô tả..." name="mota"></textarea>
 				                        </div>
 				                    </div>
 				                </div>
-				                <div class='col-sm-12'>
-				                   <label>Ngày chỉnh sửa cuối:</label>
-				                    <div class="form-group" >
-				                        <div class="form-group" >
-				                            <p><script> 
-				                            	document.write(new Date().toLocaleDateString()+"\t\t---");
-				                            	document.write(new Date().toLocaleTimeString()); 
-				                            </script></p>
-				                        </div>
-				                    </div>
-				                </div>
-				                <div class='col-sm-12'>
-				                   <label>Trạng thái:</label>
-				                    <div class="form-group" >
-				                        <input type="radio"> Còn hàng <br>  
-				                        <input type="radio"> Hết hàng <br>
-				                        <input type="radio"> Ẩn
-				                    </div>
-				                </div>
+				                
                         </div>
                         <div class="clearfix"></div>
 
@@ -383,16 +398,29 @@
 			    	
 			    	document.getElementById("txtid").value = id;
 			    };
-			    function pass_update(id,name,phone,username,pass,address) {
+			    function pass_update(id,eoutput,eten,edanhmuc,encc,esoluong,egiaban,egianhap,ehot,enew,emota) {
 			    	document.getElementById("eid").value = id; 
-			    	document.getElementById("ename").value = name; 
-			    	document.getElementById("ephone").value = phone; 
-			    	document.getElementById("eusername").value = username;
-			    	document.getElementById("epass").value = pass;
-			    	document.getElementById("eaddress").value = address;
+			    	document.getElementById("eoutput").src = eoutput;
+			    	document.getElementById("eten").value = eten; 
+			    	document.getElementById("edanhmuc").value = edanhmuc;
+			    	document.getElementById("encc").value = encc;
+			    	document.getElementById("egiaban").value = egiaban;
+			    	document.getElementById("egianhap").value = egianhap;
+			    	document.getElementById("emota").value = emota;
+			    	document.getElementById("esoluong").value = esoluong;
+			    	if(ehot == "true") { document.getElementById("ehot").checked= true;} else { document.getElementById("ehot").checked= false;}
+			    	if(enew == "true") { document.getElementById("enew").checked= true;} else { document.getElementById("enew").checked= false;}
+			    	
 			    	
 			    };
-			    
+			    var eloadFile = function (event) {
+	                 var reader = new FileReader();
+	                 reader.onload = function () {
+	                     var eoutput = document.getElementById('eoutput');
+	                     eoutput.src = reader.result;
+	                 };
+	                 reader.readAsDataURL(event.target.files[0]);
+	             };
 			</script>
 					<!-- ----------------------------------------------->
 			    </div>
@@ -402,6 +430,6 @@
 			
 		      </div>
 		    </div>
-    	</div>
+    	
 	</body>
 </html>

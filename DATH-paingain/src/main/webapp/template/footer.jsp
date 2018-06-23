@@ -83,6 +83,8 @@
 		   
 			<!-- Custom Theme Scripts -->
 		    <script src="/resources/build/js/custom.min.js"></script>
+			<script src="/resources/build/js/uploadimg.js"></script>
+			<script src="/resources/build/js/jquery-ui1.12.1.js"></script>
 		     
 		    <script src="/resources/build/js/jquery.boot-tab-slider.min.js"></script>
 		    
