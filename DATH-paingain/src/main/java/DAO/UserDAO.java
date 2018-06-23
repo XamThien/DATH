@@ -58,6 +58,28 @@ public class UserDAO {
 	        }
 	        return list;
 	}
+	@SuppressWarnings("unchecked")
+	public  List<PgUsers> getAccountByRole(int roleID){
+		 List<PgUsers> list=null;
+	        try
+	        {
+	        	Configuration configuration =  new Configuration().configure();
+	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
+	        	Session session = sessionFactory.openSession();
+	        	
+	        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		        Transaction transaction = session.beginTransaction();
+		        String hql ="from PgUsers where pgRoles.roleId = "+roleID;
+		        Query que = session.createQuery(hql);
+		        list = que.list();
+		        transaction.commit();
+		        session.close();
+	        }
+	        catch  (HibernateException e) {
+	        	 e.printStackTrace();
+	        }
+	        return list;
+	}
 	
 	 public PgUsers getPgUsersByName(String name) {
 		 PgUsers cl = null;

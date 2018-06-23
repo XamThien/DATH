@@ -27,7 +27,7 @@
 	                  <li><a href="sach.jsp"><i class="fa fa-book"></i>Quản lý đơn hàng </a> </li>
 	                  
 	                  <li><a href="/manager/nhanvien.jsp"><i class="fa fa-users"></i>Quản lý nhân viên </a></li>
-	                  <li><a href="/manager/phanquyen.jsp"><i class="fa fa-sitemap"></i>Phân quyền</a></li>
+	                  <li><a href="/manager/phanquyen"><i class="fa fa-sitemap"></i>Phân quyền</a></li>
 	                </ul>
 	              </div>
 
