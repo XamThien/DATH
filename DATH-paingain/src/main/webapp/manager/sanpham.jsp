@@ -176,7 +176,7 @@
 				                    <label >Số lượng:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="number" class="form-control" name="soluong" placeholder="Số lượng" required="required" />
+				                            <input type="number" class="form-control" name="soluong" min="1" max="100" placeholder="Số lượng" required="required" />
 				                        </div>
 				                    </div>
 				                </div>
@@ -184,7 +184,7 @@
 				                    <label >Đơn giá bán:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="number" class="form-control" name="giaban" placeholder="Đơn giá bán" required="required" />
+				                            <input type="number" class="form-control" min="10000"  name="giaban" placeholder="Đơn giá bán" required="required" />
 				                        </div>
 				                    </div>
 				                </div>
@@ -192,7 +192,7 @@
 				                    <label >Đơn giá nhập:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="number" class="form-control" name="gianhap" placeholder="Đơn giá nhập" required="required" />
+				                            <input type="number" class="form-control" min="10000"  name="gianhap" placeholder="Đơn giá nhập" required="required" />
 				                        </div>
 				                    </div>
 				                </div>
@@ -305,7 +305,7 @@
 				                    <label >Số lượng:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="number" class="form-control" id="esoluong" name="soluong" placeholder="Số lượng" required="required" />
+				                            <input type="number" class="form-control" min="1" max="100" id="esoluong" name="soluong" placeholder="Số lượng" required="required" />
 				                        </div>
 				                    </div>
 				                </div>
@@ -313,7 +313,7 @@
 				                    <label >Đơn giá bán:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="number" class="form-control" id="egiaban" name="giaban" placeholder="Đơn giá bán" required="required" />
+				                            <input type="number" class="form-control" min="10000"  id="egiaban" name="giaban" placeholder="Đơn giá bán" required="required" />
 				                        </div>
 				                    </div>
 				                </div>
@@ -321,7 +321,7 @@
 				                    <label >Đơn giá nhập:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="number" class="form-control" id="egianhap" name="gianhap" placeholder="Đơn giá nhập" required="required" />
+				                            <input type="number" class="form-control" min="10000"  id="egianhap" name="gianhap" placeholder="Đơn giá nhập" required="required" />
 				                        </div>
 				                    </div>
 				                </div>
