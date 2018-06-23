@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import model.PgCategories;
+import model.PgProductPictures;
 import model.PgProducts;
 import model.PgSuppliers;
 import model.PgUsers;
@@ -73,7 +74,15 @@ public class ProductDAO {
 	       {
 	    	    Configuration configuration =  new Configuration().configure();
 	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
-	        	Session session = sessionFactory.openSession();
+	        	Session session ;
+			 	if(sessionFactory.getCurrentSession() != null)
+			 	{
+			 		session = sessionFactory.getCurrentSession();
+			 	}
+			 	else
+			 	{
+			 		session = sessionFactory.openSession();
+			 	}
 	        	
 	        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		        Transaction transaction = session.beginTransaction();
@@ -110,30 +119,57 @@ public class ProductDAO {
 	 public void updatePgProduct(PgProducts sp){
 		 	Configuration configuration =  new Configuration().configure();
 	     	SessionFactory sessionFactory = configuration.buildSessionFactory();
-	     	Session session = sessionFactory.openSession();
+	     	Session session ;
+		 	if(sessionFactory.getCurrentSession() != null)
+		 	{
+		 		session = sessionFactory.getCurrentSession();
+		 	}
+		 	else
+		 	{
+		 		session = sessionFactory.openSession();
+		 	}
 	        Transaction transaction = session.beginTransaction();
 	        session.update(sp);
 	        transaction.commit();
-	        session.close();
+	        //session.close();
 	    }
 	 public static void main(String[] args) {
-		 try
+//		 try
+//		 {
+//			 Date Ngay = new Date();
+//		     SimpleDateFormat datefrmat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		     String datestr = datefrmat.format(Ngay);
+//		     Date now = datefrmat.parse(datestr);
+//			
+//		     
+//		    PgCategories cate = new CategoryDAO().getCategory(1);
+//		    
+//		    PgSuppliers su = new PgSuppliersDAO().findByID(1);
+//			PgProducts tl = new PgProducts(cate, su, "xax", 12, 12345, 12343, "", now, now, true, true);
+//			new ProductDAO().insertPgProduct(tl);
+//		 }
+//		 catch(Exception e)
+//		 {
+//			 System.out.println(e);
+//		 }
+//		 PgSuppliers su = new PgSuppliersDAO().findByID(1);
+//		 PgCategories cate = new CategoryDAO().getCategory(1);
+//		 PgProducts tl = new ProductDAO().getPgProductsByID(3);
+//		 System.out.println(tl.getProductName());
+//		 tl.setProductName("Áo thun ngắn tay");
+//		 tl.setPgSuppliers(su);
+//		 tl.setPgCategories(cate);
+//		 new ProductDAO().updatePgProduct(tl);
+//		 PgProductPictures prpic = new ProductPictures().getPgProductPicturesByID(1);
+// 		prpic.setPath("xxx");
+// 		new ProductPictures().updatePgProductPictures(prpic);
+// 		PgProductPictures prpic1 = new ProductPictures().getPgProductPicturesByID(1);
+// 		System.out.println(prpic1.getPath());
+		 List<PgProducts> lst = new ProductDAO().getAllPgProducts(1);
+		 for(PgProducts xxx : lst)
 		 {
-			 Date Ngay = new Date();
-		     SimpleDateFormat datefrmat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		     String datestr = datefrmat.format(Ngay);
-		     Date now = datefrmat.parse(datestr);
-			
-		     
-		    PgCategories cate = new CategoryDAO().getCategory(1);
-		    
-		    PgSuppliers su = new PgSuppliersDAO().findByID(1);
-			PgProducts tl = new PgProducts(cate, su, "xax", 12, 12345, 12343, "", now, now, true, true);
-			new ProductDAO().insertPgProduct(tl);
-		 }
-		 catch(Exception e)
-		 {
-			 System.out.println(e);
+			 PgProducts tl = new ProductDAO().getPgProductsByID(xxx.getProductId());
+			 System.out.println(tl.getProductName());
 		 }
 	}
 }
