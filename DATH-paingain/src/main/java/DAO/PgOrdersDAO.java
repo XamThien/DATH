@@ -49,7 +49,7 @@ public class PgOrdersDAO {
 			        Query que = session.createQuery(hql);
 			        cl = (PgOrders) que.uniqueResult();
 			        transaction.commit();
-
+					//session.close();
 		       }
 		       catch  (HibernateException e) {
 		    	   e.printStackTrace();
@@ -60,36 +60,21 @@ public class PgOrdersDAO {
 		 public void insertPgOrders(PgOrders sp){
 			 	Configuration configuration =  new Configuration().configure();
 			 	SessionFactory sessionFactory = configuration.buildSessionFactory();
-			 	Session session ;
-			 	if(sessionFactory.getCurrentSession() != null)
-			 	{
-			 		session = sessionFactory.getCurrentSession();
-			 	}
-			 	else
-			 	{
-			 		session = sessionFactory.openSession();
-			 	}
+			 	Session session = sessionFactory.openSession();
 		        Transaction transaction = session.beginTransaction();
 		        session.save(sp);
 		        transaction.commit();
-		        //session.close();
+		        session.close();
 		    }
 		
 		 public void updatePgOrders(PgOrders sp){
 			 	Configuration configuration =  new Configuration().configure();
 		     	SessionFactory sessionFactory = configuration.buildSessionFactory();
-		     	Session session ;
-			 	if(sessionFactory.getCurrentSession() != null)
-			 	{
-			 		session = sessionFactory.getCurrentSession();
-			 	}
-			 	else
-			 	{
-			 		session = sessionFactory.openSession();
-			 	}
+		     	Session session = sessionFactory.getCurrentSession();
+			 	
 		        Transaction transaction = session.beginTransaction();
 		        session.update(sp);
 		        transaction.commit();
-		        //session.close();
+		        session.close();
 		    }
 }

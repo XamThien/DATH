@@ -81,7 +81,8 @@
 					        			</div>
 					        		</div>
 					        		<div class="col-sm-6" style="padding-left: 53px;">
-					        			<form action="#" method="post">
+					        			<form action="/order" method="post">
+					        			<input type="hidden" name="oid" value="<%=id %>">
 					        			<label>Cập nhật đơn hàng:</label>
 										<div class="clearfix"></div>
 					        			
@@ -110,7 +111,7 @@
 				                            	<option value="0">Hủy</option>
 				                            </select>
 											<div class="clearfix"></div>
-											<button type="button" style="margin-top: 7px;" class="btn btn-primary" <%=(stt==0 || stt==3)? "disabled='disabled'":"" %>>Cập nhật</button>
+											<button type="submit" style="margin-top: 7px;" class="btn btn-primary" <%=(stt==0 || stt==3)? "disabled='disabled'":"" %>>Cập nhật</button>
 					        				</div>
 					        			
 					        			

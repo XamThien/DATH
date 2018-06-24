@@ -42,6 +42,6 @@ public class OrderDatail {
         Transaction transaction = session.beginTransaction();
         session.save(sp);
         transaction.commit();
-        //session.close();
+        session.close();
     }
 }
