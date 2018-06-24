@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import model.PgOrders;
+import util.HibernateUtils;
 
 
 public class PgOrdersDAO {
@@ -68,13 +69,25 @@ public class PgOrdersDAO {
 		    }
 		
 		 public void updatePgOrders(PgOrders sp){
-			 	Configuration configuration =  new Configuration().configure();
-		     	SessionFactory sessionFactory = configuration.buildSessionFactory();
-		     	Session session = sessionFactory.getCurrentSession();
-			 	
-		        Transaction transaction = session.beginTransaction();
-		        session.update(sp);
-		        transaction.commit();
-		        session.close();
+			 Session session = HibernateUtils.getSessionFactory().openSession();
+				try {
+					Transaction tx = session.beginTransaction();
+					session.update(sp);
+					tx.commit();
+				}catch (HibernateException e) {
+					e.printStackTrace();
+				} finally {
+					if(session.isOpen()) {
+						session.close();
+					}
+				}
 		    }
+		 public static void main(String[] args) {
+			 PgOrders or = new PgOrdersDAO().getPgOrdersByID(3);
+			 System.out.println(or.getOrderStatus());
+			 or.setOrderStatus(3);
+			 new PgOrdersDAO().updatePgOrders(or);
+//			 PgOrders orr = new PgOrdersDAO().getPgOrdersByID(3);
+//			 System.out.println(orr.getOrderStatus());
+		}
 }
