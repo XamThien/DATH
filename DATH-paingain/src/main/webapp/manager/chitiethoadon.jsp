@@ -69,8 +69,9 @@
 												SĐT người nhận:
 											</div>
 					        			</div>
-					        			<div class="col-sm-6">
+					        			<div class="col-sm-6" style=" padding-left: 30px;">
 					        			<%
+											try{
 					        				PgOrders or = new PgOrdersDAO().getPgOrdersByID(id);
 					        			%>
 					        				<%=or.getPgUsersByCustomerId().getFirstName() %> <%=or.getPgUsersByCustomerId().getLastName() %> <br/>
@@ -164,6 +165,10 @@
 										  	{
 										  		out.println("Không có dữ liệu hiển thị");
 										  	}
+										}
+										catch (Exception e) {
+											response.sendRedirect("/manager/index.jsp");  
+										 }
 										  %>
 										  </tbody>
 										</table>
