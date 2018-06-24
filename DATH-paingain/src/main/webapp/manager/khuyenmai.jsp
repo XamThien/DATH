@@ -48,13 +48,10 @@
 										  <thead>
 										  	<tr>
 										  		<th></th>
-										  		<th>Ảnh</th>
+										  		
 										  		<th>Mã sản phẩm</th>
 										  		<th>Tên sản phẩm</th>
-										  		
-										  		
-										  		
-
+										  		<th>Đơn giá bán</th>
 										  		
 										  	</tr>
 										  </thead>

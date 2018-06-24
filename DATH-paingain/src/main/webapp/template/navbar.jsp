@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ page import="model.PgCategories" %>
+<%@ page import="DAO.CategoryDAO" %>
+<%@ page import="java.util.List" %>
 <div class="col-md-3 left_col">
 	          <div class="left_col scroll-view">
 	            <div class="navbar nav_title" style="border: 0;">
@@ -20,7 +23,6 @@
 	                  <li><a><i class="fa fa-cube"></i>Quản lý sản phẩm <span class="fa fa-chevron-down"></span></a>
 	                    	<ul class="nav child_menu">
 		                      <li><a href="/danhmuc">Quản lý danh mục & sản phẩm</a></li>
-		                      
 		                      <li><a href="/manager/suppliers.jsp">Quản lý nhà cung cấp</a></li>
 		                    </ul>
 	                  </li>
@@ -32,7 +34,17 @@
 		                      <li><a href="/manager/hoadon.jsp?stt=0">Đơn hàng hủy</a></li>
 		                    </ul>
 	                  </li>
-	                  
+	                  <li><a><i class="fa  fa-file-text-o"></i>Quản lý khuyến mại <span class="fa fa-chevron-down"></span></a>
+	                    	<ul class="nav child_menu">
+	                    	<%
+	                    		List<PgCategories> catelst = new CategoryDAO().getAllPgCategories();
+	                    		for(PgCategories catex : catelst)
+	                    		{
+	                    	%>
+		                      <li><a href="/manager/khuyenmai.jsp?id=<%=catex.getCategoryId()%>"><%=catex.getCategoryName() %></a></li>
+		                      <%} %>
+		                    </ul>
+	                  </li>
 	                  <li><a href="/manager/nhanvien.jsp"><i class="fa fa-users"></i>Quản lý nhân viên </a></li>
 	                  <li><a href="/manager/phanquyen"><i class="fa fa-sitemap"></i>Phân quyền</a></li>
 	                </ul>
