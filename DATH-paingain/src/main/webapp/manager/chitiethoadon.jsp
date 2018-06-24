@@ -21,9 +21,7 @@
 		 tt.put(1,"Đang xử lý");  
 		 tt.put(2,"Đang giao hàng");  
 		 tt.put(3,"Hoàn thành");  
-		  for(Map.Entry m:tt.entrySet()){  
-		   System.out.println(m.getKey()+" "+m.getValue());  
-		  }  
+		  
 	%>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -95,9 +93,15 @@
 					        					<select  class="form-control"  name="tt" <%=(stt==0 || stt==3)? "disabled='disabled'":"" %>>
 												
 				                            	<%
-				                            		
+				                            	if(stt==0)
+												{
+												%>
+				                            	<option value="0">Hủy</option>
+				                            	<%
+												}
+												else
 				                            	for(Map.Entry m:tt.entrySet()){  
-				                            		if((int)m.getKey()>=stt || (int)m.getKey()!=0)
+				                            		if((int)m.getKey()>=stt)
 				                            		{
 				                            	%>
 				                            	<option value="<%=m.getKey()%>"><%=m.getValue() %></option>
