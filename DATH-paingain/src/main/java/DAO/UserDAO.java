@@ -28,7 +28,6 @@ public class UserDAO {
 		        Query que = session.createQuery(hql);
 		        list = que.list();
 		        transaction.commit();
-		        session.close();
 	        }
 	        catch  (HibernateException e) {
 	        	 e.printStackTrace();
@@ -69,7 +68,7 @@ public class UserDAO {
 	        	
 	        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		        Transaction transaction = session.beginTransaction();
-		        String hql ="from PgUsers where USER_ID='"+name+"'";
+		        String hql ="from PgUsers where userStatus=1 and USER_ID='"+name+"'";
 		        Query que = session.createQuery(hql);
 		        cl = (PgUsers) que.uniqueResult();
 		        transaction.commit();

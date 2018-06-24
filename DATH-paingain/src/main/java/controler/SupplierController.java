@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.PgSuppliers;
+import service.PGValidation;
 import DAO.PgSuppliersDAO;
 
 public class SupplierController extends HttpServlet {
@@ -51,11 +52,14 @@ public class SupplierController extends HttpServlet {
 			 String rg = request.getParameter("region");
 			 String phone = request.getParameter("phone");
 			 String email = request.getParameter("email");
-			 int status = 1;
-			 if(request.getParameter("status")==null) {
-				 status = 0;
+			 int status = Integer.parseInt(request.getParameter("status"));
+			 boolean checkEmail = false;
+			 if (email.equals("") || email == null) {
+				 checkEmail = true;
+			 } else {
+				 checkEmail = new PGValidation().checkMail(email);
 			 }
-			 response.getWriter().println(status);
+			 boolean checkPhone = new PGValidation().checkPhone(phone);
 			 PgSuppliers sup = new PgSuppliers(company,contact,add,rg,phone,email,status);
 			 try 
 			 {
@@ -66,7 +70,13 @@ public class SupplierController extends HttpServlet {
 					 request.setAttribute("msg", message);
 					 dispatcher.forward(request, response);
 				 }
-				 else 
+				 else if (checkEmail == false || checkPhone == false) {
+					 message = "Định dạng Email hoặc số điện thoại không chính xác!";
+					 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/suppliers.jsp");
+					 request.setAttribute("msg", message);
+					 dispatcher.forward(request, response);	
+				 } 
+				 else
 				 {
 					 if(new PgSuppliersDAO().insert(sup))
 					 {
@@ -95,31 +105,36 @@ public class SupplierController extends HttpServlet {
 					 String rgE = request.getParameter("regionE");
 					 String phoneE = request.getParameter("phoneE");
 					 String emailE = request.getParameter("emailE");
-					 int statusE;
-					 if(request.getParameterValues("statusE")==null) {
-						 statusE = 0;
-					 }else{
-						 statusE = 1;
+					 int statusE = Integer.parseInt(request.getParameter("statusE"));
+					 boolean checkEmailE = false;
+					 if (emailE.equals("") || emailE == null) {
+						 checkEmailE = true;
+					 } else {
+						 checkEmailE = new PGValidation().checkMail(emailE);
 					 }
+					 boolean checkPhoneE = new PGValidation().checkPhone(phoneE);
 					try 
 					{
-						if (companyE !="" || contactE != "")
+						if (companyE =="" || contactE == "" || phoneE == "" || companyE.equals("") || contactE.equals("") || phoneE.equals(""))
 						 {
-								PgSuppliers supE = new PgSuppliers(ma,companyE,contactE,addE,rgE,phoneE,emailE,statusE);
-							    new PgSuppliersDAO().edit(supE);
-							    message = "Cập nhật thành công!";
-								RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/suppliers.jsp");
-								request.setAttribute("msg", message );
-								dispatcher.forward(request, response);
-								
-							
+							message = "Cập nhật không thành công!";
+							 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/suppliers.jsp");
+							 request.setAttribute("msg", message);
+							 dispatcher.forward(request, response);							
+						 } else if (checkEmailE == false || checkPhoneE == false) {
+							 message = "Định dạng Email hoặc số điện thoại không chính xác!";
+							 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/suppliers.jsp");
+							 request.setAttribute("msg", message);
+							 dispatcher.forward(request, response);	
 						 }
 						else
 						{
-							 message = "Cập nhật không thành công!";
-							 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/suppliers.jsp");
-							 request.setAttribute("msg", message);
-							 dispatcher.forward(request, response);
+							PgSuppliers supE = new PgSuppliers(ma,companyE,contactE,addE,rgE,phoneE,emailE,statusE);
+						    new PgSuppliersDAO().edit(supE);
+						    message = "Cập nhật thành công!";
+							RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/suppliers.jsp");
+							request.setAttribute("msg", message );
+							dispatcher.forward(request, response);
 						}
 						
 					}
