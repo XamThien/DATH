@@ -19,6 +19,10 @@
         <servlet-class>controler.CategoryAction</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ModuleAction</servlet-name>
+        <servlet-class>controler.ModuleAction</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Supplier</servlet-name>
         <servlet-class>controler.SupplierController</servlet-class>
     </servlet>
@@ -34,17 +38,25 @@
         <servlet-name>ListRole</servlet-name>
         <servlet-class>controler.ListRole</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListModule</servlet-name>
+        <servlet-class>controler.ListModule</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ListCategories</servlet-name>
         <url-pattern>/danhmuc</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CategoryAction</servlet-name>
-        <url-pattern>categoryac</url-pattern>
+        <url-pattern>/categoryac</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModuleAction</servlet-name>
+        <url-pattern>/moduleac</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RoleAction</servlet-name>
-        <url-pattern>rolecontrol</url-pattern>
+        <url-pattern>/rolecontrol</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Supplier</servlet-name>
@@ -57,5 +69,9 @@
     <servlet-mapping>
         <servlet-name>ListRole</servlet-name>
         <url-pattern>/manager/phanquyen</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListModule</servlet-name>
+        <url-pattern>/manager/chucnang</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -109,10 +109,12 @@
 										  <thead>
 										  	<tr>
 										  		<th>Chức năng</th>
+										  		<th>Mô tả</th>
 										  		<th>Xem chi tiết</th>
 										  		<th>Thêm mới</th> 
 										  		<th>Cập nhật</th>
 										  		<th>Xóa</th>
+										  		<th>Trạng thái thao tác</th>
 										  	</tr>
 										  </thead>
 										   <tbody>
@@ -123,6 +125,12 @@
 										   %>
 										  <tr>
 										    <td><%=per.getPgModules().getModuleName() %></td>
+										     
+										    <td><% if(per.getDescription() == null){
+										    	out.print("");
+										    } else {out.print(per.getDescription());}
+										    
+										    %></td>
 										    <td><%
 										    	if(per.getIsRead()){
 										    		out.print("<input type=\"checkbox\" checked=\"checked\" disabled=\"disabled\">");
@@ -151,6 +159,11 @@
 										    		out.print("<input type=\"checkbox\" disabled=\"disabled\">");
 											    	}
 										    %></td>
+			                                <% if (per.getPerStatus()==1) {
+			                                        out.print("<td>Active</td>");
+			                                    } else {
+			                                        out.print("<td>InActive</td>");
+			                                }%>
 										  </tr>
 										  <%
 									   			}

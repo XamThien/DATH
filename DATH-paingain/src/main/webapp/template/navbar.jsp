@@ -46,7 +46,12 @@
 		                    </ul>
 	                  </li>
 	                  <li><a href="/manager/nhanvien.jsp"><i class="fa fa-users"></i>Quản lý nhân viên </a></li>
-	                  <li><a href="/manager/phanquyen"><i class="fa fa-sitemap"></i>Phân quyền</a></li>
+	                  <li><a ><i class="fa fa-sitemap"></i>Quản lý phân quyền<span class="fa fa-chevron-down"></span></a>
+	                  	<ul class="nav child_menu">
+		                      <li><a href="/manager/phanquyen">Phân quyền</a></li>
+		                      <li><a href="/manager/chucnang">Quản lý danh mục chức năng</a></li>
+		                    </ul>
+	                  </li>
 	                </ul>
 	              </div>
 

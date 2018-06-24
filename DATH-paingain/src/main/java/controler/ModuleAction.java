@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import DAO.CategoryDAO;
-import model.PgCategories;
+import DAO.ModuleDAO;
+import model.PgModules;
 
-public class CategoryAction extends HttpServlet{
+public class ModuleAction extends HttpServlet{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public CategoryAction() {
+	public ModuleAction() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -36,7 +36,7 @@ public class CategoryAction extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
     	response.setCharacterEncoding("UTF-8");
-    	List<PgCategories> result = new ArrayList<PgCategories>();
+    	List<PgModules> result = new ArrayList<PgModules>();
 		String action = request.getParameter("action");
 		String message = "";
 		 try
@@ -44,30 +44,28 @@ public class CategoryAction extends HttpServlet{
 			 switch (action) {
 			 case "add":
 				 String name =request.getParameter("name");
-				 String descrip = request.getParameter("descrip");
-				 int sort = Integer.parseInt(request.getParameter("sort"));
-				 int status = 1;
-				 PgCategories sup = new PgCategories(name,descrip,sort,status);
+				 int parent = Integer.parseInt(request.getParameter("parent"));
+				 PgModules sup = new PgModules(name,parent);
 				 try 
 				 {
 					
-					 if(new CategoryDAO().insertPgCategories(sup))
+					 if(new ModuleDAO().insertPgModules(sup))
 					 {
 						 message = "Thêm thành công!";
-						 result = new CategoryDAO().getAllPgCategories();
+						 result = new ModuleDAO().getAllPgModules();
 						 request.setAttribute("result", result);
-						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/danhmuc.jsp");
+						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/module.jsp");
 						 request.setAttribute("msg", message);
 						 dispatcher.forward(request, response);						 
 					 }
 					 else
 					 {
 						 message = "Không thành công!";
-						 result = new CategoryDAO().getAllPgCategories();
+						 result = new ModuleDAO().getAllPgModules();
 						 request.setAttribute("result", result);
-						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/danhmuc.jsp");
+						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/module.jsp");
 						 request.setAttribute("msg", message);
-						 dispatcher.forward(request, response);
+						 dispatcher.forward(request, response);	
 					 }
 					 
 				 } catch (Exception e) {
@@ -78,17 +76,16 @@ public class CategoryAction extends HttpServlet{
 			 case "edit":
 				 	int ma = Integer.parseInt(request.getParameter("id"));
 				 	String ename =request.getParameter("name");
-					 String edescrip = request.getParameter("descrip");
-					 int esort = Integer.parseInt(request.getParameter("sort"));
+				 	int eparent = Integer.parseInt(request.getParameter("parent"));
 					 int statusE = Integer.parseInt(request.getParameter("status"));;
 					try 
 					{
-				 		PgCategories cat = new PgCategories(ma,ename,edescrip,esort,statusE);
-					    new CategoryDAO().updatePgCategories(cat);
+				 		PgModules mol = new PgModules(ma,ename,eparent,statusE);
+					    new ModuleDAO().updatePgModules(mol);
 					    message = "Cập nhật thành công!";
-					    result = new CategoryDAO().getAllPgCategories();
+					    result = new ModuleDAO().getAllPgModules();
 						 request.setAttribute("result", result);
-						RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/danhmuc.jsp");
+						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/module.jsp");
 						request.setAttribute("msg", message );
 						dispatcher.forward(request, response);
 								
@@ -97,17 +94,17 @@ public class CategoryAction extends HttpServlet{
 					catch (Exception e)
 					{
 						 message = "Cập nhật không thành công!";
-						 result = new CategoryDAO().getAllPgCategories();
+						 result = new ModuleDAO().getAllPgModules();
 						 request.setAttribute("result", result);
-						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/danhmuc.jsp");
+						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/module.jsp");
 						 request.setAttribute("msg", message );
 						 dispatcher.forward(request, response);
 					}
 				 break;
 			 default:
-				 result = new CategoryDAO().getAllPgCategories();
+				 result = new ModuleDAO().getAllPgModules();
 				 request.setAttribute("result", result);
-				 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/danhmuc.jsp");
+				 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/module.jsp");
 				 dispatcher.forward(request, response);
 				 break;
 			 }

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ page import="model.*" %>
+<%@ page import="DAO.*" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -7,6 +10,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
   		<title>Chình sửa vai trò trên trang</title>
 		<%@include file="/template/header.jsp"%>
+		<%
+		int id = Integer.parseInt(request.getParameter("roleid"));
+	%>
 	</head>
 	<body >
 			<div class="nav-md">
@@ -23,7 +29,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
 	              	<h2><strong>Chình sửa vai trò trên trang</strong></h2>
 	              	<hr/>
-	                <!-- <span style="color:red"><i>${msg}</i></span> -->
+	              	<span style="color:red"><i>${msg}</i></span>
 	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới module</button> </a>
 	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add2"><button><i class="fa fa-plus" ></i> Thêm mới thao tác</button> </a>
 	                <!-- show table-->
@@ -42,34 +48,70 @@
 										  <thead>
 										  	<tr>
 										  		<th>Chức năng</th>
+										  		<th>Mô tả</th>
 										  		<th>Xem chi tiết</th>
 										  		<th>Thêm mới</th> 
 										  		<th>Cập nhật</th>
 										  		<th>Xóa</th>
+										  		<th>Trạng thái thao tác</th>
 										  		<th>Tùy chọn</th>
 										  	</tr>
 										  </thead>
 										   <tbody>
+										  <%
+										   ArrayList<PgRolePermission> pers = (ArrayList<PgRolePermission>) new RolePermissionDAO().getPgRolePermissionByRoleID(id);
+									   		if(pers != null){
+									   			for(PgRolePermission per : pers){
+										   %>
 										  <tr>
-										    <td>Nhân viên</td>
-										    <td><input type="checkbox" checked="checked" disabled="disabled"></td>
-										    <td><input type="checkbox" checked="checked" disabled="disabled"></td>
-										    <td><input type="checkbox" checked="checked" disabled="disabled"></td>
-										    <td><input type="checkbox" checked="checked" disabled="disabled"></td>
-										    <td>
-										    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa</a>
-										    </td>
+										    <td><%=per.getPgModules().getModuleName() %></td>
+										    <td><% if(per.getDescription() == null){
+										    	out.print("");
+										    } else {out.print(per.getDescription());}
+										    
+										    %></td>
+										    <td><%
+										    	if(per.getIsRead()){
+										    		out.print("<input type=\"checkbox\" checked=\"checked\" disabled=\"disabled\">");
+										    	} else {
+										    		out.print("<input type=\"checkbox\" disabled=\"disabled\">");
+											    	}
+										    %></td>
+										    <td><%
+										    	if(per.getIsInsert()){
+										    		out.print("<input type=\"checkbox\" checked=\"checked\" disabled=\"disabled\">");
+										    	} else {
+										    		out.print("<input type=\"checkbox\" disabled=\"disabled\">");
+											    	}
+										    %></td>
+										   <td><%
+										    	if(per.getIsUpdate()){
+										    		out.print("<input type=\"checkbox\" checked=\"checked\" disabled=\"disabled\">");
+										    	} else {
+										    		out.print("<input type=\"checkbox\" disabled=\"disabled\">");
+											    	}
+										    %></td>
+										   <td><%
+										    	if(per.getIsDelete()){
+										    		out.print("<input type=\"checkbox\" checked=\"checked\" disabled=\"disabled\">");
+										    	} else {
+										    		out.print("<input type=\"checkbox\" disabled=\"disabled\">");
+											    	}
+										    %></td>
+										    <% if (per.getPerStatus()==1) {
+			                                        out.print("<td>Active</td>");
+			                                    } else {
+			                                        out.print("<td>InActive</td>");
+			                                }%>
+			                                <td><a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa module</a>
+			                                <a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa thao tác</a>
+			                                
+			                                </td>
 										  </tr>
-										  <tr>
-										    <td>Sản phẩm</td>
-										    <td><input type="checkbox" checked="checked" disabled="disabled"></td>
-										    <td><input type="checkbox" checked="checked" disabled="disabled"></td>
-										    <td><input type="checkbox" checked="checked" disabled="disabled"></td>
-										    <td><input type="checkbox" checked="checked" disabled="disabled"></td>
-										    <td>
-										    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa</a>
-										    </td>
-										  </tr>
+										  <%
+									   			}
+									   		}
+										  %>
 										  </tbody>
 										</table>
 					                </div>

@@ -111,7 +111,7 @@
                         <form action="rolecontrol?action=add" method="post">
                         <div class="modal-body">
                           	 <div class='col-sm-12'>
-				                   <label >Tên vai trò: <span style="color: red;" id="mes1"></span></label>
+				                   <label >Tên vai trò:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                            <input type="text" id="aname" class="form-control" name="name" placeholder="Tên vai trò" />
@@ -147,7 +147,7 @@
 
                         <div class="modal-footer">
                           <button type="reset" class="btn btn-info">Làm mới </button>
-                          <button type="submit" class="btn btn-info">Lưu </button>
+                          <button type="submit" onclick="return checkadd()" class="btn btn-info">Lưu </button>
                         </div>
                     	</form>
                       </div>
@@ -168,14 +168,13 @@
 			<!--  Delete modal -->
 
         	<script type="text/javascript">
-			   var message = "Không được để trống"; 
-        	document.getElementById("aname").addEventListener("blur",function(){
-				if(this.value ===""){
-			    		document.getElementById("mes1").innerHTML = message ;
-					}else{
-			    		document.getElementById("mes1").innerHTML = null ;
-						}
-			});
+        	function checkadd(){
+		    	if(document.getElementById("aname").value==""){
+		    		alert("Bạn chưa điền tên vai trò.");
+		    		return false;
+		    	} 
+		    	return true;
+		    }
 			    
 			</script>
 					<!-- ----------------------------------------------->

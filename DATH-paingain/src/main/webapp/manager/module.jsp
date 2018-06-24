@@ -8,7 +8,7 @@
 	<head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  		<title>Quản lý danh mục sản phẩm</title>
+  		<title>Quản lý chức năng</title>
 		<%@include file="/template/header.jsp"%>
 	</head>
 	<body >
@@ -24,7 +24,7 @@
 					<!-- ----------------------------------------------->
 					<div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
-	              	<h2><strong>Quản lý danh mục sản phẩm</strong></h2>
+	              	<h2><strong>Quản lý chức năng</strong></h2>
 					<span style="color:red"><i>${msg }</i></span>
 	              	<hr/>
 	               
@@ -32,7 +32,7 @@
 	                <!-- show table-->
 	                <div class="x_panel">
 		                  <div class="x_title">
-		                    <h2>Danh mục sản phẩm</h2>
+		                    <h2>Danh mục chức năng</h2>
 		                    
 		                    <div class="clearfix"></div>
 		                  </div>
@@ -45,39 +45,43 @@
 					                	<table id= "datatable" class="table table-striped table-bordered dataTable no-footer">
 										  <thead>
 										  	<tr>
-										  		<th>Mã danh mục</th>
-										  		<th>Tên danh mục</th>
-										  		<th>Mô tả</th>
-										  		<th>Sort index</th>
+										  		<th>Mã chức năng</th>
+										  		<th>Tên chức năng</th>
+										  		<th>Chức năng cha</th>
 										  		<th>Trạng thái</th>
-												<th>Danh sách sản phẩm</th>
 										  		<th>Tùy chọn</th> 
 										  	</tr>
 										  </thead>
 										   <tbody>
 										  <%
-							                	ArrayList <PgCategories> list = (ArrayList<PgCategories>)request.getAttribute("result");
+							                	ArrayList <PgModules> list = (ArrayList<PgModules>)request.getAttribute("result");
 						 	                	if (list!=null)
 						 	                	{
-						 	                		for (PgCategories catg : list)
+						 	                		for (PgModules mol : list)
 						 	                		{
 						 	                		
 							                %>
 										 
 										  	
 										  <tr>
-										    <td><%=catg.getCategoryId() %></td>
-										    <td><%=catg.getCategoryName() %></td>
-										    <td><%=catg.getDescription() %></td>
-										    <td><%=catg.getSortIndex() %></td>
-										    <% if (catg.getCategoryStatus()==1) {
+										    <td><%=mol.getModuleId()%></td>
+										    <td><%=mol.getModuleName() %></td>
+										    <td><%
+										     	if(mol.getParent()==0){
+										     		out.print("Không có");
+										     	} else {
+										     	PgModules	mols =  new ModuleDAO().getPgModulesByID(mol.getParent());
+										     		out.print(mols.getModuleName());
+										     	}
+										     
+										     %></td>
+										    <% if (mol.getModuleStatus()==1) {
 			                                        out.print("<td>Active</td>");
 			                                    } else {
 			                                        out.print("<td>InActive</td>");
 			                                }%>
-											<td><a href="/manager/sanpham.jsp?id=<%=catg.getCategoryId()%>" class="btn btn-link">Danh sách sản phẩm</a></td>
-										    <td>
-										    	<a href="#" onclick="pass_update(<%=catg.getCategoryId() %>,'<%=catg.getCategoryName() %>','<%=catg.getDescription() %>',<%=catg.getSortIndex() %>,<%=catg.getCategoryStatus() %>)" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa</a>
+											<td>
+										    	<a href="#" onclick="pass_update(<%=mol.getModuleId() %>,'<%=mol.getModuleName() %>','<%=mol.getParent() %>',<%=mol.getModuleStatus() %>)" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa</a>
 										    	<%-- <a href="#" onclick="pass_del(<%=catg.getCategoryId() %>)" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" > <i class="fa fa-trash-o" ></i> Xóa</a> --%>
 										    	
 										    </td>
@@ -112,12 +116,12 @@
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                           </button>
-                          <h4 class="modal-title" id="myModalLabel">Thêm mới danh mục sản phẩm: </h4>
+                          <h4 class="modal-title" id="myModalLabel">Thêm mới chức năng: </h4>
                         </div>
-                        <form action="/categoryac?action=add" method="post">
+                        <form action="/moduleac?action=add" method="post">
                         <div class="modal-body">
                           	 <div class='col-sm-12'>
-				                   <label >Tên danh mục: </label>
+				                   <label >Tên chức năng: </label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                            <input type="text" id="aname" class="form-control" name="name" placeholder="Tên danh mục" />
@@ -127,21 +131,27 @@
 				                </div>
 				                
 				                <div class='col-sm-12'>
-				                   <label >Mô tả:</label>
+				                   <label >Chức năng cha:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                            <!-- <input type="" class="form-control" name="name" placeholder="last name nhân viên" />  -->
-				                            <textarea rows="4" id="adescrip" name="descrip" cols="50" style="width: 450px;" placeholder="Mô tả..."></textarea>
-				                        </div>
-				                    </div>
-				                </div>
-				                <div class='col-sm-12'>
-				                   <label >Sort index:</label>
-				                    <div class="form-group" >
-				                        <div class="form-group" >
-				                            <!-- <input type="" class="form-control" name="name" placeholder="last name nhân viên" />  -->
-				                            <input type="number" min=0 id="asort" class="form-control" value="0" name="sort" placeholder="Sort index" />
-				                        </div>
+				                           <select class="form-control" id="aparent" name="parent" >
+			                                	<option value="0" selected>Không có</option>
+				                           <%
+				                           ArrayList <PgModules> lis = (ArrayList<PgModules>)request.getAttribute("result");
+				                           if(lis != null){
+				                        	   for(PgModules l : lis){
+				                        		   
+				                        		   %>
+				                        		<option value="<%=l.getModuleId() %>" ><%=l.getModuleName() %></option>   
+				                        		   <%
+				                        	   }
+				                           }
+				                           %>
+			                                	
+			                                
+											</select>
+										 </div>
 				                    </div>
 				                </div>
 				        </div>
@@ -166,15 +176,15 @@
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                           </button>
-                          <h4 class="modal-title" id="myModalLabel">Sửa thông tin danh mục:</h4>
+                          <h4 class="modal-title" id="myModalLabel">Sửa thông tin chức năng:</h4>
                         </div>
-                        <form action="/categoryac?action=edit" method="post">
+                        <form action="/moduleac?action=edit" method="post">
                         <div class="modal-body">
                         	<div class="hd_id">
                         		<input type="hidden" id="eid" class="form-control" name="id" />
                         	</div>
                           	 <div class='col-sm-12'>
-				                   <label >Tên danh mục: </label>
+				                   <label >Tên chức năng: </label>
 				                    <div class="form-group ">
 				                        <div class="form-group code" >
 				                            <input id="ename" class="form-control" name="name" placeholder="Tên danh mục" />
@@ -184,23 +194,27 @@
 				                </div>
 			                 
 			                 <div class='col-sm-12'>
-				                   <label >Mô tả:</label>
+				                   <label >Chức năng cha:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                            <!-- <input type="" class="form-control" name="name" placeholder="last name nhân viên" />  -->
-				                            <textarea id="edescrip" name="descrip" rows="4" cols="50" style="width: 450px;" placeholder="Mô tả..."></textarea>
-				                        </div>
+				                           <select class="form-control" id="eparent" name="parent" >
+			                                	<option value="0">Không có</option>
+				                           <%
+				                           ArrayList <PgModules> lst = (ArrayList<PgModules>)request.getAttribute("result");
+				                           if(lis != null){
+				                        	   for(PgModules l : lst){
+				                        		   
+				                        		   %>
+				                        		<option value="<%=l.getModuleId() %>" ><%=l.getModuleName() %></option>   
+				                        		   <%
+				                        	   }
+				                           }
+				                           %>
+											</select>
+										 </div>
 				                    </div>
-				             </div>
-				             <div class='col-sm-12'>
-			                   <label >Sort index:</label>
-			                    <div class="form-group" >
-			                        <div class="form-group" >
-			                            <!-- <input type="" class="form-control" name="name" placeholder="last name nhân viên" />  -->
-			                            <input type="number" min=0 id="esort" class="form-control" name="sort" placeholder="Sort index" />
-			                        </div>
-			                    </div>
-			                </div>
+				                </div>
 				             <div class='col-sm-12'>
 				                   <label >Trạng thái:</label>
 				                    <div class="form-group" >
@@ -254,16 +268,10 @@
 			  Delete modal -->
 
         	<script type="text/javascript">
-        	var message = "Không được để trống!!!"
-			    function pass_del(id) {
-			    	
-			    	document.getElementById("txtid").value = id;
-			    };
-			    function pass_update(id,name,descript,sort,status) {
+			    function pass_update(id,name,parent,status) {
 			    	document.getElementById("eid").value = id; 
 			    	document.getElementById("ename").value = name; 
-			    	document.getElementById("edescrip").value = descript; 
-			    	document.getElementById("esort").value = sort;
+			    	document.getElementById("eparent").value = parent; 
 			    	if(status==1){
 			    		document.getElementById("estatus").value="1";
 			    	} else {document.getElementById("estatus").value="0";}
@@ -274,20 +282,14 @@
 			    	if(document.getElementById("aname").value==""){
 			    		alert("Bạn chưa điền tên danh mục sản phẩm.");
 			    		return false;
-			    	} else if (document.getElementById("asort").value==""){
-			    		alert("Bạn chưa điền mã sắp xếp danh mục sản phẩm.");
-			    		return false;
-			    	}
+			    	} 
 			    	return true;
 			    }
 			    function checkedit(){
 			    	if(document.getElementById("ename").value==""){
 			    		alert("Bạn chưa điền tên danh mục sản phẩm.");
 			    		return false;
-			    	} else if (document.getElementById("esort").value==""){
-			    		alert("Bạn chưa điền mã sắp xếp danh mục sản phẩm.");
-			    		return false;
-			    	}
+			    	} 
 			    	return true;
 			    }
 			    
