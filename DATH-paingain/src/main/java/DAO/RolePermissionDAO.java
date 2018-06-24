@@ -67,14 +67,32 @@ public class RolePermissionDAO {
 	        return list;
 	}
 	@SuppressWarnings("unchecked")
-	public  List<PgRolePermission> getPgRolePermissionByModuleID(){
+	public  List<PgRolePermission> getPgRolePermissionByRoleIDModuleID(int idrole, int idmol){
+		List<PgRolePermission> list=null;
+	        try
+	        {
+	        	Session session = Hibernate.getSessionFactory().openSession();
+	        	
+		        Transaction transaction = session.beginTransaction();
+		        String hql ="from PgRolePermission where ROLE_ID="+idrole+" AND MODULE_ID="+idmol;
+		        Query que = session.createQuery(hql);
+		        list = que.list();
+		        transaction.commit();
+	        }
+	        catch  (HibernateException e) {
+	        	 e.printStackTrace();
+	        }
+	        return list;
+	}
+	@SuppressWarnings("unchecked")
+	public  List<PgRolePermission> getPgRolePermissionByModuleID(int id){
 		 List<PgRolePermission> list=null;
 	        try
 	        {
 	        	Session session = Hibernate.getSessionFactory().openSession();
 	        	
 		        Transaction transaction = session.beginTransaction();
-		        String hql ="from PgRolePermission where MODULE_ID=1";
+		        String hql ="from PgRolePermission where MODULE_ID=" +id;
 		        Query que = session.createQuery(hql);
 		        list = que.list();
 		        transaction.commit();

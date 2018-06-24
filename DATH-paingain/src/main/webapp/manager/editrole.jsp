@@ -30,7 +30,7 @@
 	              	<h2><strong>Chình sửa vai trò trên trang</strong></h2>
 	              	<hr/>
 	              	<span style="color:red"><i>${msg}</i></span>
-	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới module</button> </a>
+	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới chức năng</button> </a>
 	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add2"><button><i class="fa fa-plus" ></i> Thêm mới thao tác</button> </a>
 	                <!-- show table-->
 	                <div class="x_panel">
@@ -103,9 +103,8 @@
 			                                    } else {
 			                                        out.print("<td>InActive</td>");
 			                                }%>
-			                                <td><a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa module</a>
-			                                <a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa thao tác</a>
-			                                
+			                                <td><a href="#" onclick="pass_update(<%=per.getPgModules().getModuleId() %>,'<%=per.getPgModules().getModuleName() %>',<%=per.getIsRead() %>,<%=per.getIsInsert() %>,<%=per.getIsUpdate() %>,<%=per.getIsDelete() %>,<%=per.getPerStatus() %>,'<%=per.getDescription() %>')" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa thao tác</a>
+			                               
 			                                </td>
 										  </tr>
 										  <%
@@ -137,47 +136,49 @@
                           </button>
                           <h4 class="modal-title" id="myModalLabel">Thêm mới vai trò: </h4>
                         </div>
-                        <form action="#" method="post">
+                        <form action="/moduleac?action=addpq&id=<%=id %>" method="post">
                         <div class="modal-body">
                           	 <div class='col-sm-12'>
-				                   <label >Tên module:</label>
+				                   <label >Tên chức năng: </label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <input type="text" class="form-control" name="name" placeholder="Tên module" />
+				                            <input type="text" id="aname" class="form-control" name="name" placeholder="Tên danh mục" />
 				                            
 				                        </div>
 				                    </div>
 				                </div>
 				                
 				                <div class='col-sm-12'>
-				                   <label >Mô tả:</label>
+				                   <label >Chức năng cha:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                            <!-- <input type="" class="form-control" name="name" placeholder="last name nhân viên" />  -->
-				                            <textarea rows="4" cols="50" style="width: 450px;" placeholder="Mô tả..."></textarea>
-				                        </div>
-				                    </div>
-				                </div>
-				                
-				                <div class='col-sm-12'>
-				                   <label >Module cha:</label>
-				                    <div class="form-group" >
-				                        <div class="form-group" >
-				                            <select>
-				                            	<option>0</option>
-				                            	<option>1</option>
-				                            	<option>2</option>
-				                            </select>
-				                        </div>
+				                           <select class="form-control" id="aparent" name="parent" >
+			                                	<option value="0" selected>Không có</option>
+				                           <%
+				                           ArrayList <PgModules> lis = (ArrayList<PgModules>) new ModuleDAO().getAllPgModules();
+				                           if(lis != null){
+				                        	   for(PgModules l : lis){
+				                        		   
+				                        		   %>
+				                        		<option value="<%=l.getModuleId() %>" ><%=l.getModuleName() %></option>   
+				                        		   <%
+				                        	   }
+				                           }
+				                           %>
+			                                	
+			                                
+											</select>
+										 </div>
 				                    </div>
 				                </div>
 				        </div>
                         <div class="clearfix"></div>
 
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                         
                           <button type="reset" class="btn btn-info">Làm mới </button>
-                          <button type="submit" class="btn btn-info">Lưu </button>
+                          <button type="submit" onclick="return checkadd()" class="btn btn-info">Lưu </button>
                         </div>
                     	</form>
                       </div>
@@ -195,61 +196,42 @@
                           </button>
                           <h4 class="modal-title" id="myModalLabel">Thêm mới thao tác: </h4>
                         </div>
-                        <form action="#" method="post">
+                        <form action="/rolecontrol?action=add" method="post">
                         <div class="modal-body">
                           	 <div class='col-sm-12'>
 				                   <label >Tên chức năng:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <select>
-				                            	<option>--Tên các modules ở đây--</option>
-				                            </select>
+				                            <select class="form-control" id="module" name="module" >
+				                           <%
+				                           ArrayList <PgModules> ls = (ArrayList<PgModules>) new ModuleDAO().getAllPgModules();
+				                           if(lis != null){
+				                        	   for(PgModules l : ls){
+				                        		   
+				                        		   %>
+				                        		<option value="<%=l.getModuleId() %>" ><%=l.getModuleName() %></option>   
+				                        		   <%
+				                        	   }
+				                           }
+				                           %>
+			                                	
+			                                
+											</select>
 				                        </div>
 				                    </div>
 				                </div>
-				                
-				                <div class='col-sm-12'>
-				                   <label >Module:</label>
-				                    <div class="form-group" >
-				                        <div class="form-group" >
-				                            <select>
-				                            	<option>0</option>
-				                            	<option>1</option>
-				                            	<option>2</option>
-				                            </select>
-				                        </div>
-				                    </div>
-				                </div>
-				                
-				                <div class='col-sm-12'>
-				                   <label >Vai trò:</label>
-				                    <div class="form-group" >
-				                        <div class="form-group" >
-				                            <select>
-				                            	<option>Admin</option>
-				                            	<option>Nhân viên</option>
-				                            	<option>Khách hàng</option>
-				                            </select>
-				                        </div>
-				                    </div>
-				                </div>
+				               <div class="hd_id">
+                        		<input type="hidden" id="roleid" class="form-control" name="roleid" value="<%=id%>"/>
+                        	</div>
 				                
 				                <div class='col-sm-12'>
 				                   <label >Thao tác:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                        	<input type="checkbox"> Xem chi tiết <br>	
-				                        	<input type="checkbox"> Thêm mới	<br>
-				                        	<input type="checkbox"> Cập nhật	<br>
-				                        	<input type="checkbox"> Xóa	
-				                        </div>
-				                    </div>
-				                </div>
-				                <div class='col-sm-12'>
-				                   <label >Trạng thái:</label>
-				                    <div class="form-group" >
-				                        <div class="form-group" >
-				                        	<input type="checkbox">
+				                        	<input type="checkbox" id="read" name="read"> Xem chi tiết <br>	
+				                        	<input type="checkbox" id="insert" name="insert"> Thêm mới	<br>
+				                        	<input type="checkbox" id="update" name="update"> Cập nhật	<br>
+				                        	<input type="checkbox" id="del" name="del"> Xóa	
 				                        </div>
 				                    </div>
 				                </div>
@@ -258,7 +240,7 @@
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                            <!-- <input type="" class="form-control" name="name" placeholder="last name nhân viên" />  -->
-				                            <textarea rows="4" cols="50" style="width: 450px;" placeholder="Mô tả..."></textarea>
+				                            <textarea rows="4" name="desc" cols="50" style="width: 450px;" placeholder="Mô tả..."></textarea>
 				                        </div>
 				                    </div>
 				                </div>
@@ -266,7 +248,6 @@
                         <div class="clearfix"></div>
 
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                           <button type="reset" class="btn btn-info">Làm mới </button>
                           <button type="submit" class="btn btn-info">Lưu </button>
                         </div>
@@ -284,41 +265,21 @@
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                           </button>
-                          <h4 class="modal-title" id="myModalLabel">Sửa chức năng:</h4>
+                          <h4 class="modal-title" id="myModalLabel">Sửa thao tác:</h4>
                         </div>
                         <form action="#" method="post">
                         <div class="modal-body">
-							                          	 <div class='col-sm-12'>
+                        <div class="hd_id">
+                        		<input type="hidden" id="roleid" class="form-control" name="roleid" value="<%=id%>"/>
+                        	</div>
+                        	<div class="hd_id">
+                        		<input type="hidden" id="modelid" class="form-control" name="modelid" />
+                        	</div>
+							   <div class='col-sm-12'>
 				                   <label >Tên chức năng:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <input type="text" placeholder="Tên chức năng" value="--Tên chức năng ở đây--">
-				                        </div>
-				                    </div>
-				                </div>
-				                
-				                <div class='col-sm-12'>
-				                   <label >Module:</label>
-				                    <div class="form-group" >
-				                        <div class="form-group" >
-				                            <select>
-				                            	<option>0</option>
-				                            	<option>1</option>
-				                            	<option>2</option>
-				                            </select>
-				                        </div>
-				                    </div>
-				                </div>
-				                
-				                <div class='col-sm-12'>
-				                   <label >Vai trò:</label>
-				                    <div class="form-group" >
-				                        <div class="form-group" >
-				                            <select>
-				                            	<option>Admin</option>
-				                            	<option>Nhân viên</option>
-				                            	<option>Khách hàng</option>
-				                            </select>
+				                            <input type="text" placeholder="Tên chức năng" disable id="modelname">
 				                        </div>
 				                    </div>
 				                </div>
@@ -327,10 +288,10 @@
 				                   <label >Thao tác:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                        	<input type="checkbox" checked="checked"> Xem chi tiết <br>	
-				                        	<input type="checkbox" checked="checked"> Thêm mới	<br>
-				                        	<input type="checkbox" checked="checked"> Cập nhật	<br>
-				                        	<input type="checkbox" checked="checked"> Xóa	
+				                        	<input type="checkbox" id="eread" name="eread"> Xem chi tiết <br>	
+				                        	<input type="checkbox" id="einsert" name="einsert"> Thêm mới	<br>
+				                        	<input type="checkbox" id="eupdate" name="eupdate"> Cập nhật	<br>
+				                        	<input type="checkbox" id="edel" name="edel"> Xóa	
 				                        </div>
 				                    </div>
 				                </div>
@@ -338,16 +299,21 @@
 				                   <label >Trạng thái:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                        	<input type="checkbox" checked="checked">
+				                            <select class="form-control" id="estatus" name="status" >
+			                                	<option value="1" >Active</option>
+			                                
+			                                	<option value="0" >InActive</option>
+			                                
+											</select>
 				                        </div>
 				                    </div>
-				                </div>
+				             </div>
 				                <div class='col-sm-12'>
 				                   <label >Mô tả:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                            <!-- <input type="" class="form-control" name="name" placeholder="last name nhân viên" />  -->
-				                            <textarea rows="4" cols="50" style="width: 450px;" placeholder="Mô tả..."></textarea>
+				                            <textarea id="edes" name="edes" rows="4" cols="50" style="width: 450px;" placeholder="Mô tả..."></textarea>
 				                        </div>
 				                    </div>
 				                </div>                        	
@@ -366,7 +332,45 @@
 			<!--  Edit modal -->
 					<!-- ----------------------------------------------->
 			    </div>
+			    <script type="text/javascript">
+			    function pass_update(id,name,read,insert,update,del,status,des) {
+			    	document.getElementById("modelid").value = id; 
+			    	document.getElementById("modelname").value = name;
+			    	if(read == true){
+			    		document.getElementById("eread").checked = true;
+			    	}
+			    	if(insert == true){
+			    		document.getElementById("einsert").checked = true;
+			    	}
+			    	if(update == true){
+			    		document.getElementById("eupdate").checked = true;
+			    	}
+			    	if(del == true){
+			    		document.getElementById("edel").checked = true;
+			    	}
+			    	if(status==1){
+			    		document.getElementById("estatus").value="1";
+			    	} else {document.getElementById("estatus").value="0";}
+
+			    	document.getElementById("edes").value = des; 
+			    };
+			  
+			    function checkadd(){
+			    	if(document.getElementById("aname").value==""){
+			    		alert("Bạn chưa điền tên chức năng.");
+			    		return false;
+			    	} 
+			    	return true;
+			    }
+			    function checkedit(){
+			    	if(document.getElementById("aname").value==""){
+			    		alert("Bạn chưa điền tên danh mục sản phẩm.");
+			    		return false;
+			    	} 
+			    	return true;
+			    }
 			    
+			</script>
 			    <%@include file="/template/footer.jsp"%>
 				<%@include file="/template/footname.jsp"%>
 			

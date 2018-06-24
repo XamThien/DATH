@@ -31,7 +31,7 @@
 	              	<h2><strong>Thông tin chi tiết của vai trò <%=role.getRoleName() %></strong></h2>
 	              	<hr/>
 	                <!-- <span style="color:red"><i>${msg}</i></span> -->
-	                <a href="editrole.jsp?roleid=<%=id %>" style="color: #2c6c8a;"><button><i class="fa fa-edit" ></i> Sửa phân quyền module</button> </a>
+	                <a href="editrole.jsp?roleid=<%=id %>" style="color: #2c6c8a;"><button><i class="fa fa-edit" ></i> Sửa phân quyền chức năng</button> </a>
 	               <!-- show table-->
 	               <div class="x_panel">
 		                  <div class="x_title">
@@ -114,7 +114,7 @@
 										  		<th>Thêm mới</th> 
 										  		<th>Cập nhật</th>
 										  		<th>Xóa</th>
-										  		<th>Trạng thái thao tác</th>
+										  		<th>Trạng thái</th>
 										  	</tr>
 										  </thead>
 										   <tbody>

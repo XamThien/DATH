@@ -32,9 +32,10 @@ public class PgModules implements java.io.Serializable {
 		this.moduleName = moduleName;
 	}
 
-	public PgModules(String moduleName, Integer parent) {
+	public PgModules(String moduleName, Integer parent, Integer moduleStatus) {
 		this.moduleName = moduleName;
 		this.parent = parent;
+		this.moduleStatus = moduleStatus;
 	}
 	public PgModules(Integer moduleId,String moduleName, Integer parent, Integer moduleStatus) {
 		this.moduleId = moduleId;

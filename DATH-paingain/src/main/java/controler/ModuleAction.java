@@ -45,7 +45,8 @@ public class ModuleAction extends HttpServlet{
 			 case "add":
 				 String name =request.getParameter("name");
 				 int parent = Integer.parseInt(request.getParameter("parent"));
-				 PgModules sup = new PgModules(name,parent);
+				 int status =1;
+				 PgModules sup = new PgModules(name,parent,status);
 				 try 
 				 {
 					
@@ -64,6 +65,35 @@ public class ModuleAction extends HttpServlet{
 						 result = new ModuleDAO().getAllPgModules();
 						 request.setAttribute("result", result);
 						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/module.jsp");
+						 request.setAttribute("msg", message);
+						 dispatcher.forward(request, response);	
+					 }
+					 
+				 } catch (Exception e) {
+					response.getWriter().println("Lỗi: " + e.getMessage());
+				 }
+			 
+			 break;
+			 case "addpq":
+				 String namepq =request.getParameter("name");
+				 int parentpq = Integer.parseInt(request.getParameter("parent"));
+				 int id = Integer.parseInt(request.getParameter("id"));
+				 int statuspq =1;
+				 PgModules supq = new PgModules(namepq,parentpq,statuspq);
+				 try 
+				 {
+					
+					 if(new ModuleDAO().insertPgModules(supq))
+					 {
+						 message = "Thêm chức năng thành công!";
+						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/editrole.jsp?roleid="+id);
+						 request.setAttribute("msg", message);
+						 dispatcher.forward(request, response);						 
+					 }
+					 else
+					 {
+						 message = "Không thành công thêm chức năng!";
+						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/editrole.jsp?roleid="+id);
 						 request.setAttribute("msg", message);
 						 dispatcher.forward(request, response);	
 					 }

@@ -46,19 +46,14 @@
         <servlet-name>ListCategories</servlet-name>
         <url-pattern>/danhmuc</url-pattern>
     </servlet-mapping>
-<!--    <servlet-mapping>
+ <servlet-mapping>
         <servlet-name>CategoryAction</servlet-name>
-<<<<<<< HEAD
         <url-pattern>/categoryac</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ModuleAction</servlet-name>
         <url-pattern>/moduleac</url-pattern>
     </servlet-mapping>
-=======
-        <url-pattern>categoryac</url-pattern>
-    </servlet-mapping>-->
->>>>>>> a5b67fd18b5e1a1fd1eead2ddd48cb7eed9c8d2a
     <servlet-mapping>
         <servlet-name>RoleAction</servlet-name>
         <url-pattern>/rolecontrol</url-pattern>

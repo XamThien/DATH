@@ -280,14 +280,14 @@
 			  
 			    function checkadd(){
 			    	if(document.getElementById("aname").value==""){
-			    		alert("Bạn chưa điền tên danh mục sản phẩm.");
+			    		alert("Bạn chưa điền tên chức năng.");
 			    		return false;
 			    	} 
 			    	return true;
 			    }
 			    function checkedit(){
 			    	if(document.getElementById("ename").value==""){
-			    		alert("Bạn chưa điền tên danh mục sản phẩm.");
+			    		alert("Bạn chưa điền tên chức năng.");
 			    		return false;
 			    	} 
 			    	return true;
@@ -302,6 +302,5 @@
 			
 		      </div>
 		    </div>
-    	</div>
 	</body>
 </html>
