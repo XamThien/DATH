@@ -34,10 +34,10 @@
         <servlet-name>ListCategories</servlet-name>
         <url-pattern>/danhmuc</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
+<!--    <servlet-mapping>
         <servlet-name>CategoryAction</servlet-name>
         <url-pattern>categoryac</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>Supplier</servlet-name>
         <url-pattern>/manager/supplieraction</url-pattern>

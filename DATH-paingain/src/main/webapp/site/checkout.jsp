@@ -8,96 +8,48 @@
                 <li class="active">Check out</li>
             </ol>
         </div><!--/breadcrums-->
-
-        <div class="step-one">
-            <h2 class="heading">Step1</h2>
-        </div>
-        <div class="checkout-options">
-            <h3>New User</h3>
-            <p>Checkout options</p>
-            <ul class="nav">
-                <li>
-                    <label><input type="checkbox"> Register Account</label>
-                </li>
-                <li>
-                    <label><input type="checkbox"> Guest Checkout</label>
-                </li>
-            </ul>
-        </div><!--/checkout-options-->
-
-        <div class="register-req">
-            <p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
-        </div><!--/register-req-->
-
+        <c:if test="${authentic == null}">
+            <div class="register-req">
+                <p>Please use Register or Login</p>
+            </div><!--/register-req-->
+        </c:if>
         <div class="shopper-informations">
             <div class="row">
+
                 <div class="col-sm-3">
+
                     <div class="shopper-info">
                         <p>Shopper Information</p>
-                        <form>
-                            <input type="text" placeholder="Display Name">
-                            <input type="text" placeholder="User Name">
-                            <input type="password" placeholder="Password">
-                            <input type="password" placeholder="Confirm password">
-                        </form>
-                        <a class="btn btn-primary" href="">Get Quotes</a>
-                        <a class="btn btn-primary" href="">Continue</a>
+                        <c:if test="${authentic == null}">
+                            <a class="btn btn-primary" href="site-login?href=site/checkout.jsp">Register or Login</a>
+                        </c:if>
+                        <c:if test="${authentic != null}">
+                            <a class="btn btn-primary check-out" href="javascript:void(0)">Check out</a>
+                        </c:if>
                     </div>
+
                 </div>
-                <div class="col-sm-5 clearfix">
-                    <div class="bill-to">
-                        <p>Bill To</p>
-                        <div class="form-one">
-                            <form>
-                                <input type="text" placeholder="Company Name">
-                                <input type="text" placeholder="Email*">
-                                <input type="text" placeholder="Title">
-                                <input type="text" placeholder="First Name *">
-                                <input type="text" placeholder="Middle Name">
-                                <input type="text" placeholder="Last Name *">
-                                <input type="text" placeholder="Address 1 *">
-                                <input type="text" placeholder="Address 2">
-                            </form>
+
+                <div class="col-sm-9 clearfix">
+                    <c:if test="${authentic != null}">
+                        <div class="bill-to">
+                            <p>Bill information</p>
+                            <div class="form-one">
+                                <form class="user-info">
+                                    <input type="text" placeholder="First Name *" name="fname" value="${authentic.users.firstName}">
+                                    <input type="text" placeholder="Last Name *" name="lname" value="${authentic.users.lastName}">
+                                    <input type="text" placeholder="Email" value="${authentic.users.email}" name="email">
+                                </form>
+                            </div>
+                            <div class="form-two">
+                                <form class="user-info">
+                                    <input type="text" placeholder="Address " value="${authentic.users.address}" name="address">
+                                    <input type="text" placeholder="Phone *" value="${authentic.users.phoneNumber}" name="phone">
+                                </form>
+                                <a class="btn btn-primary user-update" href="javascript:void(0)">Update information</a>
+                            </div>
                         </div>
-                        <div class="form-two">
-                            <form>
-                                <input type="text" placeholder="Zip / Postal Code *">
-                                <select>
-                                    <option>-- Country --</option>
-                                    <option>United States</option>
-                                    <option>Bangladesh</option>
-                                    <option>UK</option>
-                                    <option>India</option>
-                                    <option>Pakistan</option>
-                                    <option>Ucrane</option>
-                                    <option>Canada</option>
-                                    <option>Dubai</option>
-                                </select>
-                                <select>
-                                    <option>-- State / Province / Region --</option>
-                                    <option>United States</option>
-                                    <option>Bangladesh</option>
-                                    <option>UK</option>
-                                    <option>India</option>
-                                    <option>Pakistan</option>
-                                    <option>Ucrane</option>
-                                    <option>Canada</option>
-                                    <option>Dubai</option>
-                                </select>
-                                <input type="password" placeholder="Confirm password">
-                                <input type="text" placeholder="Phone *">
-                                <input type="text" placeholder="Mobile Phone">
-                                <input type="text" placeholder="Fax">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="order-message">
-                        <p>Shipping Order</p>
-                        <textarea name="message"  placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
-                        <label><input type="checkbox"> Shipping to bill address</label>
-                    </div>	
+                    </c:if>
                 </div>					
             </div>
         </div>
@@ -137,7 +89,7 @@
                             <td class="cart_quantity">
                                 <div class="cart_quantity_button">
                                     <a class="cart_quantity_up" href="javascript:void(0)"> + </a>
-                                    <input class="cart_quantity_input" type="text" name="quantity" value="${item.amount}" autocomplete="off" size="2" min="0">
+                                    <input class="cart_quantity_input" type="text" name="quantity" value="${item.amount}" itemid="${item.pgProducts.productId}" autocomplete="off" size="2" min="0">
                                     <a class="cart_quantity_down" href="javascript:void(0)"> - </a>
                                 </div>
                             </td>
@@ -151,7 +103,7 @@
                         </tr>
                     </c:forEach>
                     <tr>
-                        <td colspan="4">&nbsp;</td>
+                        <td colspan="4"><a class="btn btn-primary update" href="javascript:void(0)">Update cart</a></td>
                         <td colspan="2">
                             <table class="table table-condensed total-result">
                                 <tr>
@@ -173,6 +125,7 @@
                             </table>
                         </td>
                     </tr>
+
                 </tbody>
             </table>
         </div>

@@ -70,7 +70,7 @@ public class ProductDAO {
     }
 
     public PgProducts getPgProductsByID(int id) {
-        Session session = Hibernate.getSessionFactory().getCurrentSession();
+        Session session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
         try {
             PgProducts product = (PgProducts) session.createCriteria(PgProducts.class)

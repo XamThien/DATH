@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -58,6 +59,13 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if(session.getAttribute("authentic") !=null){
+            response.sendRedirect(request.getContextPath()+"/home");
+            return;
+        }
+        String href = request.getParameter("href")!=null?request.getParameter("href"):"";
+        request.setAttribute("href", href);
         response.setContentType("text/html;charset=UTF-8");
         request.setAttribute("title", "Login and Signup");
         request.getRequestDispatcher("site/login.jsp").forward(request, response);
