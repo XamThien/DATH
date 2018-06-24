@@ -83,13 +83,13 @@
 										    <%} else { %>
 										    	<td><%=sup.getEmail()%></td>
 										    <%} %>
-										    <td>
+										    
 										    	<%if (sup.getSupplierStatus()==1){ %>
-										    		<input type="checkbox" checked disabled>
+										    		<td>Active</td>
 										    	<% }else{ %>
-										    		<input type="checkbox" disabled>
+										    		<td>Inactive</td>
 										    	<% } %>
-										    </td>
+										    
 										    <td>
 										    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=sup.getSupplierId()%>,'<%=sup.getCompanyName()%>','<%=sup.getContactName()%>','<%=sup.getAddress()%>','<%=sup.getRegion()%>','<%=sup.getPhone()%>','<%=sup.getEmail()%>',<%=sup.getSupplierStatus()%>)" > <i class="fa fa-edit"></i> Sửa</a>
 										    	</td>
@@ -187,12 +187,15 @@
 				                        </div>
 				                    </div>
 				                </div>
-				                <div class='col-sm-12'>
+				                <div class='form-group'>
 				                    <label >Trạng thái:</label>
-				                    <div class="form-group">
-				                        <div class="form-group" >
-				                            <input type="checkbox" name="status" checked="checked" />			                            
-				                        </div>
+				                    <div class="form-group radio">
+				                        <div class="col-sm-6 text-center">
+				                            <input type="radio" name="status" value = "1"checked="checked" />Active
+				                         </div>
+				                         <div class="col-sm-6 text-center">
+				                            <input type="radio" name="status" value="0" />Inactive
+				                         </div>		                         
 				                    </div>
 				                </div>        
                         </div>
@@ -282,12 +285,15 @@
 				                        </div>
 				                    </div>
 				                </div>
-				                <div class='col-sm-12'>
+				                <div class='form-group'>
 				                    <label >Trạng thái:</label>
-				                    <div class="form-group">
-				                        <div class="form-group" >
-				                            <input id="statusid" type="checkbox" name="statusE" checked="checked" />			                            
-				                        </div>
+				                    <div class="form-group radio">            	                    
+				                   		<div class="col-sm-6 text-center">
+				                            <input type="radio" name="statusE" value = "1" id="statusEid1" />Active
+				                         </div>
+				                         <div class="col-sm-6 text-center">
+				                            <input type="radio" name="statusE" value="0" id="statusEid2" />Inactive
+				                         </div>		
 				                    </div>
 				                </div>        
 			                 
@@ -317,9 +323,13 @@
 			    	document.getElementById("phoneid").value = phone;
 			    	document.getElementById("emailid").value = email;
 				    if(status === 1){
-				    	document.getElementById("statusid").checked = true; 
+				    	document.getElementById("statusEid1").checked = true; 
+				    	document.getElementById("statusEid2").checked = false; 
+				    	
 					    } else {
-					    	document.getElementById("statusid").checked = false; 
+					    	document.getElementById("statusEid1").checked = false; 
+						 
+					    	document.getElementById("statusEid2").checked = true; 
 						    }
 			    };
 				document.getElementById("companyid1").addEventListener("blur",function(){

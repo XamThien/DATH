@@ -3,15 +3,18 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.PgUsers" %>
 <%@ page import="DAO.UserDAO" %>
+<%@ page import="model.PgRoles" %>
+<%@ page import="DAO.RoleDAO" %>
 <!DOCTYPE html>
 <html>
 	<head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  		<title>Quản lý nhân viên</title>
+  		<title>Quản lý tài khoản</title>
 		<%@include file="/template/header.jsp"%>
 	</head>
 	<body >
+	<% ArrayList<PgRoles> listRole = (ArrayList<PgRoles>) new RoleDAO().getAllPgRoles(); %>
 			<div class="nav-md">
 		    <div class="container body">
 		      <div class="main_container"> 
@@ -24,7 +27,7 @@
 					<!-- ----------------------------------------------->
 					<div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
-	              	<h2><strong>Quản lý nhân viên</strong></h2>
+	              	<h2><strong>Quản lý tài khoản</strong></h2>
 	              	<hr/>
 	              	<%if(request.getAttribute("msg")==null){ %>
 	              		<span></span>
@@ -34,7 +37,7 @@
 	                <!-- show table-->
 	                <div class="x_panel">
 		                  <div class="x_title">
-		                    <h2>Danh sách nhân viên</h2>
+		                    <h2>Danh sách tài khoản</h2>
 		                    
 		                    <div class="clearfix"></div>
 		                  </div>
@@ -48,7 +51,8 @@
 										  <thead>
 										  	<tr>
 										  		<th>Tên đăng nhập</th>
-										  		<th>Tên nhân viên</th>
+										  		<th>Tên</th>
+										  		<th>Loại tài khoản</th>
 										  		<th>Giới tính</th>
 										  		<th>Địa chỉ</th>
 										  		<th>SĐT</th>
@@ -63,13 +67,18 @@
 										  </thead>
 										   <tbody>
 										<%
-											ArrayList<PgUsers> list = (ArrayList<PgUsers>) new UserDAO().getAllNhanvien();
+											ArrayList<PgUsers> list = (ArrayList<PgUsers>) new UserDAO().getAllPgUsers();
 											if(list != null){
 											for(PgUsers user : list){
 										%>  	
 										  <tr>
 											<td><%=user.getUserId()%></td>
 											<td><%=user.getLastName()+" "+user.getFirstName()%></td>
+											<%if (user.getPgRoles()==null){ %>
+												<td></td>
+											<%} else { %>
+												<td><%=user.getPgRoles().getRoleName()%></td>
+											<%} %>
 											<td><%
 											if(user.getSex()==true){
 												out.print("Nam");
@@ -100,15 +109,19 @@
 											<%} else { %>
 												<td><%=user.getModifiedTime()%></td>
 											<%} %>
-											<td>
+											
 												<%if (user.getUserStatus()==1){ %>
-										    		<input type="checkbox" checked disabled>
+													<td>Active</td>
 										    	<% }else{ %>
-										    		<input type="checkbox" disabled>
+										    		<td>Inactive</td>
 										    	<% } %>
-											</td>
+											
 										    <td>
-										    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=user.getRecordId()%>,'<%=user.getUserId()%>','<%=user.getFirstName()%>','<%=user.getLastName()%>','<%=user.getAddress()%>','<%=user.getPhoneNumber()%>','<%=user.getCardId()%>','<%=user.getEmail()%>','<%=user.getUserPassword()%>','<%=user.getCreateTime()%>',<%=user.getSex()%>,<%=user.getUserStatus()%>)" > <i class="fa fa-edit"></i> Sửa</a>										    	
+										    <%if(user.getPgRoles()==null){ %>
+										    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=user.getRecordId()%>,'<%=user.getUserId()%>','<%=user.getFirstName()%>','<%=user.getLastName()%>','<%=user.getAddress()%>','<%=user.getPhoneNumber()%>','<%=user.getCardId()%>','<%=user.getEmail()%>','<%=user.getUserPassword()%>','<%=user.getCreateTime()%>',<%=user.getSex()%>,<%=user.getUserStatus()%>)" > <i class="fa fa-edit"></i> Sửa</a>										    						    	
+										    <%} else { %>
+										    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=user.getRecordId()%>,'<%=user.getUserId()%>','<%=user.getFirstName()%>','<%=user.getLastName()%>','<%=user.getAddress()%>','<%=user.getPhoneNumber()%>','<%=user.getCardId()%>','<%=user.getEmail()%>','<%=user.getUserPassword()%>','<%=user.getCreateTime()%>',<%=user.getSex()%>,<%=user.getUserStatus()%>,'<%=user.getPgRoles().getRoleId()%>')" > <i class="fa fa-edit"></i> Sửa</a>										    	
+										    <%} %>
 										    </td>
 										  </tr>
 										  <%}
@@ -214,25 +227,46 @@
 				                    </div>
 				                </div>
 				                <div class='col-sm-12'>
-				                    <label >Giới tính :</label>
+				                    <label >Loại tài khoản :</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                        	<select name="role" class="form-control">
+					                        	<%
+					                        		if(listRole != null){
+					                        		for(PgRoles role:listRole){	     	
+					                        	%>
+					                        		<option value="<%=role.getRoleId()%>" ><%=role.getRoleName()%></option>
+					                        	<% }}else{%>
+					                        		<option>Không có dữ liệu</option>
+					                        	<%} %>
+				                        	</select>
+				                        </div>
+				                    </div>
+				                </div>
+				              <div class="form-group">
+				                    <label class="control-label" >Giới tính :</label>
 				                    <div class="form-group radio">
-				                        	<div class="col-sm-6">
+				                        	<div class="col-sm-6 text-center">
 				                            	<input type="radio" name="sex" value="man" checked="checked" />   Nam
 				  		                   	</div>
-				  		                   	<div class="col-sm-6">
+				  		                   	<div class="col-sm-6 text-center">
 				  		                    	<input type="radio" name="sex" value="notman"/>     Nữ<br>
 				                            </div>			                     
 				                    </div>
-				                </div>
-				              <div class='col-sm-12'>
-				                    <label >Trạng thái:</label>
-				                    <div class="form-group">
-				                        <div class="form-group" >
-				                            <input type="checkbox" name="status" checked="checked" />			                            
-				                        </div>
+				                
+				               </div>
+				              <div class="form-group">				                
+				                    <label class="control-label" >Trạng thái:</label>
+				                    <div class="form-group radio">
+				                        <div class="col-sm-6 text-center">
+				                            <input type="radio" name="status" value = "1"checked="checked" />Active
+				                         </div>
+				                         <div class="col-sm-6 text-center">
+				                            <input type="radio" name="status" value="0" />Inactive
+				                         </div>	
+				                       </div>	                         
 				                    </div>
 				                </div>        
-                        </div>
                         <div class="clearfix"></div>
 
                         <div class="modal-footer">
@@ -316,6 +350,24 @@
 				                        </div>
 				                    </div>
 				                </div>
+				                <div class='col-sm-12'>
+				                    <label >Loại tài khoản :</label>
+				                    <div class="form-group">
+				                        <div class="form-group" >
+				                        	<select name="roleE" id="roleid" class="form-control">
+				                        			<option value=""></option>
+					                        	<%
+					                        		if(listRole != null){
+					                        		for(PgRoles role:listRole){	     	
+					                        	%>
+					                        		<option value="<%=role.getRoleId()%>" ><%=role.getRoleName()%></option>
+					                        	<% }}else{%>
+					                        		<option>Không có dữ liệu</option>
+					                        	<%} %>
+				                        	</select>
+				                        </div>
+				                    </div>
+				                </div>
 				              <div class='col-sm-12'>
 				                        <div class="form-group" >
 				                            <input type="hidden" id="userpasswordid" class="form-control" name="userpasswordE" />                
@@ -326,23 +378,27 @@
 				                            <input type="hidden" id="createdateid" class="form-control" name="createdateE" />                
 				                        </div>
 				                </div>
-				                <div class='col-sm-12'>
-				                    <label >Giới tính :</label>
+				                <div class='form-group'>
+				                    <label class="control-label">Giới tính :</label>
 				                    <div class="form-group radio">
-				                        	<div class="col-sm-6">
+				                        	<div class="col-sm-6 text-center">
 				                            	<input id="sexmaleid" type="radio" name="sexE" value="man" />Nam
 				  		                   	</div>
-				  		                   	<div class="col-sm-6">
+				  		                   	<div class="col-sm-6 text-center">
 				  		                    	<input id="sexfemaleid" type="radio" name="sexE" value="notman"/>Nữ<br>
 				                            </div>			                     
 				                    </div>
 				                </div>
-				              <div class='col-sm-12'>
+				               
+				              <div class='form-group'>
 				                    <label >Trạng thái:</label>
-				                    <div class="form-group">
-				                        <div class="form-group" >
-				                            <input type="checkbox" id="statusid" name="statusE"  />			                            
-				                        </div>
+				                    <div class="form-group radio">
+				                   		<div class="col-sm-6 text-center">
+				                            <input type="radio" name="statusE" value = "1" id="statusEid1" />Active
+				                         </div>
+				                         <div class="col-sm-6 text-center">
+				                            <input type="radio" name="statusE" value="0" id="statusEid2" />Inactive
+				                         </div>		
 				                    </div>
 				                </div>        
 			                 
@@ -363,7 +419,7 @@
 
         	<script type="text/javascript">
         	var message = "Không được để trống!!!"
-			    function pass_update(id,uid,fname,lname,address,phone,idcard,email,up,cdate,sex,status) {
+			    function pass_update(id,uid,fname,lname,address,phone,idcard,email,up,cdate,sex,status,role) {
 			    	document.getElementById("eid").value = id; 
 			    	document.getElementById("userid").value = uid; 
 			    	document.getElementById("firstnameid").value = fname; 
@@ -374,6 +430,8 @@
 			    	document.getElementById("emailid").value = email;
 			    	document.getElementById("userpasswordid").value = up;
 			    	document.getElementById("createdateid").value = cdate;
+			    	document.getElementById("roleid").value = role;
+			    	
 			    	if(sex == true){
 				    	document.getElementById("sexmaleid").checked = true ;
 				    	document.getElementById("sexfemaleid").checked = false;
@@ -382,9 +440,13 @@
 				    	document.getElementById("sexfemaleid").checked = true;
 				    }
 				    if(status === 1){
-				    	document.getElementById("statusid").checked = true; 
+				    	document.getElementById("statusEid1").checked = true;
+				    	document.getElementById("statusEid2").checked = false; 
+				    	
 					    } else {
-					    	document.getElementById("statusid").checked = false; 
+					    	document.getElementById("statusEid1").checked = false; 
+					    	document.getElementById("statusEid2").checked = true; 
+					    	
 						    }
 			    };
 				document.getElementById("firstnameid1").addEventListener("blur",function(){

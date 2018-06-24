@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import DAO.UserDAO;
 import model.PgRoles;
 import model.PgUsers;
+import service.PGValidation;
 import service.PainAndGainService;
 
 public class UserController extends HttpServlet {
@@ -73,24 +74,34 @@ public class UserController extends HttpServlet {
 			 String email = request.getParameter("email");
 			 String sexParam = (request.getParameter("sex"));
 			 String userpass = request.getParameter("userpassword");
+			 int role = Integer.parseInt(request.getParameter("role"));
 			 Boolean sex = false;
 			 if(sexParam.equals("man")) {
 				 sex = true;
 			 }
-			 int status = 1;
-			 if(request.getParameter("status")==null) {
-				 status = 0;
-			 }
+			 int status = Integer.parseInt(request.getParameter("status"));
 			   String date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").format(LocalDateTime.now());
 			   Date createDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(date);
 			   PgRoles pgRoles = new PgRoles();
-			   pgRoles.setRoleId(2);
+			   pgRoles.setRoleId(role);
+			 boolean checkEmail = false;
+			 if (email.equals("") || email == null) {
+				 checkEmail = true;
+			 } else {
+				 checkEmail = new PGValidation().checkMail(email);
+			 }
+			 boolean checkPhone = new PGValidation().checkPhone(phone);
 			 PgUsers user = new PgUsers(ma,firstname,lastname,address,phone,cardId,email,sex,userpass,createDate,createDate,status,pgRoles);
 			 try 
 			 {
 				 if(ma.equals("") || lastname.equals("") || phone.equals("") || userpass.equals("") || ma == null || lastname == null || phone == null || userpass == null)
 				 {
 					 message = "Điền đầy đủ thông tin!";
+					 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/nhanvien.jsp");
+					 request.setAttribute("msg", message);
+					 dispatcher.forward(request, response);	
+				 } else if (checkEmail == false || checkPhone == false) {
+					 message = "Định dạng Email hoặc số điện thoại không chính xác!";
 					 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/nhanvien.jsp");
 					 request.setAttribute("msg", message);
 					 dispatcher.forward(request, response);	
@@ -135,50 +146,48 @@ public class UserController extends HttpServlet {
 					 String sexParamE = (request.getParameter("sexE"));
 					 String userpassE = request.getParameter("userpasswordE");
 					 String dateParam = request.getParameter("createdateE");
+					 int roleE = Integer.parseInt(request.getParameter("roleE"));
+					 PgRoles pgRolesE = new PgRoles();
+					 pgRolesE.setRoleId(roleE);
 					 Date createDateE = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateParam);
 					 Boolean sexE = false;
 					 if(sexParamE.equals("man")) {
 						 sexE = true;
 					 }
-					 int statusE = 1;
-					 if(request.getParameter("statusE")==null) {
-						 statusE = 0;
+					 int statusE = Integer.parseInt(request.getParameter("statusE"));
+					 boolean checkEmailE = false;
+					 if (emailE.equals("") || emailE == null) {
+						 checkEmailE = true;
+					 } else {
+						 checkEmailE = new PGValidation().checkMail(emailE);
 					 }
+					 boolean checkPhoneE = new PGValidation().checkPhone(phoneE);
 					 String date1 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").format(LocalDateTime.now());
 					   Date modifiedDateE = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(date1);				   
-					   System.out.println("-----------------------------------");
-					   System.out.println("recordid"+recordE);
-					   System.out.println("id "+maE);
-					   System.out.println("first "+firstnameE);
-					   System.out.println("lastname "+lastnameE);
-					   System.out.println("address "+addressE);
-					   System.out.println("phone "+phoneE);
-					   System.out.println("cardid "+cardidE);
-					   System.out.println("email "+emailE);
-					   System.out.println("sexparam "+sexParamE);
-					   System.out.println("userpass "+userpassE);
-					   System.out.println("create date "+createDateE);
-					   System.out.println("status "+statusE);
-					   System.out.println("Boolean sex "+sexE);
-					   System.out.println("-----------------------------------");
+					
 					try 
 					{
-						if (recordE != 0 || maE != "" || firstnameE !="" || lastnameE != "" || phoneE != "" || userpassE != "" || createDateE != null)
+						if (recordE == 0 || maE == "" || firstnameE =="" || lastnameE == "" || phoneE == "" || userpassE == "" || createDateE == null || maE.equals("") || firstnameE.equals("") || lastnameE.equals("") || phoneE.equals("") || userpassE.equals(""))
 						 {
-								PgUsers userE = new PgUsers(recordE,maE,firstnameE,lastnameE,addressE,phoneE,cardidE,emailE,sexE,userpassE,createDateE,modifiedDateE,statusE);
+							message = "Cập nhật không thành công!";
+							 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/nhanvien.jsp");
+							 request.setAttribute("msg", message);
+							 dispatcher.forward(request, response);
+								
+						 } else if (checkEmailE == false || checkPhoneE == false) {
+							 message = "Định dạng Email hoặc số điện thoại không chính xác!";
+							 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/nhanvien.jsp");
+							 request.setAttribute("msg", message);
+							 dispatcher.forward(request, response);	
+						 }
+						else
+						{
+							 PgUsers userE = new PgUsers(recordE,maE,firstnameE,lastnameE,addressE,phoneE,cardidE,emailE,sexE,userpassE,createDateE,modifiedDateE,statusE,pgRolesE);
 							    new UserDAO().updatePgUsers(userE);
 							    message = "Cập nhật thành công!";
 								RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/nhanvien.jsp");
 								request.setAttribute("msg", message );
 								dispatcher.forward(request, response);
-								
-						 }
-						else
-						{
-							 message = "Cập nhật không thành công!";
-							 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/nhanvien.jsp");
-							 request.setAttribute("msg", message);
-							 dispatcher.forward(request, response);
 						}
 						
 					}
