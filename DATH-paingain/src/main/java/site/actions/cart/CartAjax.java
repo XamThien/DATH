@@ -11,6 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import database.Hibernate;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.ProcessBuilder.Redirect.Type;
@@ -125,23 +126,23 @@ public class CartAjax extends HttpServlet {
         try {
             for (Object item : list) {
                 JsonObject jsonObject = new JsonParser().parse(item.toString()).getAsJsonObject();
-                PgProducts product = new PgProducts();
-                product.setProductId(Integer.parseInt(jsonObject.get("id").toString()));
                 PgOrderDetails porder = new PgOrderDetails();
-                porder.setPgProducts(product);
                 for (PgOrderDetails od : cart.getPgOrderDetailses()) {
-                    if (od.equals(porder)) {
+                    if (od.getPgProducts().getProductId() == Integer.parseInt(jsonObject.get("id").toString())) {
                         porder = od;
                         break;
                     }
                 }
-                porder.setAmount(Integer.parseInt(jsonObject.get("value").toString()));
-                cart.addToCart(porder);
+                if (Integer.parseInt(jsonObject.get("value").toString()) < porder.getPgProducts().getQuantity()) {
+                    porder.setAmount(Integer.parseInt(jsonObject.get("value").toString()));
+                } else {
+                    response.getWriter().println("vuot qua so luong trong kho");
+                }
             }
             session.setAttribute("mycart", cart);
             response.getWriter().print("success");
         } catch (Exception e) {
-            response.getWriter().print("faild");
+            response.getWriter().println("co loi xay ra");
         }
 
     }

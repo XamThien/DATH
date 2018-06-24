@@ -78,6 +78,7 @@ public class Signup extends HttpServlet {
         PgUsers user = new PgUsers(username, name, name, phone, password, 1);
         user.setAddress(address);
         user.setEmail(email);
+        String href = !request.getParameter("href").equals("") ? request.getParameter("href") : "site/login.jsp";
         String valid = new PGValidation().validateUserInformation(user, cfpass);
         if (valid.equals("valid")) {
             Session session = Hibernate.getSessionFactory().openSession();
@@ -92,10 +93,12 @@ public class Signup extends HttpServlet {
                 session.getTransaction().commit();
                 session.close();
                 request.setAttribute("spMsg", "Dang ky thanh cong");
+                request.getRequestDispatcher(href).forward(request, response);
             }
         } else {
             request.setAttribute("spMsg", valid);
         }
+        request.setAttribute("href", href);
         request.setAttribute("title", "Login and Signup");
         request.getRequestDispatcher("site/login.jsp").forward(request, response);
     }

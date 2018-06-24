@@ -57,14 +57,43 @@ $(document).ready(function () {
         $.ajax({
             url: "cart-action",
             type: "POST",
-            dataType: "JSON",
-            data: {products: JSON.stringify(param)},
-            success: function (data) {
-                console.log(data);
+            dataType: "text",
+            data: {products: JSON.stringify(param)}
+        }).done(function (data) {
+            if (data != "success") {
+                alert(data);
+            } else {
+                location.reload();
             }
         })
     });
-
+    $(".user-update").click(function () {
+        var datas = {};
+        $(".user-info input[type=text]").each(function () {
+            var prop = $(this).attr("name");
+            datas[prop] = $(this).val();
+        })
+        $.ajax({
+            url: "user-update",
+            type: "POST",
+            data: datas
+        }).done(function (data) {
+            console.log(data);
+        });
+    })
+    $(".check-out").click(function () {
+        $.ajax({
+            url:"checkout-action",
+            type:"POST"
+        }).done(function(data){
+            if(data=="success"){
+                location.reload();
+            }else{
+                alert(data);
+            }
+        })
+        
+    })
 })
 
 

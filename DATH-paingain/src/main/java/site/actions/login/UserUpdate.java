@@ -3,27 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package site.Views.login;
+package site.actions.login;
 
+import DAO.UserDAO;
 import database.Hibernate;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import model.PgUsers;
+import org.hibernate.Session;
 import service.UserAuthentication;
 
 /**
  *
  * @author dangt
  */
-@WebServlet(name = "Authentication", urlPatterns = {"/auth"})
-public class Authentication extends HttpServlet {
+@WebServlet(name = "UserUpdate", urlPatterns = {"/user-update"})
+public class UserUpdate extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,7 +37,18 @@ public class Authentication extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.sendRedirect(request.getContextPath() + "/site/layouts/accessdenied.jsp");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet UserUpdate</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet UserUpdate at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -66,36 +77,27 @@ public class Authentication extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-
-        String username = request.getParameter("username");
-        String password;
-        password = request.getParameter("lgpassword") !=null?request.getParameter("lgpassword"):"";
-        Matcher matcher = Pattern.compile("(^([a-zA-Z]+[0-9]*){6,}$)|(^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$)", Pattern.CASE_INSENSITIVE).matcher(username);
-        String href = !request.getParameter("href").equals("")?"/checkout":"/home";
-        if (matcher.find()) {
-            if (password.length() == 0) {
-                request.setAttribute("msg", "mat khau qua ngan");
-            } else {
-                UserAuthentication auth = new UserAuthentication();
-                if (auth.login(username, password)) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("authentic", auth);
-                    Hibernate.getSessionFactory().getCurrentSession().close();
-                    response.sendRedirect(request.getContextPath()+href);
-                    return;
-                } else {
-                    request.setAttribute("msg", "Password is incorrect");
-                    Hibernate.getSessionFactory().getCurrentSession().close();
-                }
-            }
-        } else {
-            request.setAttribute("msg", "Username is incorrect");
+        String fname = request.getParameter("fname");
+        String lname = request.getParameter("lname");
+        String email = request.getParameter("email");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+        UserAuthentication auth = (UserAuthentication) request.getSession().getAttribute("authentic");
+        if (auth != null) {
+            auth.getUsers().setFirstName(fname);
+            auth.getUsers().setLastName(lname);
+            auth.getUsers().setEmail(email);
+            auth.getUsers().setAddress(address);
+            auth.getUsers().setPhoneNumber(phone);
+            Session session = Hibernate.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            session.merge(auth.getUsers());
+            session.getTransaction().commit();
+            response.getWriter().print("success");
+        }else{
+            response.getWriter().print("faild");
         }
-        request.setAttribute("href", href);
-        request.setAttribute("title", "Login and Signup");
-        request.getRequestDispatcher("site/login.jsp").forward(request, response);
-
+        
     }
 
     /**

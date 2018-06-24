@@ -70,7 +70,7 @@ public class ProductDAO {
     }
 
     public PgProducts getPgProductsByID(int id) {
-        Session session = Hibernate.getSessionFactory().getCurrentSession();
+        Session session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
         try {
             PgProducts product = (PgProducts) session.createCriteria(PgProducts.class)
@@ -98,7 +98,27 @@ public class ProductDAO {
         transaction.commit();
         //session.close();
     }
+     // phuong thuc get nhuwng sp khong co trong bang sale
+    @SuppressWarnings("unchecked")
+    public List<PgProducts> getPgProductsNotSale(int CATEGORY_ID) {
+        List<PgProducts> list = null;
+        try {
+            Configuration configuration = new Configuration().configure();
+            SessionFactory sessionFactory = configuration.buildSessionFactory();
+            Session session = sessionFactory.openSession();
 
+            //Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+            String hql = "from PgProducts p where p.pgCategories.categoryId =" + CATEGORY_ID + " and p.productStatus=1 and p not in (from PgProductSales where PRODUCT_ID = p.productId and salesStatus = 1)";
+            Query que = session.createQuery(hql);
+            list = que.list();
+            transaction.commit();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     public void updatePgProduct(PgProducts sp) {
         Configuration configuration = new Configuration().configure();
         SessionFactory sessionFactory = configuration.buildSessionFactory();

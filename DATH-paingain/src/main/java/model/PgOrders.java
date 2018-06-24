@@ -80,7 +80,7 @@ public class PgOrders implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "EMPLOYEE_ID", nullable = false)
+	@JoinColumn(name = "EMPLOYEE_ID", nullable = true)
 	public PgUsers getPgUsersByEmployeeId() {
 		return this.pgUsersByEmployeeId;
 	}

@@ -17,9 +17,17 @@ import org.hibernate.criterion.Restrictions;
 public class UserAuthentication {
     
     private PgUsers users;
+
+    public PgUsers getUsers() {
+        return users;
+    }
     
     public PgUsers getCurrentUsers() {
         return users;
+    }
+
+    public void setUsers(PgUsers users) {
+        this.users = users;
     }
     
     public boolean login(String username, String password) {

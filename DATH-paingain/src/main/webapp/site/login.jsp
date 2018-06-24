@@ -10,6 +10,7 @@
                     <form action="${pageContext.request.contextPath}/auth" method="post">
                         <input type="text" placeholder="Username or email" name="username"/>
                         <input type="password" placeholder="Password" name="lgpassword"/>
+                        <input type="hidden" name="href" value="${href}">
                         <span>
                             <input type="checkbox" class="checkbox"> 
                             Keep me signed in
@@ -26,6 +27,7 @@
                     <h2>New User Signup!</h2>
                     <span>${spMsg}</span>
                     <form action="${pageContext.request.contextPath}/signup" method="post">
+                        <input type="hidden" name="href" value="${href}">
                         <input type="text" placeholder="Name" name="name"/>
                         <input type="text" placeholder="Username" name="username"/>
                         <input type="email" placeholder="Email Address" name="email"/>

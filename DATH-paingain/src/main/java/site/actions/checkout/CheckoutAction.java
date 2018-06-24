@@ -3,27 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package site.Views.login;
+package site.actions.checkout;
 
 import database.Hibernate;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Cart;
+import model.PgOrderDetails;
+import model.PgOrders;
+import model.PgUsers;
+import org.hibernate.Session;
 import service.UserAuthentication;
 
 /**
  *
  * @author dangt
  */
-@WebServlet(name = "Authentication", urlPatterns = {"/auth"})
-public class Authentication extends HttpServlet {
+@WebServlet(name = "CheckoutAction", urlPatterns = {"/checkout-action"})
+public class CheckoutAction extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,7 +41,18 @@ public class Authentication extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.sendRedirect(request.getContextPath() + "/site/layouts/accessdenied.jsp");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet CheckoutAction</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet CheckoutAction at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -66,36 +81,41 @@ public class Authentication extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+        HttpSession httpSession = request.getSession();
+        PgOrders cartc = (PgOrders) httpSession.getAttribute("mycart");
+        UserAuthentication auth = (UserAuthentication) httpSession.getAttribute("authentic");
 
-        String username = request.getParameter("username");
-        String password;
-        password = request.getParameter("lgpassword") !=null?request.getParameter("lgpassword"):"";
-        Matcher matcher = Pattern.compile("(^([a-zA-Z]+[0-9]*){6,}$)|(^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$)", Pattern.CASE_INSENSITIVE).matcher(username);
-        String href = !request.getParameter("href").equals("")?"/checkout":"/home";
-        if (matcher.find()) {
-            if (password.length() == 0) {
-                request.setAttribute("msg", "mat khau qua ngan");
-            } else {
-                UserAuthentication auth = new UserAuthentication();
-                if (auth.login(username, password)) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("authentic", auth);
-                    Hibernate.getSessionFactory().getCurrentSession().close();
-                    response.sendRedirect(request.getContextPath()+href);
-                    return;
-                } else {
-                    request.setAttribute("msg", "Password is incorrect");
-                    Hibernate.getSessionFactory().getCurrentSession().close();
-                }
-            }
-        } else {
-            request.setAttribute("msg", "Username is incorrect");
+        if (auth == null) {
+            response.sendRedirect(request.getContextPath() + "/site-login");
+            return;
         }
-        request.setAttribute("href", href);
-        request.setAttribute("title", "Login and Signup");
-        request.getRequestDispatcher("site/login.jsp").forward(request, response);
-
+        if (cartc == null) {
+            cartc = new Cart();
+        }
+        PgOrders cart = new PgOrders();
+        PgUsers user = auth.getUsers();
+        if (cartc.getPgOrderDetailses().size() != 0) {
+            cart.setPgUsersByCustomerId(user);
+            cart.setOrderDate(new Date());
+            cart.setOrderStatus(0);
+            cart.setShipName(user.getFirstName() + " " + user.getLastName());
+            cart.setShipAddress(user.getAddress());
+            cart.setShipPhone(user.getPhoneNumber());
+            cart.setPgOrderDetailses(cartc.getPgOrderDetailses());
+            Session session = Hibernate.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            session.save(cart);
+            for (PgOrderDetails ord : cart.getPgOrderDetailses()) {
+                ord.setPgOrders(cart);
+                ord.setUnitPrice(ord.getPgProducts().getUnitPrice());
+                session.save(ord);
+            }
+            session.getTransaction().commit();
+            httpSession.setAttribute("mycart", new Cart());
+            response.getWriter().print("success");
+        } else {
+            response.getWriter().print("cart empty");
+        }
     }
 
     /**
