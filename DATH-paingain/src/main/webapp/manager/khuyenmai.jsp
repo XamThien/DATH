@@ -70,12 +70,11 @@
 										  </thead>
 										   <tbody>
 										   		<%
-										   		List<PgProducts> lstsp = new ProductDAO().getAllPgProducts(cateid) ;
+										   		List<PgProducts> lstsp = new ProductDAO().getPgProductsNotSale(cateid) ;
 										   		int dem=0;
 										   		for(PgProducts sp : lstsp)
 										   		{
-										   			PgProducts cksp = new ProductSalesDAO().getProductByID(sp.getProductId());
-										   			if(cksp==null){
+										   			
 										   				dem= dem+1;
 										   		%>
 										   		<tr>
@@ -84,7 +83,7 @@
 										   			<td><%=sp.getProductName() %></td>
 										   			<td><%=sp.getUnitPrice() %></td>
 										   		</tr>
-										   		<%} }%>
+										   		<%} %>
 										   </tbody>
 										</table>
 										<input type="hidden" name="ckcount" value="<%=dem%>">
