@@ -43,36 +43,37 @@ public class CategoryAction extends HttpServlet{
 		 {
 			 switch (action) {
 			 case "add":
-			 //
-			 String name =request.getParameter("name");
-			 String descrip = request.getParameter("descrip");
-			 int sort = Integer.parseInt(request.getParameter("sort"));
-			 int status = 1;
-			 PgCategories sup = new PgCategories(name,descrip,sort,status);
-			 try 
-			 {
-				 if(new CategoryDAO().insertPgCategories(sup))
+				 String name =request.getParameter("name");
+				 String descrip = request.getParameter("descrip");
+				 int sort = Integer.parseInt(request.getParameter("sort"));
+				 int status = 1;
+				 PgCategories sup = new PgCategories(name,descrip,sort,status);
+				 try 
 				 {
-					 message = "Thêm thành công!";
-					 result = new CategoryDAO().getAllPgCategories();
-					 request.setAttribute("result", result);
-					 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/danhmuc.jsp");
-					 request.setAttribute("msg", message);
-					 dispatcher.forward(request, response);						 
+					
+					 if(new CategoryDAO().insertPgCategories(sup))
+					 {
+						 message = "Thêm thành công!";
+						 result = new CategoryDAO().getAllPgCategories();
+						 request.setAttribute("result", result);
+						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/danhmuc.jsp");
+						 request.setAttribute("msg", message);
+						 dispatcher.forward(request, response);						 
+					 }
+					 else
+					 {
+						 message = "Không thành công!";
+						 result = new CategoryDAO().getAllPgCategories();
+						 request.setAttribute("result", result);
+						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/danhmuc.jsp");
+						 request.setAttribute("msg", message);
+						 dispatcher.forward(request, response);
+					 }
+					 
+				 } catch (Exception e) {
+					response.getWriter().println("Lỗi: " + e.getMessage());
 				 }
-				 else
-				 {
-					 message = "Không thành công!";
-					 result = new CategoryDAO().getAllPgCategories();
-					 request.setAttribute("result", result);
-					 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/danhmuc.jsp");
-					 request.setAttribute("msg", message);
-					 dispatcher.forward(request, response);
-				 }
-				 
-			 } catch (Exception e) {
-				response.getWriter().println("Lỗi: " + e.getMessage());
-			 }
+			 
 			 break;
 			 case "edit":
 				 	int ma = Integer.parseInt(request.getParameter("id"));
@@ -103,6 +104,10 @@ public class CategoryAction extends HttpServlet{
 						 dispatcher.forward(request, response);
 					}
 				 break;
+			 default:
+				 request.setAttribute("result", result);
+				 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/danhmuc.jsp");
+				 dispatcher.forward(request, response);
 			 }
 		 }
 		 catch (Exception e)

@@ -71,30 +71,11 @@
 										    <td><%=parent.getRoleName() %></td>		
 										    		<%
 										    	}
-										    ArrayList<PgUsers> users = (ArrayList<PgUsers>) new UserDAO().getAccountByRole(role.getRoleId());
-										    ArrayList<String> usname = new ArrayList<String>();
-										    if(users != null){
-		                        				for(PgUsers us : users){
-		                        					usname.add(us.getUserId());
-		                        				}
-		                        			}
-		                        			ArrayList<PgRolePermission> pers = (ArrayList<PgRolePermission>) new RolePermissionDAO().getPgRolePermissionByRoleID(role.getRoleId());
-		                        			ArrayList<Boolean> perls = new ArrayList<Boolean>();
-		                        			ArrayList<String> mol = new ArrayList<String>();
-		                        			if(pers != null){
-		                        				for(PgRolePermission per : pers){
-		                        					mol.add(per.getPgModules().getModuleName());
-		                        					perls.add(per.getIsRead());
-		                        					perls.add(per.getIsInsert());
-		                        					perls.add(per.getIsUpdate());
-		                        					perls.add(per.getIsDelete());
-		                        				}
-		                        			}
 										    %>
 										    
 										    <td>
-										    	<a href="" onclick="detail(<%=role.getRoleId() %>,'<%=role.getRoleName() %>',<%=usname %>,<%=perls %>,<%=mol %>)" data-toggle="modal" data-target="#modal-detail" class="btn btn-link" > <i class="fa fa-eye" ></i> Chi tiết</a>
-										    	<a href="editrole.jsp" class="btn btn-link" > <i class="fa fa-edit"></i> Sửa</a>
+										    	<a href="chitietphanquyen.jsp?roleid=<%=role.getRoleId() %>" class="btn btn-link"> <i class="fa fa-eye" ></i> Chi tiết</a>
+										    	<a href="editrole.jsp?roleid=<%=role.getRoleId() %>" class="btn btn-link" > <i class="fa fa-edit"></i> Sửa</a>
 										    </td>
 										  </tr>
 										  <%
@@ -124,14 +105,13 @@
                     <div class="modal-content">
 
                         <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                          </button>
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
                           <h4 class="modal-title" id="myModalLabel">Thêm mới vai trò: </h4>
                         </div>
-                        <form action="#" method="post">
+                        <form action="rolecontrol?action=add" method="post">
                         <div class="modal-body">
                           	 <div class='col-sm-12'>
-				                   <label >Tên vai trò:</label>
+				                   <label >Tên vai trò: <span style="color: red;" id="mes1"></span></label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                            <input type="text" id="aname" class="form-control" name="name" placeholder="Tên vai trò" />
@@ -180,71 +160,7 @@
 			<!--  Edit modal -->
 			
 			<!-- Detail modal -->
-            <div class="modal fade bs-example-modal-lg" id="modal-detail" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog modal-lg modal-delete">
-                      <div class="modal-content">
-
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                          </button>
-                          <h4 class="modal-title" id="myModalLabel">Chi tiết vai trò:</h4>
-                        </div>
-                        <form action="#" method="post">
-                        <div class="modal-body">
-                        	<div class="hd_id">
-                        		<input type="hidden" id="did" class="form-control" name="id" />
-                        	</div>
-                        	<div class='col-sm-12'>
-                        		 <label>Tài khoản thuộc quyền </label> <label id="dname"></label>
-                        		<div id="listus">
-                        		
-                        		</div>
-                        	</div>
-                        	
-                        	<div class='col-sm-12'>
-                        		<label>Phạm vi thao tác:</label>
-                        		<div id="listper">
-                        		
-                        		</div>
-                        		<table id= "datatable" class="table table-striped table-bordered dataTable no-footer">
-                        			
-										  <thead>
-										  	<tr>
-										  		<th>Modules</th>
-										  		<th>Xem chi tiết</th>
-										  		<th>Thêm mới</th> 
-										  		<th>Cập nhật</th>
-										  		<th>Xóa</th>
-										  	</tr>
-										  </thead>
-										   <tbody>
-										  <tr>
-										    <td>Nhân viên</td>
-										    <td><input type="checkbox" checked="checked"></td>
-										    <td><input type="checkbox" checked="checked"></td>
-										    <td><input type="checkbox" checked="checked"></td>
-										    <td><input type="checkbox" checked="checked"></td>
-										  </tr>
-										  <tr>
-										    <td>Sản phẩm</td>
-										    <td><input type="checkbox" checked="checked"></td>
-										    <td><input type="checkbox" checked="checked"></td>
-										    <td><input type="checkbox" checked="checked"></td>
-										    <td><input type="checkbox" checked="checked"></td>
-										  </tr>
-										  </tbody>
-								</table>
-                        	</div>
-			            </div>    
-                        <div class="clearfix"></div>
-
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                        </div>
-                    	</form>
-                      </div>
-                    </div>
-            </div>
+           
 			<!--  Detail modal -->
 			
 			<!-- Delete modal -->
@@ -252,53 +168,14 @@
 			<!--  Delete modal -->
 
         	<script type="text/javascript">
-			    
-			    function detail(id,name,usname,perls,mol) {
-			    	document.getElementById("did").value = id; 
-			    	document.getElementById("dname").append(name); 
-			    	var html1='<ul>';
-			    	if(usname !== null){
-			    		for(var us in usname){
-				    		html1 += '<li>'+ us + '</li>';
-				    	}
-				    	html1 += '</ul>';
-				    	
-			    	} else {
-			    		html1 = 'Không có tài khoản';
-			    	}
-			    	document.getElementById("listus").append(html1);
-			    	var html2='<table id= "datatable" class="table table-striped table-bordered dataTable no-footer"> <thead>'+
-						  	'<tr><th>Modules</th><th>Xem chi tiết</th><th>Thêm mới</th> <th>Cập nhật</th><th>Xóa</th>	</tr> </thead> <tbody>';
-			    	
-		    		for(var i =0; i < mol.length;i++){
-			    		html2 += '<tr><td>'+mol[i]+'</td>';
-			    		if(perls[i*4]== true){
-			    			html2 += '<td><input type="checkbox" checked="checked"></td>';
-			    		} else {
-			    			html2 += '<td><input type="checkbox"></td>';
-			    		}
-			    		if(perls[i*4+1]== true){
-			    			html2 += '<td><input type="checkbox" checked="checked"></td>';
-			    		} else {
-			    			html2 += '<td><input type="checkbox"></td>';
-			    		}
-			    		if(perls[i*4+2]== true){
-			    			html2 += '<td><input type="checkbox" checked="checked"></td>';
-			    		} else {
-			    			html2 += '<td><input type="checkbox"></td>';
-			    		}
-			    		if(perls[i*4+3]== true){
-			    			html2 += '<td><input type="checkbox" checked="checked"></td></tr>';
-			    		} else {
-			    			html2 += '<td><input type="checkbox"></td></tr>';
-			    		}
-			    		
-			    	}
-			    	html2 += ' </tbody> </table>';
-				    
-			    	document.getElementById("listper").append(html2);
-			    	
-			    };
+			   var message = "Không được để trống"; 
+        	document.getElementById("aname").addEventListener("blur",function(){
+				if(this.value ===""){
+			    		document.getElementById("mes1").innerHTML = message ;
+					}else{
+			    		document.getElementById("mes1").innerHTML = null ;
+						}
+			});
 			    
 			</script>
 					<!-- ----------------------------------------------->

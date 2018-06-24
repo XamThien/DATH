@@ -23,6 +23,10 @@
         <servlet-class>controler.SupplierController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>RoleAction</servlet-name>
+        <servlet-class>controler.RoleAction</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Users</servlet-name>
         <servlet-class>controler.UserController</servlet-class>
     </servlet>
@@ -37,6 +41,10 @@
     <servlet-mapping>
         <servlet-name>CategoryAction</servlet-name>
         <url-pattern>categoryac</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RoleAction</servlet-name>
+        <url-pattern>rolecontrol</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Supplier</servlet-name>

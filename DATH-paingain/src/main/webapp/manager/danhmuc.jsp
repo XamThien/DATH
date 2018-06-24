@@ -297,6 +297,17 @@
 				    		document.getElementById("mes4").innerHTML = null ;
 							}
 				});
+			  
+			    function checkadd(){
+			    	if(document.getElementById("aname").value==""){
+			    		alert("Bạn chưa điền tên danh mục sản phẩm.");
+			    		return false;
+			    	} else if (document.getElementById("asort").value==""){
+			    		alert("Bạn chưa điền mã sắp xếp danh mục sản phẩm.");
+			    		return false;
+			    	}
+			    	return true;
+			    }
 			    function checkedit(){
 			    	if(document.getElementById("ename").value==""){
 			    		alert("Bạn chưa điền tên danh mục sản phẩm.");
