@@ -6,9 +6,16 @@
 package site.actions.cart;
 
 import DAO.ProductDAO;
-import database.Hibernate;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.ProcessBuilder.Redirect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +25,7 @@ import javax.servlet.http.HttpSession;
 import model.Cart;
 import model.PgOrderDetails;
 import model.PgProducts;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -70,7 +78,6 @@ public class CartAjax extends HttpServlet {
         PgOrderDetails order = new PgOrderDetails();
         order.setPgProducts(product);
         order.setUnitPrice(product.getUnitPrice());
-        Hibernate.getSessionFactory().getCurrentSession().close();
         HttpSession session = request.getSession();
         Cart cart = (Cart) session.getAttribute("mycart");
         if (cart == null) {
@@ -90,7 +97,7 @@ public class CartAjax extends HttpServlet {
             if (cart.removeFromCart(order)) {
                 session.setAttribute("mycart", cart);
                 response.getWriter().print("success");
-            }else{
+            } else {
                 response.getWriter().print("faild");
             }
         }
@@ -108,7 +115,35 @@ public class CartAjax extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String data = request.getParameter("products");
+        ArrayList list = new Gson().fromJson(data, ArrayList.class);
+        HttpSession session = request.getSession();
+        Cart cart = (Cart) session.getAttribute("mycart");
+        if (cart == null) {
+            cart = new Cart();
+        }
+        try {
+            for (Object item : list) {
+                JsonObject jsonObject = new JsonParser().parse(item.toString()).getAsJsonObject();
+                PgProducts product = new PgProducts();
+                product.setProductId(Integer.parseInt(jsonObject.get("id").toString()));
+                PgOrderDetails porder = new PgOrderDetails();
+                porder.setPgProducts(product);
+                for (PgOrderDetails od : cart.getPgOrderDetailses()) {
+                    if (od.equals(porder)) {
+                        porder = od;
+                        break;
+                    }
+                }
+                porder.setAmount(Integer.parseInt(jsonObject.get("value").toString()));
+                cart.addToCart(porder);
+            }
+            session.setAttribute("mycart", cart);
+            response.getWriter().print("success");
+        } catch (Exception e) {
+            response.getWriter().print("faild");
+        }
+
     }
 
     /**

@@ -39,9 +39,9 @@
                             </td>
                             <td class="cart_quantity">
                                 <div class="cart_quantity_button">
-                                    <a class="cart_quantity_up" href=""> + </a>
-                                    <input class="cart_quantity_input" type="text" name="quantity" value="${item.amount}" autocomplete="off" size="2">
-                                    <a class="cart_quantity_down" href=""> - </a>
+                                    <a class="cart_quantity_up" href="javascript:void(0)"> + </a>
+                                    <input class="cart_quantity_input" type="text" name="quantity" value="${item.amount}" autocomplete="off" size="2" min="0" itemid="${item.pgProducts.productId}">
+                                    <a class="cart_quantity_down" href="javascript:void(0)"> - </a>
                                 </div>
                             </td>
                             <td class="cart_total">
@@ -76,7 +76,7 @@
                         <li>Shipping Cost <span>Free</span></li>
                         <li>Total <span>${total} VND</span></li>
                     </ul>
-                    <a class="btn btn-default update" href="">Update</a>
+                    <a class="btn btn-default update" href="javascript:void(0)" >Update cart</a>
                     <a class="btn btn-default check_out" href="checkout">Check Out</a>
                 </div>
             </div>

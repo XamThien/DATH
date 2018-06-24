@@ -67,6 +67,8 @@
 		    <script src="/resources/vendors/moment/min/moment.min.js"></script>
 		    
 		    <script src="/resources/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+			<script src="/resources/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+
 		    	    
 		     <script src="/resources/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
 		     <script src="/resources/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -84,6 +86,7 @@
 			<!-- Custom Theme Scripts -->
 		    <script src="/resources/build/js/custom.min.js"></script>
 			<script src="/resources/build/js/uploadimg.js"></script>
+			<script src="/resources/build/js/selectAllCheckbox.js"></script>
 			<script src="/resources/build/js/jquery-ui1.12.1.js"></script>
 		     
 		    <script src="/resources/build/js/jquery.boot-tab-slider.min.js"></script>

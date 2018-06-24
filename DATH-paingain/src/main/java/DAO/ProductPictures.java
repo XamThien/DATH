@@ -19,7 +19,15 @@ public class ProductPictures {
 	       {
 	    	    Configuration configuration =  new Configuration().configure();
 	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
-	        	Session session = sessionFactory.openSession();
+	        	Session session ;
+			 	if(sessionFactory.getCurrentSession() != null)
+			 	{
+			 		session = sessionFactory.getCurrentSession();
+			 	}
+			 	else
+			 	{
+			 		session = sessionFactory.openSession();
+			 	}
 	        	
 	        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		        Transaction transaction = session.beginTransaction();
@@ -27,7 +35,7 @@ public class ProductPictures {
 		        Query que = session.createQuery(hql);
 		        cl = (PgProductPictures) que.uniqueResult();
 		        transaction.commit();
-		        session.close();
+		        //session.close();
 	       }
 	       catch  (HibernateException e) {
 	    	   e.printStackTrace();
@@ -38,7 +46,7 @@ public class ProductPictures {
 	 	Configuration configuration =  new Configuration().configure();
 	 	SessionFactory sessionFactory = configuration.buildSessionFactory();
 	 	Session session ;
-	 	if(sessionFactory.getCurrentSession() != null)
+	 	if(sessionFactory.getCurrentSession().isOpen())
 	 	{
 	 		session = sessionFactory.getCurrentSession();
 	 	}
@@ -55,10 +63,18 @@ public class ProductPictures {
  public void updatePgProductPictures(PgProductPictures sp){
 	 	Configuration configuration =  new Configuration().configure();
      	SessionFactory sessionFactory = configuration.buildSessionFactory();
-     	Session session = sessionFactory.openSession();
+     	Session session ;
+	 	if(sessionFactory.getCurrentSession() != null)
+	 	{
+	 		session = sessionFactory.getCurrentSession();
+	 	}
+	 	else
+	 	{
+	 		session = sessionFactory.openSession();
+	 	}
         Transaction transaction = session.beginTransaction();
         session.update(sp);
         transaction.commit();
-        session.close();
+        //session.close();
     }
 }

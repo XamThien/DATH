@@ -23,8 +23,16 @@
         <servlet-class>controler.SupplierController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>RoleAction</servlet-name>
+        <servlet-class>controler.RoleAction</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Users</servlet-name>
         <servlet-class>controler.UserController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListRole</servlet-name>
+        <servlet-class>controler.ListRole</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ListCategories</servlet-name>
@@ -35,11 +43,19 @@
         <url-pattern>categoryac</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>RoleAction</servlet-name>
+        <url-pattern>rolecontrol</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>Supplier</servlet-name>
         <url-pattern>/manager/supplieraction</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Users</servlet-name>
         <url-pattern>/manager/useraction</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListRole</servlet-name>
+        <url-pattern>/manager/phanquyen</url-pattern>
     </servlet-mapping>
 </web-app>

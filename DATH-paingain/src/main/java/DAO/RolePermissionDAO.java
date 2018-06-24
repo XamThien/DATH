@@ -49,14 +49,14 @@ public class RolePermissionDAO {
 	        return list;
 	}
 	@SuppressWarnings("unchecked")
-	public  List<PgRolePermission> getPgRolePermissionByRoleID(){
+	public  List<PgRolePermission> getPgRolePermissionByRoleID(int id){
 		 List<PgRolePermission> list=null;
 	        try
 	        {
 	        	Session session = Hibernate.getSessionFactory().openSession();
 	        	
 		        Transaction transaction = session.beginTransaction();
-		        String hql ="from PgRolePermission where ROLE_ID=1";
+		        String hql ="from PgRolePermission where ROLE_ID="+id;
 		        Query que = session.createQuery(hql);
 		        list = que.list();
 		        transaction.commit();
