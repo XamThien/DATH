@@ -9,13 +9,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import model.PgProductSales;
 import model.PgProducts;
 
-public class ProductSales {
+public class ProductSalesDAO {
 	
 	@SuppressWarnings("unchecked")
-	public  List<ProductSales> getAllPgProducts(){
-		 List<ProductSales> list=null;
+	public  List<PgProductSales> getAllPgProducts(){
+		 List<PgProductSales> list=null;
 	        try
 	        {
 	        	Configuration configuration =  new Configuration().configure();
@@ -24,7 +25,7 @@ public class ProductSales {
 	        	
 	        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		        Transaction transaction = session.beginTransaction();
-		        String hql ="from PgProducts where salesStatus=1";
+		        String hql ="from ProductSales where salesStatus=1";
 		        Query que = session.createQuery(hql);
 		        list = que.list();
 		        transaction.commit();
@@ -35,8 +36,8 @@ public class ProductSales {
 	        }
 	        return list;
 	}
-	public ProductSales getProductSalesByID(int id) {
-		ProductSales cl = null;
+	public PgProductSales getProductSalesByID(int id) {
+		PgProductSales cl = null;
 	       try
 	       {
 	    	    Configuration configuration =  new Configuration().configure();
@@ -47,7 +48,7 @@ public class ProductSales {
 		        Transaction transaction = session.beginTransaction();
 		        String hql ="from PgProductSales where saleId="+id;
 		        Query que = session.createQuery(hql);
-		        cl = (ProductSales) que.uniqueResult();
+		        cl = (PgProductSales) que.uniqueResult();
 		        transaction.commit();
 		        session.close();
 	       }
@@ -56,7 +57,28 @@ public class ProductSales {
 	        }
 	        return cl;
 	    }
-	public void insertPgProduct(ProductSales sp){
+	public PgProducts getProductByID(int id_pr) {
+		PgProducts cl = null;
+	       try
+	       {
+	    	    Configuration configuration =  new Configuration().configure();
+	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
+	        	Session session = sessionFactory.openSession();
+	        	
+	        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		        Transaction transaction = session.beginTransaction();
+		        String hql ="from PgProductSales where salesStatus = 1 and PRODUCT_ID="+id_pr;
+		        Query que = session.createQuery(hql);
+		        cl = (PgProducts) que.uniqueResult();
+		        transaction.commit();
+		        session.close();
+	       }
+	       catch  (HibernateException e) {
+	    	   e.printStackTrace();
+	        }
+	        return cl;
+	    }
+	public void insertPgProduct(PgProductSales sp){
 	 	Configuration configuration =  new Configuration().configure();
 	 	SessionFactory sessionFactory = configuration.buildSessionFactory();
 	 	Session session = sessionFactory.openSession();
@@ -66,7 +88,7 @@ public class ProductSales {
         session.close();
     }
 
- public void updatePgProduct(ProductSales sp){
+ public void updatePgProduct(PgProductSales sp){
 	 	Configuration configuration =  new Configuration().configure();
      	SessionFactory sessionFactory = configuration.buildSessionFactory();
      	Session session = sessionFactory.openSession();

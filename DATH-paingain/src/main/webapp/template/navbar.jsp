@@ -34,10 +34,10 @@
 		                      <li><a href="/manager/hoadon.jsp?stt=0">Đơn hàng hủy</a></li>
 		                    </ul>
 	                  </li>
-	                  <li><a><i class="fa  fa-file-text-o"></i>Quản lý khuyến mại <span class="fa fa-chevron-down"></span></a>
+	                  <li><a><i class="fa  fa-gift"></i>Quản lý khuyến mại <span class="fa fa-chevron-down"></span></a>
 	                    	<ul class="nav child_menu">
 	                    	<%
-	                    		List<PgCategories> catelst = new CategoryDAO().getAllPgCategories();
+	                    		List<PgCategories> catelst = new CategoryDAO().getActivePgCategories();
 	                    		for(PgCategories catex : catelst)
 	                    		{
 	                    	%>

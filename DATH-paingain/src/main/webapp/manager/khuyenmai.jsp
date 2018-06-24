@@ -1,8 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ page import="model.PgCategories" %>
+<%@ page import="model.PgProducts" %>
+<%@ page import="DAO.CategoryDAO" %>
+<%@ page import="DAO.ProductDAO" %>
+<%@ page import="DAO.ProductSalesDAO" %>
 <!DOCTYPE html>
 <html>
 	<head>
+		<%
+			try
+		{
+			int cateid = Integer.parseInt(request.getParameter("id"));
+			PgCategories cate =  new CategoryDAO().getCategory(cateid);
+		%>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
   		<title>Thêm khuyến mại</title>
@@ -36,29 +47,49 @@
 		                  	<!-- search-->
 					        <!-- ========================== -->
 					        <div class="container">
+					        <form action="/khuyenmai?action=add" method="post">
 				            	<div class="row">
 					                <div class="col-md-9 col-sm-9 col-xs-12">
+					                	<!-- 
 					                	<div class="box-header with-border">
 					                        <input type="text" name="txtsearchproc" class="form-control" placeholder="Tìm kiếm sách" id="txtsearch1" onkeyup ="showHint(this.value);">
 					                    </div>
+					                	 -->
 					                    <div class="box-body suggest" id="sugges1">
 					                        <ul class="list-suggest" id="result1"></ul>
 					                    </div>
 					                	<table id= "table" class="table table-striped table-bordered dataTable no-footer">
 										  <thead>
 										  	<tr>
-										  		<th></th>
-										  		
+										  		<th>Chọn sản phẩm</th>
 										  		<th>Mã sản phẩm</th>
 										  		<th>Tên sản phẩm</th>
 										  		<th>Đơn giá bán</th>
 										  		
 										  	</tr>
 										  </thead>
-										   <tbody id="muontradetail" onload="editBill();"></tbody>
+										   <tbody>
+										   		<%
+										   		List<PgProducts> lstsp = new ProductDAO().getAllPgProducts(cateid) ;
+										   		int dem=0;
+										   		for(PgProducts sp : lstsp)
+										   		{
+										   			PgProducts cksp = new ProductSalesDAO().getProductByID(sp.getProductId());
+										   			if(cksp==null){
+										   				dem= dem+1;
+										   		%>
+										   		<tr>
+										   			<td><input type="checkbox" class= "check"  name="ck<%=dem%>" value="<%=sp.getProductId() %>"></td>
+										   			<td><%=sp.getProductId() %></td>
+										   			<td><%=sp.getProductName() %></td>
+										   			<td><%=sp.getUnitPrice() %></td>
+										   		</tr>
+										   		<%} }%>
+										   </tbody>
 										</table>
+										<input type="hidden" name="ckcount" value="<%=dem%>">
 					                </div>
-					                <div class="col-md-3 col-sm-3 col-xs-12">
+					                <div class="col-md-3 col-sm-3 col-xs-12" style="margin-top: 11px;">
 					                	<div class="x_panel">
 					                		<div class="x_title">
 							                  	<h4><font style="vertical-align: inherit;">
@@ -108,11 +139,18 @@
 					                	</div>
 					                	
 					                </div>
-					                <div class="clearfix"></div>      
-							       
+					                <button type="submit" style="float: right;width: 91px;margin-right: 26px;" class="btn btn-primary" onclick="saveBill();"> Lưu</button>      
+							       	<button type="button" type="button" id="checkAll" onclick="selectAll();" style="float: right;width: 91px;margin-right: 26px;" class="btn btn-primary">Check all</button>
 				            </div>
-				            <button type="button" style="float: right;width: 91px;margin-right: 26px;" class="btn btn-primary" onclick="saveBill();"> Lưu</button>
+				            </form>
 			        		</div>
+	<%
+		}
+		catch(Exception e)
+		{
+			response.sendRedirect("/manager/index.jsp");
+		}
+	%>
 					        <!-- ========================== -->
 					      </div>
 	             </div>
