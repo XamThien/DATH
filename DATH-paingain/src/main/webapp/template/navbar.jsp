@@ -37,13 +37,25 @@
 	                  </li>
 	                  <li><a><i class="fa  fa-gift"></i>Quản lý khuyến mại <span class="fa fa-chevron-down"></span></a>
 	                    	<ul class="nav child_menu">
-	                    	<%
-	                    		List<PgCategories> catelst = new CategoryDAO().getActivePgCategories();
-	                    		for(PgCategories catex : catelst)
-	                    		{
-	                    	%>
-		                      <li><a href="/manager/khuyenmai.jsp?id=<%=catex.getCategoryId()%>"><%=catex.getCategoryName() %></a></li>
-		                      <%} %>
+	                    	
+		                      <li>
+		                      		<navx>
+										<ul>
+											<li><a href="#">Thêm khuyến mại</a>
+									            <ul>
+													<%
+									                    List<PgCategories> catelst = new CategoryDAO().getActivePgCategories();
+									                    for(PgCategories catex : catelst)
+								                    {
+								                    %>
+									                	<li><a href="/manager/khuyenmai.jsp?id=<%=catex.getCategoryId()%>"><%=catex.getCategoryName() %></a></li>
+									                <%} %>
+									            </ul>
+									        </li>
+										</ul>
+									</navx>
+							</li>
+		                      <li><a href="#">Kết thúc khuyến mại</a></li>
 		                    </ul>
 	                  </li>
 	                  <li><a href="/manager/nhanvien.jsp"><i class="fa fa-users"></i>Quản lý tài khoản </a></li>

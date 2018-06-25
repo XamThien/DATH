@@ -64,5 +64,6 @@
 		    <link rel="stylesheet" href="/resources/build/css/custom.min.css">
 		    
 		    <link rel="stylesheet" href="/resources/build/css/configstyle.css">
+		    <link rel="stylesheet" href="/resources/build/css/nav.css">
 		    
 		    <link rel="stylesheet" href="/resources/build/css/jquery.boot-tab-slider.min.css">
