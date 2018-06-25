@@ -115,8 +115,15 @@ public class Product extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
     	HttpSession session = request.getSession();
-    	int cateid = (int)session.getAttribute("cateid");
     	
+    	int style = Integer.parseInt(request.getParameter("st"));
+    	String path ="";
+    	if(style==1) 
+    	{
+    		int cateid = (int)session.getAttribute("cateid");
+    		path="/manager/sanpham.jsp?id="+cateid;
+    	}
+    	if(style==2) {path="/manager/hanghoa.jsp";}
 		String action = request.getParameter("action");
 		String message ="";
 		switch(action)
@@ -175,7 +182,7 @@ public class Product extends HttpServlet {
 	            	
 	            	
 	            	message = "Sửa thông tin sản phẩm thành công.";
-	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
+	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 					request.setAttribute("msg", message );
 					xxx.forward(request, response);
 	            	
@@ -183,7 +190,7 @@ public class Product extends HttpServlet {
 	            catch(Exception e)
 				{
 	            	message = "Sửa thông tin sản phẩm không thành công.1";
-	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
+	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 					request.setAttribute("msg", message );
 					xxx.forward(request, response);
 				}
@@ -191,7 +198,7 @@ public class Product extends HttpServlet {
 			catch(Exception e)
 			{
 				message = "Sửa thông tin sản phẩm không thành công.2"+e;
-	        	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
+	        	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 				request.setAttribute("msg", message );
 				xxx.forward(request, response);
 			}
@@ -227,7 +234,7 @@ public class Product extends HttpServlet {
 	            	PgProductPictures prpic = new PgProductPictures(tl,request.getContextPath()+uploadFile(request,"photo"),1); 
 	            	new ProductPictures().insertPgProductPictures(prpic);
 	            	message = "Thêm sản phẩm thành công.";
-	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
+	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 					request.setAttribute("msg", message );
 					xxx.forward(request, response);
 	            	
@@ -235,7 +242,7 @@ public class Product extends HttpServlet {
 	            catch(Exception e)
 				{
 	            	message = "Thêm sản phẩm không thành công.1";
-	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
+	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 					request.setAttribute("msg", message );
 					xxx.forward(request, response);
 				}
@@ -243,7 +250,7 @@ public class Product extends HttpServlet {
 			catch(Exception e)
 			{
 				message = "Thêm sản phẩm không thành công.2";
-	        	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
+	        	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 				request.setAttribute("msg", message );
 				xxx.forward(request, response);
 			}

@@ -11,11 +11,7 @@
   		<title>Quản lý sản phẩm</title>
 		<%@include file="/template/header.jsp"%>
 	</head>
-	<%
-		int id = Integer.parseInt(request.getParameter("id"));
-		
-		session.setAttribute("cateid", id);
-	%>
+	
 	<body >
 			<div class="nav-md">
 		    <div class="container body">
@@ -63,7 +59,7 @@
 										  </thead>
 										  <tbody>
 										  <%
-										  		List<PgProducts> lst = new ProductDAO().getAllPgProducts(id);
+										  		List<PgProducts> lst = new ProductDAO().getAllProducts();
 										  		int dem=1;
 										  		for(PgProducts pr : lst)
 										  		{
@@ -113,7 +109,7 @@
                           </button>
                           <h4 class="modal-title" id="myModalLabel">Thêm mới sản phẩm: </h4>
                         </div>
-                        <form action="/product?action=add&st=1" method="post" enctype="multipart/form-data">
+                        <form action="/product?action=add&st=2" method="post" enctype="multipart/form-data">
                         <div class="modal-body">
                         		<div class='col-sm-12'>
 	                        		<label >Ảnh sản phẩm:</label>
@@ -241,7 +237,7 @@
                           </button>
                           <h4 class="modal-title" id="myModalLabel">Chỉnh sửa thông tin sản phẩm:</h4>
                         </div>
-                        <form action="/product?action=edit&st=1" method="post" enctype="multipart/form-data">
+                        <form action="/product?action=edit&st=2" method="post" enctype="multipart/form-data">
                         <div class="modal-body">
                         		<input type="hidden" id="eid" name="eid">
                         		<div class='col-sm-12'>
@@ -370,7 +366,7 @@
                         </div>
                         
                         <div class="modal-footer">
-                        	<form action="/product?action=delete&st=1" method="post">
+                        	<form action="/product?action=delete" method="post">
                         		<div class="edit">
                         			<input type="hidden" id="did" name="did" />
                         		</div>
