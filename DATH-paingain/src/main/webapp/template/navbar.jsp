@@ -22,7 +22,8 @@
 	                  <li><a href="#"><i class="fa fa-shopping-cart"></i>Bán hàng</a>
 	                  <li><a><i class="fa fa-cube"></i>Quản lý sản phẩm <span class="fa fa-chevron-down"></span></a>
 	                    	<ul class="nav child_menu">
-		                      <li><a href="/danhmuc">Quản lý danh mục & sản phẩm</a></li>
+		                      <li><a href="/danhmuc">Quản lý danh mục</a></li>
+		                      <li><a href="/manager/hanghoa.jsp">Quản lý hàng hóa</a></li>
 		                      <li><a href="/manager/suppliers.jsp">Quản lý nhà cung cấp</a></li>
 		                    </ul>
 	                  </li>
