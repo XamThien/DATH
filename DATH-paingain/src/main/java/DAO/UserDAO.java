@@ -28,7 +28,7 @@ public class UserDAO {
 		        Query que = session.createQuery(hql);
 		        list = que.list();
 		        transaction.commit();
-		        session.close();
+		    //    session.close();
 	        }
 	        catch  (HibernateException e) {
 	        	 e.printStackTrace();
