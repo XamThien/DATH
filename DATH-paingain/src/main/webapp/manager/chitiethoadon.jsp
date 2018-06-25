@@ -58,6 +58,7 @@
 					        <div class="container">
 					        	<br/>
 					        	<div class="row">
+					        	
 					        		<div class="col-sm-6" style="border-right: 1px solid; padding-left: 53px;">
 					        			<label>Thông tin khách hàng:</label>
 										<div class="clearfix"></div>
@@ -81,7 +82,13 @@
 					        			</div>
 					        		</div>
 					        		<div class="col-sm-6" style="padding-left: 53px;">
-					        			<form action="/order" method="post">
+					        		<form action="/order" method="post">
+					        			<input type="hidden" name="cus" value="<%=or.getPgUsersByCustomerId().getRecordId() %>">
+					        			<input type="hidden" name="emp" value="<%=or.getPgUsersByEmployeeId().getRecordId() %>">
+					        			<input type="hidden" name="name" value="<%=or.getShipName() %>">
+					        			<input type="hidden" name="add" value="<%=or.getShipAddress() %>">
+					        			<input type="hidden" name="phone" value="<%=or.getShipPhone() %>">
+					        			<input type="hidden" name="dateorder" value="<%=or.getOrderDate() %>">
 					        			<input type="hidden" name="oid" value="<%=id %>">
 					        			<label>Cập nhật đơn hàng:</label>
 										<div class="clearfix"></div>
@@ -113,10 +120,11 @@
 											<div class="clearfix"></div>
 											<button type="submit" style="margin-top: 7px;" class="btn btn-primary" <%=(stt==0 || stt==3)? "disabled='disabled'":"" %>>Cập nhật</button>
 					        				</div>
+					        			</form>
 					        			
-					        			
-					        			</form>	
+					        				
 					        		</div>
+					        		
 					        	</div>
 					        	<br/>
 					        	<div class="ln_solid"></div>

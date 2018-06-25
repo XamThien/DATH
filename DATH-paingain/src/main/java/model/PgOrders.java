@@ -43,6 +43,39 @@ public class PgOrders implements java.io.Serializable {
 		this.pgUsersByEmployeeId = pgUsersByEmployeeId;
 	}
 
+	public PgOrders(Integer orderId,PgUsers pgUsersByCustomerId, PgUsers pgUsersByEmployeeId, Date orderDate, Date approvedDate,
+			Integer orderStatus, String shipName, String shipAddress, String shipPhone) {
+		this.orderId = orderId;
+		this.pgUsersByCustomerId = pgUsersByCustomerId;
+		this.pgUsersByEmployeeId = pgUsersByEmployeeId;
+		this.orderDate = orderDate;
+		this.approvedDate = approvedDate;
+		this.orderStatus = orderStatus;
+		this.shipName = shipName;
+		this.shipAddress = shipAddress;
+		this.shipPhone = shipPhone;
+	}
+	public PgOrders(Integer orderId,PgUsers pgUsersByCustomerId, PgUsers pgUsersByEmployeeId, Date orderDate,
+			Integer orderStatus, String shipName, String shipAddress, String shipPhone) {
+		this.orderId = orderId;
+		this.pgUsersByCustomerId = pgUsersByCustomerId;
+		this.pgUsersByEmployeeId = pgUsersByEmployeeId;
+		this.orderDate = orderDate;
+		this.orderStatus = orderStatus;
+		this.shipName = shipName;
+		this.shipAddress = shipAddress;
+		this.shipPhone = shipPhone;
+	}
+	public PgOrders(Integer orderId,PgUsers pgUsersByCustomerId, PgUsers pgUsersByEmployeeId, 
+			Integer orderStatus, String shipName, String shipAddress, String shipPhone) {
+		this.orderId = orderId;
+		this.pgUsersByCustomerId = pgUsersByCustomerId;
+		this.pgUsersByEmployeeId = pgUsersByEmployeeId;
+		this.orderStatus = orderStatus;
+		this.shipName = shipName;
+		this.shipAddress = shipAddress;
+		this.shipPhone = shipPhone;
+	}
 	public PgOrders(PgUsers pgUsersByCustomerId, PgUsers pgUsersByEmployeeId, Date orderDate, Date approvedDate,
 			Integer orderStatus, String shipName, String shipAddress, String shipPhone,
 			Set<PgOrderDetails> pgOrderDetailses) {

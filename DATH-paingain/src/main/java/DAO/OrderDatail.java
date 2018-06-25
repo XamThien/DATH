@@ -27,7 +27,6 @@ public class OrderDatail {
 		        Query que = session.createQuery(hql);
 		        list = que.list();
 		        transaction.commit();
-		        //session.close();
 	        }
 	        catch  (HibernateException e) {
 	        	 e.printStackTrace();
