@@ -61,7 +61,26 @@ public class ProductDAO {
         }
         return list;
     }
+ // phương thức do Huy viết để get sp
+    @SuppressWarnings("unchecked")
+    public List<PgProducts> getAllProducts() {
+        List<PgProducts> list = null;
+        try {
+            Configuration configuration = new Configuration().configure();
+            SessionFactory sessionFactory = configuration.buildSessionFactory();
+            Session session = sessionFactory.openSession();
 
+            //Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+            String hql = "from PgProducts where productStatus=1";
+            Query que = session.createQuery(hql);
+            list = que.list();
+            transaction.commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     public PgProducts getPgProductsByID(int id) {
         Session session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
