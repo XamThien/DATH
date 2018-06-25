@@ -103,7 +103,7 @@
 			                                    } else {
 			                                        out.print("<td>InActive</td>");
 			                                }%>
-			                                <td><a href="#" onclick="pass_update(<%=per.getPgModules().getModuleId() %>,'<%=per.getPgModules().getModuleName() %>',<%=per.getIsRead() %>,<%=per.getIsInsert() %>,<%=per.getIsUpdate() %>,<%=per.getIsDelete() %>,<%=per.getPerStatus() %>,'<%=per.getDescription() %>')" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa thao tác</a>
+			                                <td><a href="#" onclick="pass_update(<%=per.getPermissionId()%>,'<%=per.getPgModules().getModuleName() %>',<%=per.getIsRead() %>,<%=per.getIsInsert() %>,<%=per.getIsUpdate() %>,<%=per.getIsDelete() %>,<%=per.getPerStatus() %>,'<%=per.getDescription() %>')" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa thao tác</a>
 			                               
 			                                </td>
 										  </tr>
@@ -156,7 +156,7 @@
 				                           <select class="form-control" id="aparent" name="parent" >
 			                                	<option value="0" selected>Không có</option>
 				                           <%
-				                           ArrayList <PgModules> lis = (ArrayList<PgModules>) new ModuleDAO().getAllPgModules();
+				                           ArrayList <PgModules> lis = (ArrayList<PgModules>) new ModuleDAO().getActivePgModules();
 				                           if(lis != null){
 				                        	   for(PgModules l : lis){
 				                        		   
@@ -204,7 +204,7 @@
 				                        <div class="form-group" >
 				                            <select class="form-control" id="module" name="module" >
 				                           <%
-				                           ArrayList <PgModules> ls = (ArrayList<PgModules>) new ModuleDAO().getAllPgModules();
+				                           ArrayList <PgModules> ls = (ArrayList<PgModules>) new ModuleDAO().getActivePgModules();
 				                           if(lis != null){
 				                        	   for(PgModules l : ls){
 				                        		   
@@ -229,9 +229,9 @@
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                        	<input type="checkbox" id="read" name="read"> Xem chi tiết <br>	
-				                        	<input type="checkbox" id="insert" name="insert"> Thêm mới	<br>
-				                        	<input type="checkbox" id="update" name="update"> Cập nhật	<br>
-				                        	<input type="checkbox" id="del" name="del"> Xóa	
+				                        	<input type="checkbox" id="insert" name="insert" onblur="read_add()"> Thêm mới	<br>
+				                        	<input type="checkbox" id="update" name="update" onblur="read_add()"> Cập nhật	<br>
+				                        	<input type="checkbox" id="del" name="del" onblur="read_add()"> Xóa	
 				                        </div>
 				                    </div>
 				                </div>
@@ -267,19 +267,16 @@
                           </button>
                           <h4 class="modal-title" id="myModalLabel">Sửa thao tác:</h4>
                         </div>
-                        <form action="#" method="post">
+                        <form action="/rolecontrol?action=edit" method="post">
                         <div class="modal-body">
                         <div class="hd_id">
-                        		<input type="hidden" id="roleid" class="form-control" name="roleid" value="<%=id%>"/>
-                        	</div>
-                        	<div class="hd_id">
-                        		<input type="hidden" id="modelid" class="form-control" name="modelid" />
+                        		<input type="hidden" id="perid" class="form-control" name="perid" />
                         	</div>
 							   <div class='col-sm-12'>
 				                   <label >Tên chức năng:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <input type="text" placeholder="Tên chức năng" disable id="modelname">
+				                            <input type="text" placeholder="Tên chức năng" disabled="disabled" id="modelname">
 				                        </div>
 				                    </div>
 				                </div>
@@ -289,9 +286,9 @@
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                        	<input type="checkbox" id="eread" name="eread"> Xem chi tiết <br>	
-				                        	<input type="checkbox" id="einsert" name="einsert"> Thêm mới	<br>
-				                        	<input type="checkbox" id="eupdate" name="eupdate"> Cập nhật	<br>
-				                        	<input type="checkbox" id="edel" name="edel"> Xóa	
+				                        	<input type="checkbox" id="einsert" name="einsert" onblur="read_edit()"> Thêm mới	<br>
+				                        	<input type="checkbox" id="eupdate" name="eupdate" onblur="read_edit()"> Cập nhật	<br>
+				                        	<input type="checkbox" id="edel" name="edel" onblur="read_edit()"> Xóa	
 				                        </div>
 				                    </div>
 				                </div>
@@ -299,7 +296,7 @@
 				                   <label >Trạng thái:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                            <select class="form-control" id="estatus" name="status" >
+				                            <select class="form-control" id="estatus" name="estatus" >
 			                                	<option value="1" >Active</option>
 			                                
 			                                	<option value="0" >InActive</option>
@@ -334,19 +331,27 @@
 			    </div>
 			    <script type="text/javascript">
 			    function pass_update(id,name,read,insert,update,del,status,des) {
-			    	document.getElementById("modelid").value = id; 
+			    	document.getElementById("perid").value = id; 
 			    	document.getElementById("modelname").value = name;
 			    	if(read == true){
 			    		document.getElementById("eread").checked = true;
+			    	} else {
+			    		document.getElementById("eread").checked = false;
 			    	}
 			    	if(insert == true){
 			    		document.getElementById("einsert").checked = true;
+			    	}else {
+			    		document.getElementById("einsert").checked = false;
 			    	}
 			    	if(update == true){
 			    		document.getElementById("eupdate").checked = true;
+			    	}else {
+			    		document.getElementById("eupdate").checked = false;
 			    	}
 			    	if(del == true){
 			    		document.getElementById("edel").checked = true;
+			    	}else {
+			    		document.getElementById("edel").checked = false;
 			    	}
 			    	if(status==1){
 			    		document.getElementById("estatus").value="1";
@@ -362,12 +367,15 @@
 			    	} 
 			    	return true;
 			    }
-			    function checkedit(){
-			    	if(document.getElementById("aname").value==""){
-			    		alert("Bạn chưa điền tên danh mục sản phẩm.");
-			    		return false;
-			    	} 
-			    	return true;
+			    function read_edit(){
+			    	if((document.getElementById("einsert").checked == true)||(document.getElementById("eupdate").checked == true)||(document.getElementById("edel").checked == true)){
+			    		document.getElementById("eread").checked = true;
+			    	}
+			    }
+			    function read_add(){
+			    	if((document.getElementById("insert").checked == true)||(document.getElementById("update").checked == true)||(document.getElementById("del").checked == true)){
+			    		document.getElementById("read").checked = true;
+			    	}
 			    }
 			    
 			</script>

@@ -45,7 +45,7 @@
 		                      <%} %>
 		                    </ul>
 	                  </li>
-	                  <li><a href="/manager/nhanvien.jsp"><i class="fa fa-users"></i>Quản lý nhân viên </a></li>
+	                  <li><a href="/manager/nhanvien.jsp"><i class="fa fa-users"></i>Quản lý tài khoản </a></li>
 	                  <li><a ><i class="fa fa-sitemap"></i>Quản lý phân quyền<span class="fa fa-chevron-down"></span></a>
 	                  	<ul class="nav child_menu">
 		                      <li><a href="/manager/phanquyen">Phân quyền</a></li>

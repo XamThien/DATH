@@ -36,6 +36,18 @@ public class PgRolePermission implements java.io.Serializable {
 		this.pgRoles = pgRoles;
 	}
 
+	public PgRolePermission(Integer permissionId,PgModules pgModules, PgRoles pgRoles, Boolean isInsert, Boolean isUpdate, Boolean isDelete,
+			Boolean isRead, Integer perStatus, String description) {
+		this.permissionId = permissionId;
+		this.pgModules = pgModules;
+		this.pgRoles = pgRoles;
+		this.isInsert = isInsert;
+		this.isUpdate = isUpdate;
+		this.isDelete = isDelete;
+		this.isRead = isRead;
+		this.perStatus = perStatus;
+		this.description = description;
+	}
 	public PgRolePermission(PgModules pgModules, PgRoles pgRoles, Boolean isInsert, Boolean isUpdate, Boolean isDelete,
 			Boolean isRead, Integer perStatus, String description) {
 		this.pgModules = pgModules;
