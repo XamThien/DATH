@@ -3,31 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package site.actions.checkout;
+package site.acctions.search;
 
 import database.Hibernate;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Cart;
-import model.PgOrderDetails;
-import model.PgOrders;
-import model.PgUsers;
+import model.PgCategories;
+import model.PgProducts;
 import org.hibernate.Session;
-import service.UserAuthentication;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
  * @author dangt
  */
-@WebServlet(name = "CheckoutAction", urlPatterns = {"/checkout-action"})
-public class CheckoutAction extends HttpServlet {
+@WebServlet(name = "Search", urlPatterns = {"/search"})
+public class Search extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,7 +40,18 @@ public class CheckoutAction extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.sendRedirect(request.getContextPath() + "/site/layouts/accessdenied.jsp");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Search</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Search at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,7 +66,23 @@ public class CheckoutAction extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        String str = request.getParameter("q");
+        Session session = Hibernate.getSessionFactory().openSession();
+        session.beginTransaction();
+        List<PgProducts> products = session.createCriteria(PgProducts.class, "product")
+                .createAlias("product.pgCategories", "category")
+                .add(Restrictions.or(Restrictions.like("product.productName", str, MatchMode.ANYWHERE),
+                        Restrictions.like("category.categoryName", str, MatchMode.ANYWHERE)))
+                .list();
+        session.getTransaction().commit();
+        List<PgCategories> categorieses = session.createCriteria(PgCategories.class)
+                .addOrder(Order.asc("sortIndex"))
+                .list();
+        request.setAttribute("items", products);
+        request.setAttribute("categories", categorieses);
+        request.setAttribute("title", "Search result");
+        request.getRequestDispatcher("site/search-result.jsp").forward(request, response);
     }
 
     /**
@@ -70,41 +96,7 @@ public class CheckoutAction extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession httpSession = request.getSession();
-        PgOrders cartc = (PgOrders) httpSession.getAttribute("mycart");
-        UserAuthentication auth = (UserAuthentication) httpSession.getAttribute("authentic");
-
-        if (auth == null) {
-            response.sendRedirect(request.getContextPath() + "/site-login");
-            return;
-        }
-        if (cartc == null) {
-            cartc = new Cart();
-        }
-        PgOrders cart = new PgOrders();
-        PgUsers user = auth.getUsers();
-        if (!cartc.getPgOrderDetailses().isEmpty()) {
-            cart.setPgUsersByCustomerId(user);
-            cart.setOrderDate(new Date());
-            cart.setOrderStatus(0);
-            cart.setShipName(user.getFirstName() + " " + user.getLastName());
-            cart.setShipAddress(user.getAddress());
-            cart.setShipPhone(user.getPhoneNumber());
-            cart.setPgOrderDetailses(cartc.getPgOrderDetailses());
-            Session session = Hibernate.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
-            session.save(cart);
-            for (PgOrderDetails ord : cart.getPgOrderDetailses()) {
-                ord.setPgOrders(cart);
-                ord.setUnitPrice(ord.getPgProducts().getUnitPrice());
-                session.save(ord);
-            }
-            session.getTransaction().commit();
-            httpSession.setAttribute("mycart", new Cart());
-            response.getWriter().print("success");
-        } else {
-            response.getWriter().print("cart empty");
-        }
+        processRequest(request, response);
     }
 
     /**

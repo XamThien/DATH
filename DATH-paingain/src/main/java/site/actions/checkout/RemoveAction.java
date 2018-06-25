@@ -8,26 +8,23 @@ package site.actions.checkout;
 import database.Hibernate;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Cart;
-import model.PgOrderDetails;
 import model.PgOrders;
-import model.PgUsers;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import service.UserAuthentication;
 
 /**
  *
  * @author dangt
  */
-@WebServlet(name = "CheckoutAction", urlPatterns = {"/checkout-action"})
-public class CheckoutAction extends HttpServlet {
+@WebServlet(name = "RemoveAction", urlPatterns = {"/order-remove"})
+public class RemoveAction extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,7 +38,18 @@ public class CheckoutAction extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.sendRedirect(request.getContextPath() + "/site/layouts/accessdenied.jsp");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet RemoveAction</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet RemoveAction at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,7 +64,27 @@ public class CheckoutAction extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String id = request.getParameter("id");
+        HttpSession httpSession = request.getSession();
+        UserAuthentication auth = (UserAuthentication) httpSession.getAttribute("authentic");
+        if (auth != null) {
+            Session session = Hibernate.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            PgOrders order = (PgOrders) session.createCriteria(PgOrders.class)
+                    .add(Restrictions.and(Restrictions.eq("orderId", Integer.parseInt(id)),
+                            Restrictions.eq("pgUsersByCustomerId", auth.getUsers())))
+                    .uniqueResult();
+            if (order.getOrderStatus() == 1) {
+                order.setOrderStatus(0);
+                session.update(order);
+                response.getWriter().print("success");
+            } else {
+                response.getWriter().print("Don hang dang trong giai doan ban giao. Khong the huy");
+            }
+            session.refresh(auth.getUsers());
+            session.getTransaction().commit();
+
+        }
     }
 
     /**
@@ -70,41 +98,7 @@ public class CheckoutAction extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession httpSession = request.getSession();
-        PgOrders cartc = (PgOrders) httpSession.getAttribute("mycart");
-        UserAuthentication auth = (UserAuthentication) httpSession.getAttribute("authentic");
-
-        if (auth == null) {
-            response.sendRedirect(request.getContextPath() + "/site-login");
-            return;
-        }
-        if (cartc == null) {
-            cartc = new Cart();
-        }
-        PgOrders cart = new PgOrders();
-        PgUsers user = auth.getUsers();
-        if (!cartc.getPgOrderDetailses().isEmpty()) {
-            cart.setPgUsersByCustomerId(user);
-            cart.setOrderDate(new Date());
-            cart.setOrderStatus(0);
-            cart.setShipName(user.getFirstName() + " " + user.getLastName());
-            cart.setShipAddress(user.getAddress());
-            cart.setShipPhone(user.getPhoneNumber());
-            cart.setPgOrderDetailses(cartc.getPgOrderDetailses());
-            Session session = Hibernate.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
-            session.save(cart);
-            for (PgOrderDetails ord : cart.getPgOrderDetailses()) {
-                ord.setPgOrders(cart);
-                ord.setUnitPrice(ord.getPgProducts().getUnitPrice());
-                session.save(ord);
-            }
-            session.getTransaction().commit();
-            httpSession.setAttribute("mycart", new Cart());
-            response.getWriter().print("success");
-        } else {
-            response.getWriter().print("cart empty");
-        }
+        processRequest(request, response);
     }
 
     /**

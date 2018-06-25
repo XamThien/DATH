@@ -46,8 +46,9 @@ $button.text(formValues["buttonText"]);
 function pushLstCK()
 {
 	var lstIdCkeck = [];
+
 	var arr = [];
-	arr= document.querySelector("#table :checkbox");
+	arr= document.querySelector("#table .check");
 	var size = arr.length;
 	var ck = true;
 	var dem = 0;
@@ -68,7 +69,8 @@ function pushLstCK()
 	}
 	if(ck==true)
 	{
-		document.getElementById("lstid").value = arr.toString();;
+		//document.getElementById("lstid").value = arr.toString();
+		alert(lstIdCkeck.toString());
 	}
 	else
 	{
@@ -77,3 +79,26 @@ function pushLstCK()
 	
 }
 
+
+$(document).ready(function(){
+	$("#smit").click(function(){
+		var items =[];
+	$("#table input[type=checkbox]:checked").each(function(){
+		items.push($(this).val());
+	});
+	//console.log(items);
+	//document.getElementById("lstid").value = items.toString();
+	//alert(document.getElementById("lstid").value);
+        
+	if(items.length==0)
+	{
+		alert("Chưa lựa chọn sản phẩm");
+	}
+	else
+	{
+		document.getElementById("lstid").value = items.toString();
+		//alert(document.getElementById("lstid").value);
+	}
+	});
+	
+});

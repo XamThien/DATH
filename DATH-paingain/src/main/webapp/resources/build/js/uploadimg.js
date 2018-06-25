@@ -41,8 +41,8 @@ function readImage() {
 
             picReader.readAsDataURL(file);
         }
-        document.getElementById("slanh").value =dem;
-        $("#pro-image").val()=files;
+//        document.getElementById("slanh").value =dem;
+//        $("#pro-image").val()=files;
 
     } else {
         console.log('Browser not support');
@@ -73,6 +73,5 @@ $('#myDatepicker').datetimepicker();
         $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
     });
     
-    $("#datetimepicker7").on("dp.change", function(e) {
-        $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-
+//    $("#datetimepicker7").on("dp.change", function(e) {
+//    	$('#datetimepicker6').data("DateTimePicker").maxDate(e.date);

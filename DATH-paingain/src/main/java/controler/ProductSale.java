@@ -137,14 +137,16 @@ public class ProductSale extends HttpServlet {
 				String[] listid = request.getParameter("lstid").split(",");
 				int km = Integer.parseInt(request.getParameter("kmvalue"));
 				String bg = request.getParameter("bgtime");
+				bg= bg.split("/")[2]+"-"+bg.split("/")[0]+"-"+bg.split("/")[1];
 				String ed = request.getParameter("edtime");
+				ed= ed.split("/")[2]+"-"+ed.split("/")[0]+"-"+ed.split("/")[1];
 
 	            try
 	            {
 	            	
-	            	for(String id :listid)
+	            	for( int i=0;i<listid.length;i++)
 	            	{
-	            		
+							String id = listid[i];
 	            			PgProducts sp = new PgProducts(Integer.parseInt(id));
 	            			
 		       			    SimpleDateFormat datefrmat = new SimpleDateFormat("yyyy-MM-dd");

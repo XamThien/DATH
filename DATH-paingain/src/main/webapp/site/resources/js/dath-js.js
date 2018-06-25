@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 $(document).ready(function () {
+    var path = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 2));
     $(".add-to-cart").click(function () {
         var dId = $(this).attr("itemid");
         $.ajax({
@@ -14,7 +15,7 @@ $(document).ready(function () {
                 if (data !== "success") {
                     alert("error");
                 } else {
-                    $("#notify-content").text("product is added to your cart");
+                    $("#notify-content").html("product is added to your cart <a href='" + path + "/mycart'>view cart </a>");
                     $('#notify').modal('show');
                 }
             }
@@ -78,9 +79,9 @@ $(document).ready(function () {
             type: "POST",
             data: datas
         }).done(function (data) {
-            if(data === "success"){
+            if (data === "success") {
                 location.reload();
-            }else{
+            } else {
                 alert(data);
             }
         });
@@ -96,5 +97,26 @@ $(document).ready(function () {
                 alert(data);
             }
         });
+    });
+    $(".order_delete").click(function () {
+        var oid = $(this).attr("itemid");
+        $.ajax({
+            url: "order-remove",
+            type: "GET",
+            data: {id: oid}
+        }).done(function (data) {
+            if (data === "success") {
+                location.reload();
+            } else {
+                alert(data);
+            }
+        });
+    });
+    $(".input-search").keypress(function(e){
+        var code = e.keyCode || e.which;
+        if(code===13){
+        var q=$(this).val();
+            location.replace(path+"/search?q="+q);
+        }
     });
 });
