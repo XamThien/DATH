@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package site.Views.checkout;
+package site.Views.login;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,8 +18,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author dangt
  */
-@WebServlet(name = "Checkout", urlPatterns = {"/checkout"})
-public class Checkout extends HttpServlet {
+@WebServlet(name = "UserInfor", urlPatterns = {"/myaccount"})
+public class UserInfor extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,16 +48,12 @@ public class Checkout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setAttribute("title", "Checkout");
-        HttpSession session = request.getSession();
-        model.Cart cart = (model.Cart) session.getAttribute("mycart");
-        if (cart == null) {
-            cart = new model.Cart();
-            session.setAttribute("mycart", cart);
+        if (request.getSession().getAttribute("authentic") != null) {
+            request.setAttribute("title", "My account");
+            request.getRequestDispatcher("site/account.jsp").forward(request, response);
+        } else {
+            processRequest(request, response);
         }
-        request.setAttribute("cart", cart);
-        request.getRequestDispatcher("site/checkout.jsp").forward(request, response);
     }
 
     /**

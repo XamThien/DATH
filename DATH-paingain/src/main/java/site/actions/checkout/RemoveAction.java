@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package site.Views.checkout;
+package site.actions.checkout;
 
+import database.Hibernate;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,13 +14,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.PgOrders;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+import service.UserAuthentication;
 
 /**
  *
  * @author dangt
  */
-@WebServlet(name = "Checkout", urlPatterns = {"/checkout"})
-public class Checkout extends HttpServlet {
+@WebServlet(name = "RemoveAction", urlPatterns = {"/order-remove"})
+public class RemoveAction extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,7 +38,18 @@ public class Checkout extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.sendRedirect(request.getContextPath() + "/site/layouts/accessdenied.jsp");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet RemoveAction</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet RemoveAction at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -48,16 +64,27 @@ public class Checkout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setAttribute("title", "Checkout");
-        HttpSession session = request.getSession();
-        model.Cart cart = (model.Cart) session.getAttribute("mycart");
-        if (cart == null) {
-            cart = new model.Cart();
-            session.setAttribute("mycart", cart);
+        String id = request.getParameter("id");
+        HttpSession httpSession = request.getSession();
+        UserAuthentication auth = (UserAuthentication) httpSession.getAttribute("authentic");
+        if (auth != null) {
+            Session session = Hibernate.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            PgOrders order = (PgOrders) session.createCriteria(PgOrders.class)
+                    .add(Restrictions.and(Restrictions.eq("orderId", Integer.parseInt(id)),
+                            Restrictions.eq("pgUsersByCustomerId", auth.getUsers())))
+                    .uniqueResult();
+            if (order.getOrderStatus() == 1) {
+                order.setOrderStatus(0);
+                session.update(order);
+                response.getWriter().print("success");
+            } else {
+                response.getWriter().print("Don hang dang trong giai doan ban giao. Khong the huy");
+            }
+            session.refresh(auth.getUsers());
+            session.getTransaction().commit();
+
         }
-        request.setAttribute("cart", cart);
-        request.getRequestDispatcher("site/checkout.jsp").forward(request, response);
     }
 
     /**

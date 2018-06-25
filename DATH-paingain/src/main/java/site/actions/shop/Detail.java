@@ -3,23 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package site.Views.checkout;
+package site.actions.shop;
 
+import database.Hibernate;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import model.PgCategories;
+import model.PgProducts;
+import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
  * @author dangt
  */
-@WebServlet(name = "Checkout", urlPatterns = {"/checkout"})
-public class Checkout extends HttpServlet {
+@WebServlet(name = "Detail", urlPatterns = {"/detail"})
+public class Detail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,15 +55,25 @@ public class Checkout extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setAttribute("title", "Checkout");
-        HttpSession session = request.getSession();
-        model.Cart cart = (model.Cart) session.getAttribute("mycart");
-        if (cart == null) {
-            cart = new model.Cart();
-            session.setAttribute("mycart", cart);
+        int pId = Integer.parseInt(request.getParameter("id"));
+        Session session = Hibernate.getSessionFactory().openSession();
+        session.beginTransaction();
+        PgProducts product = (PgProducts) session.get(PgProducts.class, pId);
+        if (product != null) {
+            request.setAttribute("item", product);
         }
-        request.setAttribute("cart", cart);
-        request.getRequestDispatcher("site/checkout.jsp").forward(request, response);
+        List<PgCategories> categories = session.createCriteria(PgCategories.class)
+                .addOrder(Order.asc("sortIndex")).list();
+        List<PgProducts> relproduct = session.createCriteria(PgProducts.class)
+                .add(Restrictions.ne("productId", pId))
+                .addOrder(Order.desc("isNew"))
+                .add(Restrictions.ne("productStatus", 0))
+                .setMaxResults(3).list();
+        session.getTransaction().commit();
+        request.setAttribute("categories", categories);
+        request.setAttribute("title", "Product detail");
+        request.setAttribute("relp", relproduct);
+        request.getRequestDispatcher("site/product-details.jsp").forward(request, response);
     }
 
     /**

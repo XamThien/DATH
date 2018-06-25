@@ -27,12 +27,12 @@
                             <td class="cart_product">
                                 <c:forEach var="pic" items="${item.pgProducts.pgProductPictureses}">
                                     <c:if test="${pic.pictureType ==1}">
-                                        <a href=""><img src="${path}${pic.path}" alt="" style="max-width: 20%;"></a>
+                                        <a href="${path}/detail?id=${item.pgProducts.productId}"><img src="${path}${pic.path}" alt="" style="max-width: 20%;"></a>
                                         </c:if>
                                     </c:forEach>
                             </td>
                             <td class="cart_description">
-                                <h4><a href="">${item.pgProducts.productName}</a></h4>
+                                <h4><a href="${path}/detail?id=${item.pgProducts.productId}">${item.pgProducts.productName}</a></h4>
                             </td>
                             <td class="cart_price">
                                 <p>${item.unitPrice} VND</p>

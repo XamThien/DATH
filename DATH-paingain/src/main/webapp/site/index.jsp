@@ -92,8 +92,10 @@
                                     </div>
                                     <div class="product-overlay">
                                         <div class="overlay-content">
-                                            <h2>${pItem.unitPrice} VND</h2>
-                                            <p>${pItem.productName}</p>
+                                            <a href="detail?id=${pItem.productId}">
+                                                <h2>${pItem.unitPrice} VND</h2>
+                                                <p>${pItem.productName}</p>
+                                            </a>
                                             <a href="javascript:void(0)" class="btn btn-default add-to-cart" itemid="${pItem.productId}"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                         </div>
                                     </div>

@@ -138,7 +138,7 @@
 				                           <select class="form-control" id="aparent" name="parent" >
 			                                	<option value="0" selected>Không có</option>
 				                           <%
-				                           ArrayList <PgModules> lis = (ArrayList<PgModules>)request.getAttribute("result");
+				                           ArrayList <PgModules> lis = (ArrayList<PgModules>) new ModuleDAO().getActivePgModules();
 				                           if(lis != null){
 				                        	   for(PgModules l : lis){
 				                        		   
@@ -201,7 +201,7 @@
 				                           <select class="form-control" id="eparent" name="parent" >
 			                                	<option value="0">Không có</option>
 				                           <%
-				                           ArrayList <PgModules> lst = (ArrayList<PgModules>)request.getAttribute("result");
+				                           ArrayList <PgModules> lst = (ArrayList<PgModules>) new ModuleDAO().getActivePgModules();
 				                           if(lis != null){
 				                        	   for(PgModules l : lst){
 				                        		   

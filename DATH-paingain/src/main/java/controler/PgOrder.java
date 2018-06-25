@@ -1,6 +1,9 @@
 package controler;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,9 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import DAO.PgOrdersDAO;
-import DAO.ProductDAO;
+import DAO.UserDAO;
 import model.PgOrders;
-import model.PgProducts;
 
 /**
  * Servlet implementation class PgOrder
@@ -45,41 +47,62 @@ public class PgOrder extends HttpServlet {
 	        request.setCharacterEncoding("utf-8");
 	        int order_id = Integer.parseInt(request.getParameter("oid").trim());
 	        int tt = Integer.parseInt(request.getParameter("tt").trim());
-	        String message="";
+	        int cus = Integer.parseInt(request.getParameter("cus"));
+	        int emp = Integer.parseInt(request.getParameter("emp"));
+	        String name = request.getParameter("name");
+	        String address = request.getParameter("add");
+	        String phone = request.getParameter("phone");
 	        
-	        try
-			{
-				
-				PgOrders or = new PgOrdersDAO().getPgOrdersByID(order_id);
-						
-				or.setOrderStatus(tt);
-	            
-	            try
-	            {
-	            	new PgOrdersDAO().updatePgOrders(or);
-	            	
-	            	message = "Cập nhật đơn hàng thành công.";
-	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/chitiethoadon.jsp?stt="+tt+"&id="+order_id);
-					request.setAttribute("msg", message );
-					xxx.forward(request, response);
-	            	
-	            }
-	            catch(Exception e)
+	   /*     */
+	        SimpleDateFormat datefrmat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	        try {
+				Date orderdate = datefrmat.parse(request.getParameter("dateorder"));
+			
+		        String message="";
+		        
+		        try
 				{
-	            	message = "Cập nhật đơn hàng không thành công 1."+e;
-	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/chitiethoadon.jsp?stt="+tt+"&id="+order_id);
+		        	PgOrders ors = new PgOrders(order_id,new UserDAO().getPgUsersByID(cus),new UserDAO().getPgUsersByID(emp),orderdate,tt,name,address,phone);
+			        	
+		        	if(tt==3){
+			        	Date Ngay = new Date();
+			        	SimpleDateFormat datefrmats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			        	String datestr = datefrmats.format(Ngay);
+					    
+						Date now = datefrmat.parse(datestr);
+						ors.setApprovedDate(now);
+		        	}
+					
+		            try
+		            {
+		            	new PgOrdersDAO().updatePgOrders(ors);
+		            	message = "Cập nhật đơn hàng thành công.";
+		            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/chitiethoadon.jsp?stt="+tt+"&id="+order_id);
+						request.setAttribute("msg", message );
+						xxx.forward(request, response);
+		            	
+		            }
+		            catch(Exception e)
+					{
+		            	message = "Cập nhật đơn hàng không thành công 1.";
+		            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/chitiethoadon.jsp?stt="+tt+"&id="+order_id);
+						request.setAttribute("msg", message );
+						xxx.forward(request, response);
+					}
+		        
+				}
+		        catch(Exception e)
+				{
+		        	message = "Cập nhật đơn hàng không thành công 2."+e;
+		        	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/chitiethoadon.jsp?stt="+tt+"&id="+order_id);
 					request.setAttribute("msg", message );
 					xxx.forward(request, response);
 				}
-	        
-			}
-	        catch(Exception e)
-			{
-	        	message = "Cập nhật đơn hàng không thành công 2."+e;
-	        	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/chitiethoadon.jsp?stt="+tt+"&id="+order_id);
-				request.setAttribute("msg", message );
-				xxx.forward(request, response);
+	        } catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
         }
+	        
 
 }

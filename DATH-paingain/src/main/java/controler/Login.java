@@ -62,8 +62,11 @@ public class Login extends HttpServlet {
         		{
         			HttpSession session = request.getSession();
                     session.setAttribute("login", nv);
-                    
-                    response.sendRedirect(request.getContextPath()+"/manager/index.jsp");
+                    if(nv.getPgRoles().getRoleId()==1 || nv.getPgRoles().getRoleId() == 2) {
+                    	response.sendRedirect(request.getContextPath()+"/manager/index.jsp");
+                    } else {
+        				request.getRequestDispatcher("/site/layouts/accessdenied.jsp").forward(request, response);
+                    }
         		}
         		else
         		{

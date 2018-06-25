@@ -5,6 +5,17 @@
 <%@ page import="DAO.CategoryDAO" %>
 <%@ page import="DAO.ProductDAO" %>
 <%@ page import="DAO.ProductSalesDAO" %>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="javax.servlet.http.HttpServletResponse" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="model.PgUsers" %>
+<%
+	HttpSession sesion = request.getSession();
+	PgUsers u = (PgUsers) sesion.getAttribute("login");
+	if(u.getPgRoles().getRoleId()!=1){
+		response.sendRedirect("/site/layouts/accessdenied.jsp");
+	}
+%>
 <!DOCTYPE html>
 <html>
 	<head>
