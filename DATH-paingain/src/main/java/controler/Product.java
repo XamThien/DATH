@@ -121,44 +121,7 @@ public class Product extends HttpServlet {
 		String message ="";
 		switch(action)
 		{
-		case "delete":
-			try
-			{
-				String id = request.getParameter("did");
-				
-				
-				PgProducts tll = new ProductDAO().getPgProductsByID(Integer.parseInt(id));
-						
-				
-				tll.setProductStatus(0);
-	            
-	            try
-	            {
-	            	new ProductDAO().updatePgProduct(tll);
-	            	
-	            	message = "Xóa sản phẩm thành công.";
-	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
-					request.setAttribute("msg", message );
-					xxx.forward(request, response);
-	            	
-	            }
-	            catch(Exception e)
-				{
-	            	message = "Xóa sản phẩm không thành công .";
-	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
-					request.setAttribute("msg", message );
-					xxx.forward(request, response);
-				}
-			}
-			catch(Exception e)
-			{
-				message = "Xóa sản phẩm không thành công .";
-            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
-				request.setAttribute("msg", message );
-				xxx.forward(request, response);
-			}
-			
-			break;
+		
 		case "edit":
 			try
 			{
@@ -183,7 +146,7 @@ public class Product extends HttpServlet {
 			    //anh===============================
 			    //ncc 
 			    PgSuppliers su = new PgSuppliersDAO().findByID(nccid);
-				PgProducts tl = new ProductDAO().getPgProductsByID(id);//new PgProducts(cate, su, ten, sl, giaban, gianhap, mota, now, now, ishot, isnew);
+				PgProducts tl = new PgProducts(id, cate, su, ten, sl, giaban, gianhap, mota,1, now, now, ishot, isnew);
 				tl.setPgCategories(cate);
 				tl.setPgSuppliers(su);
 				tl.setProductName(ten);
