@@ -52,7 +52,6 @@
 										  		<th>Xem chi tiết</th>
 										  		<th>Thêm mới</th> 
 										  		<th>Cập nhật</th>
-										  		<th>Xóa</th>
 										  		<th>Trạng thái thao tác</th>
 										  		<th>Tùy chọn</th>
 										  	</tr>
@@ -91,19 +90,12 @@
 										    		out.print("<input type=\"checkbox\" disabled=\"disabled\">");
 											    	}
 										    %></td>
-										   <td><%
-										    	if(per.getIsDelete()){
-										    		out.print("<input type=\"checkbox\" checked=\"checked\" disabled=\"disabled\">");
-										    	} else {
-										    		out.print("<input type=\"checkbox\" disabled=\"disabled\">");
-											    	}
-										    %></td>
 										    <% if (per.getPerStatus()==1) {
 			                                        out.print("<td>Active</td>");
 			                                    } else {
 			                                        out.print("<td>InActive</td>");
 			                                }%>
-			                                <td><a href="#" onclick="pass_update(<%=per.getPermissionId()%>,'<%=per.getPgModules().getModuleName() %>',<%=per.getIsRead() %>,<%=per.getIsInsert() %>,<%=per.getIsUpdate() %>,<%=per.getIsDelete() %>,<%=per.getPerStatus() %>,'<%=per.getDescription() %>')" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa thao tác</a>
+			                                <td><a href="#" onclick="pass_update(<%=per.getPermissionId()%>,'<%=per.getPgModules().getModuleName() %>',<%=per.getIsRead() %>,<%=per.getIsInsert() %>,<%=per.getIsUpdate() %>,<%=per.getPerStatus() %>,'<%=per.getDescription() %>')" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa thao tác</a>
 			                               
 			                                </td>
 										  </tr>
@@ -231,7 +223,6 @@
 				                        	<input type="checkbox" id="read" name="read"> Xem chi tiết <br>	
 				                        	<input type="checkbox" id="insert" name="insert" onblur="read_add()"> Thêm mới	<br>
 				                        	<input type="checkbox" id="update" name="update" onblur="read_add()"> Cập nhật	<br>
-				                        	<input type="checkbox" id="del" name="del" onblur="read_add()"> Xóa	
 				                        </div>
 				                    </div>
 				                </div>
@@ -288,7 +279,6 @@
 				                        	<input type="checkbox" id="eread" name="eread"> Xem chi tiết <br>	
 				                        	<input type="checkbox" id="einsert" name="einsert" onblur="read_edit()"> Thêm mới	<br>
 				                        	<input type="checkbox" id="eupdate" name="eupdate" onblur="read_edit()"> Cập nhật	<br>
-				                        	<input type="checkbox" id="edel" name="edel" onblur="read_edit()"> Xóa	
 				                        </div>
 				                    </div>
 				                </div>
@@ -330,7 +320,7 @@
 					<!-- ----------------------------------------------->
 			    </div>
 			    <script type="text/javascript">
-			    function pass_update(id,name,read,insert,update,del,status,des) {
+			    function pass_update(id,name,read,insert,update,status,des) {
 			    	document.getElementById("perid").value = id; 
 			    	document.getElementById("modelname").value = name;
 			    	if(read == true){
@@ -348,11 +338,6 @@
 			    	}else {
 			    		document.getElementById("eupdate").checked = false;
 			    	}
-			    	if(del == true){
-			    		document.getElementById("edel").checked = true;
-			    	}else {
-			    		document.getElementById("edel").checked = false;
-			    	}
 			    	if(status==1){
 			    		document.getElementById("estatus").value="1";
 			    	} else {document.getElementById("estatus").value="0";}
@@ -368,12 +353,12 @@
 			    	return true;
 			    }
 			    function read_edit(){
-			    	if((document.getElementById("einsert").checked == true)||(document.getElementById("eupdate").checked == true)||(document.getElementById("edel").checked == true)){
+			    	if((document.getElementById("einsert").checked == true)||(document.getElementById("eupdate").checked == true)){
 			    		document.getElementById("eread").checked = true;
 			    	}
 			    }
 			    function read_add(){
-			    	if((document.getElementById("insert").checked == true)||(document.getElementById("update").checked == true)||(document.getElementById("del").checked == true)){
+			    	if((document.getElementById("insert").checked == true)||(document.getElementById("update").checked == true)){
 			    		document.getElementById("read").checked = true;
 			    	}
 			    }

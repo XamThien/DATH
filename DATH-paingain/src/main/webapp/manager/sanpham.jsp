@@ -58,6 +58,7 @@
 										  		<th>Cập nhật</th>
 										  		<th>Hot</th>
 										  		<th>New</th>
+										  		<th>Trạng thái</th>
 										  		<th>Tùy chọn</th> 
 										  	</tr>
 										  </thead>
@@ -79,11 +80,16 @@
 											    <td><%=pr.getModifiedTime() %></td>
 											    <td><input type="checkbox"  <%=(pr.getIsHot())? "checked":"" %>></td>
 											    <td><input type="checkbox"  <%=(pr.getIsNew())? "checked":"" %>></td>
+											    <% if (pr.getProductStatus()==1) {
+				                                        out.print("<td>Active</td>");
+				                                    } else {
+				                                        out.print("<td>InActive</td>");
+				                                }
+				                                %>
 											    
 											    <td>
-											    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=pr.getProductId() %>,'<%=new ProductPictures().getPgProductPicturesByID(pr.getProductId()).getPath() %>','<%=pr.getProductName() %>',<%=pr.getPgCategories().getCategoryId() %>,<%=pr.getPgSuppliers().getSupplierId() %>,<%=pr.getQuantity() %>,<%=pr.getUnitPrice() %>,<%=pr.getUnitOrder() %>,'<%=pr.getIsHot() %>','<%=pr.getIsNew() %>','<%=pr.getDescription() %>')" > <i class="fa fa-edit"></i> Sửa</a>
-										    		<a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" onclick="pass_del(<%=pr.getProductId() %>)" > <i class="fa fa-trash-o" ></i> Xóa</a>
-											    </td>
+											    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=pr.getProductId() %>,'<%=new ProductPictures().getPgProductPicturesByID(pr.getProductId()).getPath() %>','<%=pr.getProductName() %>',<%=pr.getPgCategories().getCategoryId() %>,<%=pr.getPgSuppliers().getSupplierId() %>,<%=pr.getQuantity() %>,<%=pr.getUnitPrice() %>,<%=pr.getUnitOrder() %>,'<%=pr.getIsHot() %>','<%=pr.getIsNew() %>','<%=pr.getDescription() %>',<%=pr.getProductStatus() %>,<%=pr.getCreateTime() %>)" > <i class="fa fa-edit"></i> Sửa</a>
+										    	</td>
 											  </tr>
 											  <%dem++;} %>
 										  </tbody>
@@ -244,6 +250,7 @@
                         <form action="/product?action=edit" method="post" enctype="multipart/form-data">
                         <div class="modal-body">
                         		<input type="hidden" id="eid" name="eid">
+                        		<input type="hidden" id="ecreate" name="ecreate">
                         		<div class='col-sm-12'>
 	                        		<label >Ảnh sản phẩm:</label>
 	                        		<div class="clearfix"></div>
@@ -344,6 +351,19 @@
 				                        </div>
 				                    </div>
 				                </div>
+				                <div class='col-sm-12'>
+				                   <label >Trạng thái:</label>
+				                    <div class="form-group" >
+				                        <div class="form-group" >
+				                            <select class="form-control" id="estatus" name="status" >
+			                                	<option value="1" >Active</option>
+			                                
+			                                	<option value="0" >InActive</option>
+			                                
+											</select>
+				                        </div>
+				                    </div>
+				             </div>
 				                
                         </div>
                         <div class="clearfix"></div>
@@ -398,7 +418,7 @@
 			    	
 			    	document.getElementById("did").value = id;
 			    };
-			    function pass_update(id,eoutput,eten,edanhmuc,encc,esoluong,egiaban,egianhap,ehot,enew,emota) {
+			    function pass_update(id,eoutput,eten,edanhmuc,encc,esoluong,egiaban,egianhap,ehot,enew,emota,estatus,ecreate) {
 			    	document.getElementById("eid").value = id; 
 			    	document.getElementById("eoutput").src = eoutput;
 			    	document.getElementById("eten").value = eten; 
@@ -410,7 +430,10 @@
 			    	document.getElementById("esoluong").value = esoluong;
 			    	if(ehot == "true") { document.getElementById("ehot").checked= true;} else { document.getElementById("ehot").checked= false;}
 			    	if(enew == "true") { document.getElementById("enew").checked= true;} else { document.getElementById("enew").checked= false;}
-			    	
+			    	if(estatus==1){
+			    		document.getElementById("estatus").value="1";
+			    	} else {document.getElementById("estatus").value="0";}
+			    	document.getElementById("ecreate").value = ecreate;
 			    	
 			    };
 			    var eloadFile = function (event) {

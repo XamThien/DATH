@@ -135,28 +135,19 @@ public class Product extends HttpServlet {
 				boolean ishot = Boolean.parseBoolean((request.getParameter("ehot")==null || !request.getParameter("ehot").equals("true"))?"false":"true");
 				boolean isnew = Boolean.parseBoolean((request.getParameter("enew")==null || !request.getParameter("enew").equals("true"))?"false":"true");
 				String mota = request.getParameter("emota");
-				
+				int status = Integer.parseInt(request.getParameter("estatus"));
 				 Date Ngay = new Date();
 			     SimpleDateFormat datefrmat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			     String datestr = datefrmat.format(Ngay);
 			     Date now = datefrmat.parse(datestr);
-				
+				Date create = datefrmat.parse(request.getParameter("ecreate"));
 			     
 			    PgCategories cate = new CategoryDAO().getCategory(categoryid);
 			    //anh===============================
 			    //ncc 
 			    PgSuppliers su = new PgSuppliersDAO().findByID(nccid);
-				PgProducts tl = new PgProducts(id, cate, su, ten, sl, giaban, gianhap, mota,1, now, now, ishot, isnew);
-				tl.setPgCategories(cate);
-				tl.setPgSuppliers(su);
-				tl.setProductName(ten);
-				tl.setQuantity(sl);
-				tl.setUnitPrice(giaban);
-				tl.setUnitOrder(gianhap);
-				tl.setDescription(mota);
-				tl.setModifiedTime(now);
-				tl.setIsHot(ishot);
-				tl.setIsNew(isnew);
+				PgProducts tl = new PgProducts(id, cate, su, ten, sl, giaban, gianhap, mota,status, create, now, ishot, isnew);
+			
 	            try
 	            {
 	            	new ProductDAO().updatePgProduct(tl);

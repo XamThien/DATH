@@ -41,6 +41,16 @@ public class PgOrders implements java.io.Serializable {
 		this.pgUsers = pgUsers;
 	}
 
+	public PgOrders(Integer orderId,PgOrderStatus pgOrderStatus, PgUsers pgUsers, Date orderDate,  String shipName,
+			String shipAddress, String shipPhone) {
+		this.orderId = orderId;
+		this.pgOrderStatus = pgOrderStatus;
+		this.pgUsers = pgUsers;
+		this.orderDate = orderDate;
+		this.shipName = shipName;
+		this.shipAddress = shipAddress;
+		this.shipPhone = shipPhone;
+	}
 	public PgOrders(PgOrderStatus pgOrderStatus, PgUsers pgUsers, Date orderDate, Date approvedDate, String shipName,
 			String shipAddress, String shipPhone, Set<PgOrderDetails> pgOrderDetailses) {
 		this.pgOrderStatus = pgOrderStatus;

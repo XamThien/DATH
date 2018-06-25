@@ -6,13 +6,13 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
-import database.Hibernate;
 import model.PgModules;
 import model.PgRolePermission;
 import model.PgRoles;
-import util.HibernateUtils;;
 
 public class RolePermissionDAO {
 	@SuppressWarnings("unchecked")
@@ -20,8 +20,9 @@ public class RolePermissionDAO {
 		 List<PgRolePermission> list=null;
 	        try
 	        {
-	        	Session session = Hibernate.getSessionFactory().openSession();
-	        	
+	        	Configuration configuration =  new Configuration().configure();
+	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
+	        	Session session = sessionFactory.openSession();
 		        Transaction transaction = session.beginTransaction();
 		        String hql ="from PgRolePermission";
 		        Query que = session.createQuery(hql);
@@ -38,8 +39,9 @@ public class RolePermissionDAO {
 		 List<PgRolePermission> list=null;
 	        try
 	        {
-	        	Session session = Hibernate.getSessionFactory().openSession();
-	        	
+	        	Configuration configuration =  new Configuration().configure();
+	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
+	        	Session session = sessionFactory.openSession();
 		        Transaction transaction = session.beginTransaction();
 		        String hql ="from PgRolePermission where perStatus=1";
 		        Query que = session.createQuery(hql);
@@ -56,8 +58,9 @@ public class RolePermissionDAO {
 		 List<PgRolePermission> list=null;
 	        try
 	        {
-	        	Session session = Hibernate.getSessionFactory().openSession();
-	        	
+	        	Configuration configuration =  new Configuration().configure();
+	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
+	        	Session session = sessionFactory.openSession();
 		        Transaction transaction = session.beginTransaction();
 		        String hql ="from PgRolePermission where ROLE_ID="+id;
 		        Query que = session.createQuery(hql);
@@ -74,8 +77,9 @@ public class RolePermissionDAO {
 		List<PgRolePermission> list=null;
 	        try
 	        {
-	        	Session session = Hibernate.getSessionFactory().openSession();
-	        	
+	        	Configuration configuration =  new Configuration().configure();
+	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
+	        	Session session = sessionFactory.openSession();
 		        Transaction transaction = session.beginTransaction();
 		        String hql ="from PgRolePermission where ROLE_ID="+idrole+" AND MODULE_ID="+idmol;
 		        Query que = session.createQuery(hql);
@@ -92,8 +96,9 @@ public class RolePermissionDAO {
 		 List<PgRolePermission> list=null;
 	        try
 	        {
-	        	Session session = Hibernate.getSessionFactory().openSession();
-	        	
+	        	Configuration configuration =  new Configuration().configure();
+	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
+	        	Session session = sessionFactory.openSession();
 		        Transaction transaction = session.beginTransaction();
 		        String hql ="from PgRolePermission where MODULE_ID=" +id;
 		        Query que = session.createQuery(hql);
@@ -107,8 +112,9 @@ public class RolePermissionDAO {
 	}
 	 public PgRolePermission getPgRolePermissionByID(int id) {
 		 PgRolePermission cl = null;
-		 Session session = Hibernate.getSessionFactory().openSession();
-     	
+		 Configuration configuration =  new Configuration().configure();
+     	SessionFactory sessionFactory = configuration.buildSessionFactory();
+     	Session session = sessionFactory.openSession();
 	       try
 	       {
 	    	   
@@ -130,7 +136,9 @@ public class RolePermissionDAO {
 
 
 	 public boolean insertPgRolePermission(PgRolePermission sp){
-		 Session session = HibernateUtils.getSessionFactory().openSession();
+		 Configuration configuration =  new Configuration().configure();
+     	SessionFactory sessionFactory = configuration.buildSessionFactory();
+     	Session session = sessionFactory.openSession();
 	        try {
 				Transaction transaction = session.beginTransaction();
 				session.save(sp);
@@ -147,7 +155,9 @@ public class RolePermissionDAO {
 	    }
 	
 	 public void updatePgRolePermission(PgRolePermission sp){
-		 Session session = HibernateUtils.getSessionFactory().openSession();
+		 Configuration configuration =  new Configuration().configure();
+     	SessionFactory sessionFactory = configuration.buildSessionFactory();
+     	Session session = sessionFactory.openSession();
 			try {
 				Transaction transaction = session.beginTransaction();
 				session.update(sp);
@@ -166,7 +176,7 @@ public class RolePermissionDAO {
 		 PgModules mol = new RolePermissionDAO().getPgRolePermissionByID(3).getPgModules();
 		 PgRoles rol = new  RolePermissionDAO().getPgRolePermissionByID(3).getPgRoles();
 	
-			 PgRolePermission sup = new PgRolePermission(3,mol,rol,false,true,true,false,0,"");
+			 PgRolePermission sup = new PgRolePermission(3,mol,rol,false,true,true,0,"");
 			 
 			 new RolePermissionDAO().updatePgRolePermission(sup);
 		 

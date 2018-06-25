@@ -88,10 +88,9 @@
 										    <td><%=dem %></td>
 										    <td><%=or.getOrderDate() %></td>
 										    <td><%=or.getApprovedDate() %></td>
-										    <td><%=or.getPgUsersByCustomerId().getFirstName() %> <%=or.getPgUsersByCustomerId().getLastName() %></td>
+										    <td><%=or.getPgUsers().getFirstName() %> <%=or.getPgUsers().getLastName() %></td>
 										    <td><%=or.getShipPhone() %></td>
-											<td><%=or.getPgUsersByEmployeeId().getFirstName() %> <%=or.getPgUsersByEmployeeId().getLastName() %></td>
-										    <td>
+											<td>
 										    	<a href="/manager/chitiethoadon.jsp?stt=<%=stt %>&id=<%=or.getOrderId()%>"  class="btn btn-link">  Chi tiết</a>
 										    	
 										    	

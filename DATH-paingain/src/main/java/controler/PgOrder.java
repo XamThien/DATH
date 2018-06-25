@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import DAO.OrderStatusDAO;
 import DAO.PgOrdersDAO;
 import DAO.UserDAO;
+import model.PgOrderStatus;
 import model.PgOrders;
 
 /**
@@ -48,11 +50,10 @@ public class PgOrder extends HttpServlet {
 	        int order_id = Integer.parseInt(request.getParameter("oid").trim());
 	        int tt = Integer.parseInt(request.getParameter("tt").trim());
 	        int cus = Integer.parseInt(request.getParameter("cus"));
-	        int emp = Integer.parseInt(request.getParameter("emp"));
 	        String name = request.getParameter("name");
 	        String address = request.getParameter("add");
 	        String phone = request.getParameter("phone");
-	        
+	        PgOrderStatus st = new OrderStatusDAO().getPgOrderStatusByID(tt);
 	   /*     */
 	        SimpleDateFormat datefrmat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	        try {
@@ -62,7 +63,7 @@ public class PgOrder extends HttpServlet {
 		        
 		        try
 				{
-		        	PgOrders ors = new PgOrders(order_id,new UserDAO().getPgUsersByID(cus),new UserDAO().getPgUsersByID(emp),orderdate,tt,name,address,phone);
+		        	PgOrders ors = new PgOrders(order_id,st,new UserDAO().getPgUsersByID(cus),orderdate,name,address,phone);
 			        	
 		        	if(tt==3){
 			        	Date Ngay = new Date();
