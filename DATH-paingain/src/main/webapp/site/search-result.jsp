@@ -8,9 +8,8 @@
         <div class="row">
             <%@include file="layouts/banner-left.jsp" %>
             <div class="col-sm-9 padding-right">
-                <div class="features_items"><!--features_items-->
-                    <h2 class="title text-center">${cCategory}</h2>
-                    <c:forEach var="pItem" items="${category.pgProductses}">
+                <div class="features_items">
+                    <c:forEach var="pItem" items="${items}">
 
                         <div class="col-sm-4">
                             <div class="product-image-wrapper">
