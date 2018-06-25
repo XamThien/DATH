@@ -1,5 +1,6 @@
 package DAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -8,7 +9,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import database.Hibernate;
+import model.PgModules;
 import model.PgRolePermission;
+import model.PgRoles;
 import util.HibernateUtils;;
 
 public class RolePermissionDAO {
@@ -104,10 +107,11 @@ public class RolePermissionDAO {
 	}
 	 public PgRolePermission getPgRolePermissionByID(int id) {
 		 PgRolePermission cl = null;
+		 Session session = Hibernate.getSessionFactory().openSession();
+     	
 	       try
 	       {
-	    	   Session session = Hibernate.getSessionFactory().openSession();
-	        	
+	    	   
 		        Transaction transaction = session.beginTransaction();
 		        String hql ="from PgRolePermission where permissionId="+id;
 		        Query que = session.createQuery(hql);
@@ -116,6 +120,10 @@ public class RolePermissionDAO {
 	       }
 	       catch  (HibernateException e) {
 	    	   e.printStackTrace();
+	        }finally {
+	            if (session.isOpen()){
+	                session.close();
+	            }
 	        }
 	        return cl;
 	    }
@@ -155,8 +163,13 @@ public class RolePermissionDAO {
 	 
 	 public static void main(String[] args) {
 
-		 PgRolePermission rolep = new RolePermissionDAO().getPgRolePermissionByID(1);
-		 System.out.println(rolep.getDescription());
+		 PgModules mol = new RolePermissionDAO().getPgRolePermissionByID(3).getPgModules();
+		 PgRoles rol = new  RolePermissionDAO().getPgRolePermissionByID(3).getPgRoles();
+	
+			 PgRolePermission sup = new PgRolePermission(3,mol,rol,false,true,true,false,0,"");
+			 
+			 new RolePermissionDAO().updatePgRolePermission(sup);
+		 
 		 
 	}
 }
