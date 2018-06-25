@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 20, 2018 4:50:52 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 26, 2018 1:39:00 AM by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -25,11 +25,10 @@ import javax.persistence.TemporalType;
 public class PgOrders implements java.io.Serializable {
 
 	private Integer orderId;
-	private PgUsers pgUsersByCustomerId;
-	private PgUsers pgUsersByEmployeeId;
+	private PgOrderStatus pgOrderStatus;
+	private PgUsers pgUsers;
 	private Date orderDate;
 	private Date approvedDate;
-	private Integer orderStatus;
 	private String shipName;
 	private String shipAddress;
 	private String shipPhone;
@@ -38,52 +37,16 @@ public class PgOrders implements java.io.Serializable {
 	public PgOrders() {
 	}
 
-	public PgOrders(PgUsers pgUsersByCustomerId, PgUsers pgUsersByEmployeeId) {
-		this.pgUsersByCustomerId = pgUsersByCustomerId;
-		this.pgUsersByEmployeeId = pgUsersByEmployeeId;
+	public PgOrders(PgUsers pgUsers) {
+		this.pgUsers = pgUsers;
 	}
 
-	public PgOrders(Integer orderId,PgUsers pgUsersByCustomerId, PgUsers pgUsersByEmployeeId, Date orderDate, Date approvedDate,
-			Integer orderStatus, String shipName, String shipAddress, String shipPhone) {
-		this.orderId = orderId;
-		this.pgUsersByCustomerId = pgUsersByCustomerId;
-		this.pgUsersByEmployeeId = pgUsersByEmployeeId;
+	public PgOrders(PgOrderStatus pgOrderStatus, PgUsers pgUsers, Date orderDate, Date approvedDate, String shipName,
+			String shipAddress, String shipPhone, Set<PgOrderDetails> pgOrderDetailses) {
+		this.pgOrderStatus = pgOrderStatus;
+		this.pgUsers = pgUsers;
 		this.orderDate = orderDate;
 		this.approvedDate = approvedDate;
-		this.orderStatus = orderStatus;
-		this.shipName = shipName;
-		this.shipAddress = shipAddress;
-		this.shipPhone = shipPhone;
-	}
-	public PgOrders(Integer orderId,PgUsers pgUsersByCustomerId, PgUsers pgUsersByEmployeeId, Date orderDate,
-			Integer orderStatus, String shipName, String shipAddress, String shipPhone) {
-		this.orderId = orderId;
-		this.pgUsersByCustomerId = pgUsersByCustomerId;
-		this.pgUsersByEmployeeId = pgUsersByEmployeeId;
-		this.orderDate = orderDate;
-		this.orderStatus = orderStatus;
-		this.shipName = shipName;
-		this.shipAddress = shipAddress;
-		this.shipPhone = shipPhone;
-	}
-	public PgOrders(Integer orderId,PgUsers pgUsersByCustomerId, PgUsers pgUsersByEmployeeId, 
-			Integer orderStatus, String shipName, String shipAddress, String shipPhone) {
-		this.orderId = orderId;
-		this.pgUsersByCustomerId = pgUsersByCustomerId;
-		this.pgUsersByEmployeeId = pgUsersByEmployeeId;
-		this.orderStatus = orderStatus;
-		this.shipName = shipName;
-		this.shipAddress = shipAddress;
-		this.shipPhone = shipPhone;
-	}
-	public PgOrders(PgUsers pgUsersByCustomerId, PgUsers pgUsersByEmployeeId, Date orderDate, Date approvedDate,
-			Integer orderStatus, String shipName, String shipAddress, String shipPhone,
-			Set<PgOrderDetails> pgOrderDetailses) {
-		this.pgUsersByCustomerId = pgUsersByCustomerId;
-		this.pgUsersByEmployeeId = pgUsersByEmployeeId;
-		this.orderDate = orderDate;
-		this.approvedDate = approvedDate;
-		this.orderStatus = orderStatus;
 		this.shipName = shipName;
 		this.shipAddress = shipAddress;
 		this.shipPhone = shipPhone;
@@ -103,27 +66,27 @@ public class PgOrders implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CUSTOMER_ID", nullable = false)
-	public PgUsers getPgUsersByCustomerId() {
-		return this.pgUsersByCustomerId;
+	@JoinColumn(name = "ORDER_STATUS_KEY")
+	public PgOrderStatus getPgOrderStatus() {
+		return this.pgOrderStatus;
 	}
 
-	public void setPgUsersByCustomerId(PgUsers pgUsersByCustomerId) {
-		this.pgUsersByCustomerId = pgUsersByCustomerId;
+	public void setPgOrderStatus(PgOrderStatus pgOrderStatus) {
+		this.pgOrderStatus = pgOrderStatus;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "EMPLOYEE_ID", nullable = true)
-	public PgUsers getPgUsersByEmployeeId() {
-		return this.pgUsersByEmployeeId;
+	@JoinColumn(name = "CUSTOMER_ID", nullable = false)
+	public PgUsers getPgUsers() {
+		return this.pgUsers;
 	}
 
-	public void setPgUsersByEmployeeId(PgUsers pgUsersByEmployeeId) {
-		this.pgUsersByEmployeeId = pgUsersByEmployeeId;
+	public void setPgUsers(PgUsers pgUsers) {
+		this.pgUsers = pgUsers;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ORDER_DATE", length = 19)
+	@Column(name = "ORDER_DATE", length = 26)
 	public Date getOrderDate() {
 		return this.orderDate;
 	}
@@ -133,22 +96,13 @@ public class PgOrders implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "APPROVED_DATE", length = 19)
+	@Column(name = "APPROVED_DATE", length = 26)
 	public Date getApprovedDate() {
 		return this.approvedDate;
 	}
 
 	public void setApprovedDate(Date approvedDate) {
 		this.approvedDate = approvedDate;
-	}
-
-	@Column(name = "ORDER_STATUS")
-	public Integer getOrderStatus() {
-		return this.orderStatus;
-	}
-
-	public void setOrderStatus(Integer orderStatus) {
-		this.orderStatus = orderStatus;
 	}
 
 	@Column(name = "SHIP_NAME", length = 100)

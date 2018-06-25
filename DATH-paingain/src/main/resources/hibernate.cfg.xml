@@ -6,7 +6,7 @@
     <session-factory>
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.password">xuanthuy</property>
+        <property name="hibernate.connection.password">root</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dath</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
@@ -14,15 +14,16 @@
         <property name="hibernate.validator.apply_to_ddl">false</property>
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="show_sql">true</property>
-        <mapping class="model.PgProductSales" />
+		<mapping class="model.PgProductSales" />
         <mapping class="model.PgUsers" />
         <mapping class="model.PgRoles" />
-        <mapping class="model.PgCategories" />
-        <mapping class="model.PgProductPictures" />
         <mapping class="model.PgOrderDetails" />
         <mapping class="model.PgOrders" />
         <mapping class="model.PgLog" />
         <mapping class="model.PgModules" />
+        <mapping class="model.PgCategories" />
+        <mapping class="model.PgProductPictures" />
+        <mapping class="model.PgOrderStatus" />
         <mapping class="model.PgProducts" />
         <mapping class="model.PgRolePermission" />
         <mapping class="model.PgSuppliers" />
