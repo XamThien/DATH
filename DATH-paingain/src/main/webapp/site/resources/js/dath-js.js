@@ -11,14 +11,14 @@ $(document).ready(function () {
             type: "GET",
             data: {pId: dId, action: "add"},
             success: function (data) {
-                if (data != "success") {
+                if (data !== "success") {
                     alert("error");
                 } else {
                     $("#notify-content").text("product is added to your cart");
                     $('#notify').modal('show');
                 }
             }
-        })
+        });
     });
     $(".cart_quantity_delete").click(function () {
         var dId = $(this).attr("itemid");
@@ -27,13 +27,13 @@ $(document).ready(function () {
             type: "GET",
             data: {pId: dId, action: "delete"},
             success: function (data) {
-                if (data != "success") {
+                if (data !== "success") {
                     alert("error");
                 } else {
                     location.reload();
                 }
             }
-        })
+        });
     });
     $(".cart_quantity_up").click(function () {
         var quantity_input = $(this).parent().children(".cart_quantity_input");
@@ -46,54 +46,55 @@ $(document).ready(function () {
         if (value <= 0) {
             quantity_input.val(0);
         } else {
-            quantity_input.val(value)
+            quantity_input.val(value);
         }
     });
     $(".update").click(function () {
         var param = [];
         $(".cart_quantity_input").each(function () {
             param.push({"id": $(this).attr("itemid"), "value": $(this).val()});
-        })
+        });
         $.ajax({
             url: "cart-action",
             type: "POST",
             dataType: "text",
             data: {products: JSON.stringify(param)}
         }).done(function (data) {
-            if (data != "success") {
+            if (data !== "success") {
                 alert(data);
             } else {
                 location.reload();
             }
-        })
+        });
     });
     $(".user-update").click(function () {
         var datas = {};
-        $(".user-info input[type=text]").each(function () {
+        $(".user-info input[type=text],input[type=email],input[name=sex]:checked,textarea[name=address]").each(function () {
             var prop = $(this).attr("name");
             datas[prop] = $(this).val();
-        })
+        });
         $.ajax({
             url: "user-update",
             type: "POST",
             data: datas
         }).done(function (data) {
-            console.log(data);
-        });
-    })
-    $(".check-out").click(function () {
-        $.ajax({
-            url:"checkout-action",
-            type:"POST"
-        }).done(function(data){
-            if(data=="success"){
+            if(data === "success"){
                 location.reload();
             }else{
                 alert(data);
             }
-        })
-        
-    })
-})
-
-
+        });
+    });
+    $(".check-out").click(function () {
+        $.ajax({
+            url: "checkout-action",
+            type: "POST"
+        }).done(function (data) {
+            if (data === "success") {
+                location.reload();
+            } else {
+                alert(data);
+            }
+        });
+    });
+});

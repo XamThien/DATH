@@ -37,18 +37,7 @@ public class UserUpdate extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UserUpdate</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UserUpdate at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        response.sendRedirect(request.getContextPath() + "/site/layouts/accessdenied.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -82,6 +71,9 @@ public class UserUpdate extends HttpServlet {
         String email = request.getParameter("email");
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
+        String cardid =request.getParameter("cardid");
+        String sex = request.getParameter("sex");
+        //System.out.println(fname +" "+lname + " " + email+ " " +address + " " + phone+" " +cardid + " " + sex);
         UserAuthentication auth = (UserAuthentication) request.getSession().getAttribute("authentic");
         if (auth != null) {
             auth.getUsers().setFirstName(fname);
@@ -89,6 +81,12 @@ public class UserUpdate extends HttpServlet {
             auth.getUsers().setEmail(email);
             auth.getUsers().setAddress(address);
             auth.getUsers().setPhoneNumber(phone);
+            if(cardid !=null){
+                auth.getUsers().setCardId(cardid);
+            }
+            if(sex !=null){
+                auth.getUsers().setSex((Integer.parseInt(sex)==1));
+            }
             Session session = Hibernate.getSessionFactory().getCurrentSession();
             session.beginTransaction();
             session.merge(auth.getUsers());

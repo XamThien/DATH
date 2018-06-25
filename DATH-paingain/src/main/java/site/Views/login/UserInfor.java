@@ -3,31 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package site.actions.checkout;
+package site.Views.login;
 
-import database.Hibernate;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Cart;
-import model.PgOrderDetails;
-import model.PgOrders;
-import model.PgUsers;
-import org.hibernate.Session;
-import service.UserAuthentication;
 
 /**
  *
  * @author dangt
  */
-@WebServlet(name = "CheckoutAction", urlPatterns = {"/checkout-action"})
-public class CheckoutAction extends HttpServlet {
+@WebServlet(name = "UserInfor", urlPatterns = {"/myaccount"})
+public class UserInfor extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,7 +48,12 @@ public class CheckoutAction extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        if (request.getSession().getAttribute("authentic") != null) {
+            request.setAttribute("title", "My account");
+            request.getRequestDispatcher("site/account.jsp").forward(request, response);
+        } else {
+            processRequest(request, response);
+        }
     }
 
     /**
@@ -70,41 +67,7 @@ public class CheckoutAction extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession httpSession = request.getSession();
-        PgOrders cartc = (PgOrders) httpSession.getAttribute("mycart");
-        UserAuthentication auth = (UserAuthentication) httpSession.getAttribute("authentic");
-
-        if (auth == null) {
-            response.sendRedirect(request.getContextPath() + "/site-login");
-            return;
-        }
-        if (cartc == null) {
-            cartc = new Cart();
-        }
-        PgOrders cart = new PgOrders();
-        PgUsers user = auth.getUsers();
-        if (cartc.getPgOrderDetailses().size() != 0) {
-            cart.setPgUsersByCustomerId(user);
-            cart.setOrderDate(new Date());
-            cart.setOrderStatus(0);
-            cart.setShipName(user.getFirstName() + " " + user.getLastName());
-            cart.setShipAddress(user.getAddress());
-            cart.setShipPhone(user.getPhoneNumber());
-            cart.setPgOrderDetailses(cartc.getPgOrderDetailses());
-            Session session = Hibernate.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
-            session.save(cart);
-            for (PgOrderDetails ord : cart.getPgOrderDetailses()) {
-                ord.setPgOrders(cart);
-                ord.setUnitPrice(ord.getPgProducts().getUnitPrice());
-                session.save(ord);
-            }
-            session.getTransaction().commit();
-            httpSession.setAttribute("mycart", new Cart());
-            response.getWriter().print("success");
-        } else {
-            response.getWriter().print("cart empty");
-        }
+        processRequest(request, response);
     }
 
     /**

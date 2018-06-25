@@ -44,7 +44,7 @@
                             <div class="shop-menu pull-right">
                                 <ul class="nav navbar-nav">
                                     <c:if test="${authentic!=null}">
-                                        <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
+                                        <li><a href="${path}/myaccount"><i class="fa fa-user"></i> Account</a></li>
                                         </c:if>
 
                                     <li><a href="${path}/checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
