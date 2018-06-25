@@ -1,10 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.PgUsers" %>
 <%@ page import="DAO.UserDAO" %>
 <%@ page import="model.PgRoles" %>
 <%@ page import="DAO.RoleDAO" %>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="javax.servlet.http.HttpServletResponse" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="model.PgUsers" %>
+<%
+	HttpSession sesion = request.getSession();
+	PgUsers u = (PgUsers) sesion.getAttribute("login");
+	if(u.getPgRoles().getRoleId()!=1){
+		response.sendRedirect("/site/layouts/accessdenied.jsp");
+	}
+%>
 <!DOCTYPE html>
 <html>
 	<head>
