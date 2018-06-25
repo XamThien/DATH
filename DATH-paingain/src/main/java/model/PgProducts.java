@@ -59,7 +59,10 @@ public class PgProducts implements java.io.Serializable {
 		this.isNew= isNew;
 		this.productStatus =1;
 	}
-
+	public PgProducts(int id)
+	{
+		this.productId = id;
+	}
 	public PgProducts(PgCategories pgCategories, PgSuppliers pgSuppliers, String productName, int quantity,
 			int unitPrice, int unitOrder, String description, int productStatus, Date createTime, Date modifiedTime,
 			Boolean isNew, Boolean isHot, Set<PgProductSales> pgProductSaleses, Set<PgOrderDetails> pgOrderDetailses,

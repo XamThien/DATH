@@ -37,6 +37,7 @@ public class PgProductSales implements java.io.Serializable {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.saleValue = saleValue;
+		this.salesStatus =1;
 	}
 
 	public PgProductSales(PgProducts pgProducts, Date startDate, Date endDate, int saleValue, Boolean isPercent,

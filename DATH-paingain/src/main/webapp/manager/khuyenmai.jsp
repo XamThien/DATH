@@ -47,7 +47,7 @@
 		                  	<!-- search-->
 					        <!-- ========================== -->
 					        <div class="container">
-					        <form action="/khuyenmai?action=add" method="post">
+					        
 				            	<div class="row">
 					                <div class="col-md-9 col-sm-9 col-xs-12">
 					                	<!-- 
@@ -78,7 +78,7 @@
 										   				dem= dem+1;
 										   		%>
 										   		<tr>
-										   			<td><input type="checkbox" class= "check"  name="ck<%=dem%>" value="<%=sp.getProductId() %>"></td>
+										   			<td><input type="checkbox" class= "check"  value="<%=sp.getProductId() %>"></td>
 										   			<td><%=sp.getProductId() %></td>
 										   			<td><%=sp.getProductName() %></td>
 										   			<td><%=sp.getUnitPrice() %></td>
@@ -86,9 +86,12 @@
 										   		<%} %>
 										   </tbody>
 										</table>
-										<input type="hidden" name="ckcount" value="<%=dem%>">
+										
 					                </div>
 					                <div class="col-md-3 col-sm-3 col-xs-12" style="margin-top: 11px;">
+					                <form action="/khuyenmai?action=add" method="post">
+					                	<input type="hidden" id="lstid" name="lstid">
+										<input type="hidden" name="cateid" value="<%=cateid%>">
 					                	<div class="x_panel">
 					                		<div class="x_title">
 							                  	<h4><font style="vertical-align: inherit;">
@@ -114,7 +117,7 @@
 								                    <div >
 								                    	<div class="form-group">
 												            <div class=" xdisplay_inputx form-group has-feedback">
-								                                <input type="text" class="form-control " aria-describedby="inputSuccess2Status" id="single_cal4" required="required" />
+								                                <input type="text" class="form-control " name="bgtime" aria-describedby="inputSuccess2Status" id="single_cal4" required="required" />
 								                                <span class="fa fa-calendar-o form-control-feedback right" aria-hidden="true"></span>
 								                            </div>
 									                    </div>
@@ -127,7 +130,7 @@
 								                    <div >
 								                    	<div class="form-group">
 											                <div class=" xdisplay_inputx form-group has-feedback">
-								                                <input type="text" class="form-control " id="single_cal3" required="required" />
+								                                <input type="text" class="form-control " name="edtime" id="single_cal3" required="required" />
 								                                <span class="fa fa-calendar-o form-control-feedback right" aria-hidden="true"></span>
 								                                
 								                              </div>
@@ -136,12 +139,13 @@
 								                </div>
 							                </div>
 					                	</div>
-					                	
+					                	<button type="submit" id="smit" style="float: right;width: 91px;margin-right: 26px;" class="btn btn-primary"  > Lưu</button>      
+							       		<button type="button" type="button" id="checkAll" onclick="selectAll();" style="float: right;width: 91px;margin-right: 26px;" class="btn btn-primary" <%=(lstsp.size()==0)?"disabled='disabled'":"" %>>Check all</button>
+					                </form>
 					                </div>
-					                <button type="submit" style="float: right;width: 91px;margin-right: 26px;" class="btn btn-primary" onclick="saveBill();"> Lưu</button>      
-							       	<button type="button" type="button" id="checkAll" onclick="selectAll();" style="float: right;width: 91px;margin-right: 26px;" class="btn btn-primary">Check all</button>
+					                
 				            </div>
-				            </form>
+				            
 			        		</div>
 	<%
 		}
@@ -160,19 +164,8 @@
 
 
         	<script type="text/javascript">
-			    function pass_del(id) {
-			    	
-			    	document.getElementById("txtid").value = id;
-			    };
-			    function pass_update(id,name,phone,username,pass,address) {
-			    	document.getElementById("eid").value = id; 
-			    	document.getElementById("ename").value = name; 
-			    	document.getElementById("ephone").value = phone; 
-			    	document.getElementById("eusername").value = username;
-			    	document.getElementById("epass").value = pass;
-			    	document.getElementById("eaddress").value = address;
-			    	
-			    };
+	        	var smit=document.getElementById("smit");
+	        	smit.addEventListener("click",pushLstCK,false);
 			    
 			</script>
 					<!-- ----------------------------------------------->
