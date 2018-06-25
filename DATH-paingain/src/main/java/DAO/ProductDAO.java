@@ -109,7 +109,7 @@ public class ProductDAO {
 
             //Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
-            String hql = "from PgProducts p where p.pgCategories.categoryId =" + CATEGORY_ID + " and p.productStatus=1 and p not in (from PgProductSales where PRODUCT_ID = p.productId and salesStatus = 1)";
+            String hql = "from PgProducts p where p.pgCategories.categoryId =" + CATEGORY_ID + " and p.productStatus=1 and p.productId not in (select ps.pgProducts.productId from PgProductSales ps where  salesStatus = 1)";
             Query que = session.createQuery(hql);
             list = que.list();
             transaction.commit();
