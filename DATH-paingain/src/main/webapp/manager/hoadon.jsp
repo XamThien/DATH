@@ -68,7 +68,7 @@
 										  		<th>Ngày duyệt đơn</th>
 										  		<th>Khách hàng</th>
 										  		<th>Số điện thoại nhận</th>
-												<th>Nhân viên duyệt</th>
+												
 										  		<th></th> 
 										  	</tr>
 										  </thead>

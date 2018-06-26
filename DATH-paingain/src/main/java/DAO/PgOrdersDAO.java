@@ -25,7 +25,7 @@ public class PgOrdersDAO {
 		        	
 		        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 			        Transaction transaction = session.beginTransaction();
-			        String hql ="from PgOrders where orderStatus="+stt+" order by orderId DESC";
+			        String hql ="from PgOrders where ORDER_STATUS_KEY="+stt+" order by orderId DESC";
 			        Query que = session.createQuery(hql);
 			        list = que.list();
 			        transaction.commit();
