@@ -68,16 +68,26 @@ public class Signup extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name");
+        String fname = request.getParameter("fname");
+        String lname = request.getParameter("lname");
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
         String password = request.getParameter("password");
         String cfpass = request.getParameter("passconfirm");
-        PgUsers user = new PgUsers(username, name, name, phone, password, 1);
+        PgRoles role = new PgRoles();
+        role.setRoleId(3);
+        role.setRoleName("Customer");
+        PgUsers user = new PgUsers();
+        user.setFirstName(fname);
+        user.setLastName(lname);
         user.setAddress(address);
         user.setEmail(email);
+        user.setPhoneNumber(phone);
+        user.setUserId(username);
+        user.setUserPassword(password);
+        user.setPgRoles(role);
         String href = !request.getParameter("href").equals("") ? request.getParameter("href") : "site/login.jsp";
         String valid = new PGValidation().validateUserInformation(user, cfpass);
         if (valid.equals("valid")) {

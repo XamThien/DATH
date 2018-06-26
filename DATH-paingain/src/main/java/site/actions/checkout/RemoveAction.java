@@ -76,11 +76,12 @@ public class RemoveAction extends HttpServlet {
             session.beginTransaction();
             PgOrders order = (PgOrders) session.createCriteria(PgOrders.class)
                     .add(Restrictions.and(Restrictions.eq("orderId", Integer.parseInt(id)),
-                            Restrictions.eq("pgUsersByCustomerId", auth.getUsers())))
+                            Restrictions.eq("pgUsers", auth.getUsers())))
                     .uniqueResult();
             if (order.getPgOrderStatus().getOrderStatusKey() == 1) {
-            	PgOrderStatus st = new OrderStatusDAO().getPgOrderStatusByID(0);
-            	order.setPgOrderStatus(st);
+                PgOrderStatus status = new PgOrderStatus();
+                status.setOrderStatusKey(0);
+            	order.setPgOrderStatus(status);
                 session.update(order);
                 response.getWriter().print("success");
             } else {

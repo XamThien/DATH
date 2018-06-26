@@ -26,9 +26,14 @@
                 <div class="signup-form"><!--sign up form-->
                     <h2>New User Signup!</h2>
                     <span>${spMsg}</span>
-                    <form action="${pageContext.request.contextPath}/signup" method="post">
+                    <form action="${pageContext.request.contextPath}/signup" method="post" class="contact-form">
                         <input type="hidden" name="href" value="${href}">
-                        <input type="text" placeholder="Name" name="name"/>
+                        <div class="form-group col-md-6" style="padding: 0px">
+                            <input type="text" placeholder="First name" name="fname" class="form-control"/>
+                        </div>
+                        <div class="form-group col-md-6" style="padding-right: 0px">
+                            <input type="text" placeholder="Last name" name="lname" class="form-control"/>
+                        </div>
                         <input type="text" placeholder="Username" name="username"/>
                         <input type="email" placeholder="Email Address" name="email"/>
                         <input type="text" placeholder="Phone number" name="phone"/>

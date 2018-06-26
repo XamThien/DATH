@@ -41,8 +41,11 @@ public class PGValidation {
     public String validateUserInformation(PgUsers user, String cfpass) {
         PGValidation validation = new PGValidation();
         if (!validation.check(user.getFirstName())) {
-            return "Ten khong duoc de trong";
-        } else if (!validation.checkUsername(user.getUserId())) {
+            return "Fist name is empty.";
+        }else if(!validation.check(user.getLastName())){
+            return "Last name is empty.";
+        }
+        else if (!validation.checkUsername(user.getUserId())) {
             return "Username khong de trong hoac duoi 6 ki tu hoac khong hop le.";
         } else if (!validation.checkMail(user.getEmail()) && !user.getEmail().isEmpty()) {
             return "Email khong hop le";

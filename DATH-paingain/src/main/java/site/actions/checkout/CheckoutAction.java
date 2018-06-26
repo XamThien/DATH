@@ -89,8 +89,9 @@ public class CheckoutAction extends HttpServlet {
         if (!cartc.getPgOrderDetailses().isEmpty()) {
             cart.setPgUsers(user);
             cart.setOrderDate(new Date());
-            PgOrderStatus st = new OrderStatusDAO().getPgOrderStatusByID(0);
-            cart.setPgOrderStatus(st);
+            PgOrderStatus status = new PgOrderStatus();
+            status.setOrderStatusKey(1);
+            cart.setPgOrderStatus(status);
             cart.setShipName(user.getFirstName() + " " + user.getLastName());
             cart.setShipAddress(user.getAddress());
             cart.setShipPhone(user.getPhoneNumber());

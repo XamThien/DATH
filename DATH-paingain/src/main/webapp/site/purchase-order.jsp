@@ -25,8 +25,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="order" items="${authentic.users.pgOrdersesForCustomerId}">
-                        <c:if test="${order.orderStatus !=0}">
+                    <c:forEach var="order" items="${authentic.users.pgOrderses}">
+                        <c:if test="${order.pgOrderStatus.orderStatusKey !=0}">
 
                             <tr>
                                 <td colspan="5" style="padding: 0px;">
@@ -56,7 +56,7 @@
                                     </table>
                                 </td>
                                 <td>${order.orderDate}</td>
-                                <td>${order.orderStatus}</td>
+                                <td>${order.pgOrderStatus.orderStatusName}</td>
                                 <td colspan="2">
                                     <table class="table table-condensed total-result">
                                         <tr>
