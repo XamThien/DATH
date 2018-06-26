@@ -112,7 +112,7 @@ public class ProductDAO {
         Transaction transaction = session.beginTransaction();
         session.save(sp);
         transaction.commit();
-        session.close();
+        //session.close();
     }
 
      // phuong thuc get nhuwng sp khong co trong bang sale
@@ -149,9 +149,29 @@ public class ProductDAO {
         Transaction transaction = session.beginTransaction();
         session.update(sp);
         transaction.commit();
-        session.close();
+        //session.close();
     }
+    public int getLastProduct()
+    {
+    	PgProducts pr = null;
+    	
+    	try {
+            Configuration configuration = new Configuration().configure();
+            SessionFactory sessionFactory = configuration.buildSessionFactory();
+            Session session = sessionFactory.openSession();
 
+            //Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+            String hql = "from PgProducts where productStatus=1 order by productId DESC";
+            Query que = session.createQuery(hql);
+            pr = (PgProducts)que.list().get(0);
+            
+            transaction.commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+    	return pr.getProductId();
+    }
     public static void main(String[] args) {
 //		 try
 //		 {
@@ -184,24 +204,42 @@ public class ProductDAO {
 // 		new ProductPictures().updatePgProductPictures(prpic);
 // 		PgProductPictures prpic1 = new ProductPictures().getPgProductPicturesByID(1);
 // 		System.out.println(prpic1.getPath());
-    	PgProducts tll = new ProductDAO().getPgProductsByID(Integer.parseInt("1"));
+//    	PgProducts tll = new ProductDAO().getPgProductsByID(Integer.parseInt("1"));
 		
-		Integer productId = tll.getProductId();
-		PgCategories pgCategories = tll.getPgCategories();
-		PgSuppliers pgSuppliers = tll.getPgSuppliers();
-		String productName = tll.getProductName();
-		int quantity = tll.getQuantity();
-		int unitPrice = tll.getUnitPrice();
-		int unitOrder = tll.getUnitOrder();
-		String description= tll.getDescription();
-		int productStatus = tll.getProductStatus();
-		Date createTime = tll.getCreateTime();
-		Date modifiedTime = tll.getModifiedTime();
-		 Boolean isNew = tll.getIsNew();
-		 Boolean isHot = tll.getIsHot();
-		 PgProducts tl = new PgProducts(productId,pgCategories,pgSuppliers,productName,quantity,unitPrice,unitOrder,description,productStatus,createTime,modifiedTime,isHot,isNew);
-		tl.setProductStatus(0);
-      new ProductDAO().updatePgProduct(tl);
+//		Integer productId = tll.getProductId();
+//		PgCategories pgCategories = tll.getPgCategories();
+//		PgSuppliers pgSuppliers = tll.getPgSuppliers();
+//		String productName = tll.getProductName();
+//		int quantity = tll.getQuantity();
+//		int unitPrice = tll.getUnitPrice();
+//		int unitOrder = tll.getUnitOrder();
+//		String description= tll.getDescription();
+//		int productStatus = tll.getProductStatus();
+//		Date createTime = tll.getCreateTime();
+//		Date modifiedTime = tll.getModifiedTime();
+//		 Boolean isNew = tll.getIsNew();
+//		 Boolean isHot = tll.getIsHot();
+//		 PgProducts tl = new PgProducts(productId,pgCategories,pgSuppliers,productName,quantity,unitPrice,unitOrder,description,productStatus,createTime,modifiedTime,isHot,isNew);
+//		tl.setProductStatus(0);
+//      new ProductDAO().updatePgProduct(tl);
+    	
+    	List<PgProducts> lst = new ProductDAO().getAllPgProducts(1);
+    	for(PgProducts xx :lst)
+    	{
+    		System.out.println(new ProductPictures().getPgProductPicturesByID(xx.getProductId()).getPath());
+    		//System.out.println(xx.getProductId());
+    	}
+//    	List<PgCategories> lstcate = new CategoryDAO().getActivePgCategories();
+//		for(PgCategories ct : lstcate)
+//		{
+//			System.out.println(ct);
+//		}
+//		List<PgSuppliers> lstncc = new PgSuppliersDAO().getListSupplier();
+//		for(PgSuppliers ct : lstncc)
+//		{
+//			System.out.println(ct);
+//		}
+		
     }
 
 }

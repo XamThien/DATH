@@ -264,5 +264,22 @@ public class PgProducts implements java.io.Serializable {
     public int hashCode() {
         return productId; //To change body of generated methods, choose Tools | Templates.
     }
+
+	@Override
+	public String toString() {
+		return "PgProducts [productId=" + productId + ", pgCategories=" + pgCategories + ", pgSuppliers=" + pgSuppliers
+				+ ", productName=" + productName + ", quantity=" + quantity + ", unitPrice=" + unitPrice
+				+ ", unitOrder=" + unitOrder + ", description=" + description + ", productStatus=" + productStatus
+				+ ", createTime=" + createTime + ", modifiedTime=" + modifiedTime + ", isNew=" + isNew + ", isHot="
+				+ isHot + ", getProductId()=" + getProductId() + ", getPgCategories()=" + getPgCategories()
+				+ ", getPgSuppliers()=" + getPgSuppliers() + ", getProductName()=" + getProductName()
+				+ ", getQuantity()=" + getQuantity() + ", getUnitPrice()=" + getUnitPrice() + ", getUnitOrder()="
+				+ getUnitOrder() + ", getDescription()=" + getDescription() + ", getProductStatus()="
+				+ getProductStatus() + ", getCreateTime()=" + getCreateTime() + ", getModifiedTime()="
+				+ getModifiedTime() + ", getIsNew()=" + getIsNew() + ", getIsHot()=" + getIsHot()
+				+ ", getPgProductSaleses()=" + getPgProductSaleses() + ", getPgOrderDetailses()="
+				+ getPgOrderDetailses() + ", getPgProductPictureses()=" + getPgProductPictureses() + ", hashCode()="
+				+ hashCode() + ", getClass()=" + getClass() + ", toString()=" + super.toString() + "]";
+	}
     
 }

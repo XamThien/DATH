@@ -114,4 +114,10 @@ public class PgCategories implements java.io.Serializable {
 		this.pgProductses = pgProductses;
 	}
 
+	@Override
+	public String toString() {
+		return "PgCategories [categoryId=" + categoryId + ", categoryName=" + categoryName + ", description="
+				+ description + ", sortIndex=" + sortIndex + ", categoryStatus=" + categoryStatus + "]";
+	}
+	
 }
