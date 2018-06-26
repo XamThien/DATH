@@ -5,17 +5,15 @@
  */
 package site.actions.login;
 
-import DAO.UserDAO;
 import database.Hibernate;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.PgUsers;
 import org.hibernate.Session;
+import service.PGValidation;
 import service.UserAuthentication;
 
 /**
@@ -71,7 +69,7 @@ public class UserUpdate extends HttpServlet {
         String email = request.getParameter("email");
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
-        String cardid =request.getParameter("cardid");
+        String cardid = request.getParameter("cardid");
         String sex = request.getParameter("sex");
         //System.out.println(fname +" "+lname + " " + email+ " " +address + " " + phone+" " +cardid + " " + sex);
         UserAuthentication auth = (UserAuthentication) request.getSession().getAttribute("authentic");
@@ -81,18 +79,25 @@ public class UserUpdate extends HttpServlet {
             auth.getUsers().setEmail(email);
             auth.getUsers().setAddress(address);
             auth.getUsers().setPhoneNumber(phone);
-            if(cardid !=null){
+            if (cardid != null) {
                 auth.getUsers().setCardId(cardid);
             }
-            if(sex !=null){
-                auth.getUsers().setSex((Integer.parseInt(sex)==1));
+            if (sex != null) {
+                auth.getUsers().setSex((Integer.parseInt(sex) == 1));
             }
             Session session = Hibernate.getSessionFactory().getCurrentSession();
             session.beginTransaction();
-            session.merge(auth.getUsers());
-            session.getTransaction().commit();
-            response.getWriter().print("success");
-        }else{
+            String valid = new PGValidation().validateUserInformation(auth.getUsers(), auth.getUsers().getUserPassword());
+            if (valid.equals("valid")) {
+                session.merge(auth.getUsers());
+                session.getTransaction().commit();
+                response.getWriter().print("success");
+            } else {
+                session.refresh(auth.getUsers());
+                session.getTransaction().rollback();
+                response.getWriter().print(valid);
+            }
+        } else {
             response.getWriter().print("faild");
         }
         

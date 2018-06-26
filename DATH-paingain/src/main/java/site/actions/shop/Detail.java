@@ -63,11 +63,14 @@ public class Detail extends HttpServlet {
             request.setAttribute("item", product);
         }
         List<PgCategories> categories = session.createCriteria(PgCategories.class)
+                .add(Restrictions.eq("categoryStatus", 1))
                 .addOrder(Order.asc("sortIndex")).list();
-        List<PgProducts> relproduct = session.createCriteria(PgProducts.class)
+        List<PgProducts> relproduct = session.createCriteria(PgProducts.class,"product")
+                .createAlias("product.pgCategories", "category")
                 .add(Restrictions.ne("productId", pId))
-                .addOrder(Order.desc("isNew"))
+                .add(Restrictions.eq("category.categoryStatus", 1))
                 .add(Restrictions.ne("productStatus", 0))
+                .addOrder(Order.desc("isNew"))
                 .setMaxResults(3).list();
         session.getTransaction().commit();
         request.setAttribute("categories", categories);

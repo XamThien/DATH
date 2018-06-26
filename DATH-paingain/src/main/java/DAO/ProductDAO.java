@@ -14,6 +14,7 @@ import model.PgSuppliers;
 import model.PgUsers;
 
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -22,6 +23,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 
 /**
  *
@@ -34,7 +36,9 @@ public class ProductDAO {
         List<PgProducts> productses = new ArrayList<>();
         Session session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
-        Criteria criteria = session.createCriteria(PgProducts.class)
+        Criteria criteria = session.createCriteria(PgProducts.class,"product")
+                .createAlias("product.pgCategories", "category")
+                .add(Restrictions.and(Restrictions.eq("product.productStatus", 1),Restrictions.eq("category.categoryStatus", 1)))
                 .addOrder(Order.desc("isNew"))
                 .addOrder(Order.desc("isHot"))
                 .setMaxResults(9);

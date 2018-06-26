@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="layouts/header.jsp" %>
 <section id="cart_items">
     <div class="container">
@@ -84,7 +85,26 @@
                                 <h4><a href="">${item.pgProducts.productName}</a></h4>
                             </td>
                             <td class="cart_price">
-                                <p>${item.unitPrice} VND</p>
+                                <c:set var="breakpoint"  value="${0}"/>       
+                                <c:forEach var="sale" items="${item.pgProducts.pgProductSaleses}">
+                                    <c:choose>
+                                        <c:when test="${sale.endDate ge now and sale.salesStatus eq 1}">
+                                            <c:set var="saleprice"  value="${0}"/>
+                                            <c:if test="${sale.isPercent}">
+                                                <c:set var="saleprice" value="${item.pgProducts.unitPrice-item.pgProducts.unitPrice*sale.saleValue/100}"/>
+                                            </c:if>
+                                            <c:if test="${not sale.isPercent}">
+                                                <c:set var="saleprice" value="${item.pgProducts.unitPrice  - sale.saleValue }"/>
+                                            </c:if>
+                                            <c:set var="breakpoint"  value="${1}"/> 
+                                            <h4 style="text-decoration: line-through;"><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${item.pgProducts.unitPrice}" /> VND</h4>
+                                            <h3 style="color:#fe980f"><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${saleprice}" /> VND</h3>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                                <c:if test="${ breakpoint eq 0}">
+                                    <h3 style="color:#fe980f"><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${item.pgProducts.unitPrice}" /> VND</h3>
+                                </c:if>
                             </td>
                             <td class="cart_quantity">
                                 <div class="cart_quantity_button">
@@ -94,9 +114,9 @@
                                 </div>
                             </td>
                             <td class="cart_total">
-                                <p class="cart_total_price">${item.amount*item.unitPrice} VND</p>
+                                <p class="cart_total_price"><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${item.amount*saleprice}" /> VND</p>
                             </td>
-                            <c:set var="total"  value="${total+item.amount*item.unitPrice}"/>
+                            <c:set var="total"  value="${total+item.amount*saleprice}"/>
                             <td class="cart_delete">
                                 <a class="cart_quantity_delete" href="javascript:void(0)" itemid="${item.pgProducts.productId}"><i class="fa fa-times"></i></a>
                             </td>
@@ -108,7 +128,7 @@
                             <table class="table table-condensed total-result">
                                 <tr>
                                     <td>Cart Sub Total</td>
-                                    <td>${total} VND</td>
+                                    <td><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${total}" /> VND</td>
                                 </tr>
                                 <tr>
                                     <td>Exo Tax</td>
@@ -120,7 +140,7 @@
                                 </tr>
                                 <tr>
                                     <td>Total</td>
-                                    <td><span>${total} VND</span></td>
+                                    <td><span><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${total}" /> VND</span></td>
                                 </tr>
                             </table>
                         </td>

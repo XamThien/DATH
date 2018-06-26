@@ -1,7 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="model.PgProductPictures"%>
-<%@page import="model.PgProducts"%>
-<%@page import="java.util.List"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="layouts/header.jsp" %>
 <section id="slider"><!--slider-->
     <div class="container">
@@ -86,14 +84,51 @@
                                                 <img src="${path}${pic.path}" alt="">
                                             </c:if>
                                         </c:forEach>
-                                        <h2>${pItem.unitPrice} VND</h2>
+                                        <c:set var="breakpoint"  value="${0}"/>       
+                                        <c:forEach var="sale" items="${pItem.pgProductSaleses}">
+                                            <c:choose>
+                                                <c:when test="${sale.endDate ge now and sale.salesStatus eq 1}">
+                                                    <c:set var="saleprice"  value="${0}"/>
+                                                    <c:if test="${sale.isPercent}">
+                                                        <c:set var="saleprice" value="${pItem.unitPrice-pItem.unitPrice*sale.saleValue/100}"/>
+                                                    </c:if>
+                                                    <c:if test="${not sale.isPercent}">
+                                                        <c:set var="saleprice" value="${pItem.unitPrice  - sale.saleValue }"/>
+                                                    </c:if>
+                                                    <c:set var="breakpoint"  value="${1}"/> 
+                                                    <h4 style="text-decoration: line-through;"><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${pItem.unitPrice}" /> VND</h4>
+                                                    <h2><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${saleprice}" /> VND</h2>
+                                                </c:when>
+                                            </c:choose>
+                                        </c:forEach>
+                                        <c:if test="${ breakpoint eq 0}">
+                                            <h2><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${pItem.unitPrice}" /> VND</h2>
+                                        </c:if>
                                         <p>${pItem.productName}</p>
                                         <a href="javascript:void(0)" class="btn btn-default add-to-cart" itemid="${pItem.productId}"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                     </div>
                                     <div class="product-overlay">
                                         <div class="overlay-content">
                                             <a href="detail?id=${pItem.productId}">
-                                                <h2>${pItem.unitPrice} VND</h2>
+                                                <c:forEach var="sale" items="${pItem.pgProductSaleses}">
+                                                    <c:choose>
+                                                        <c:when test="${sale.endDate ge now and sale.salesStatus eq 1}">
+                                                            <c:set var="saleprice"  value="${0}"/>
+                                                            <c:if test="${sale.isPercent}">
+                                                                <c:set var="saleprice" value="${pItem.unitPrice-pItem.unitPrice*sale.saleValue/100}"/>
+                                                            </c:if>
+                                                            <c:if test="${not sale.isPercent}">
+                                                                <c:set var="saleprice" value="${pItem.unitPrice  - sale.saleValue }"/>
+                                                            </c:if>
+                                                            <c:set var="breakpoint"  value="${1}"/>
+                                                            <h4 style="text-decoration: line-through;"><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${pItem.unitPrice}" /> VND</h4>
+                                                            <h2><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${saleprice}" /> VND</h2>
+                                                        </c:when>
+                                                    </c:choose>
+                                                </c:forEach>
+                                                <c:if test="${ breakpoint eq 0}">
+                                                    <h2><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${pItem.unitPrice}" /> VND</h2>
+                                                </c:if>
                                                 <p>${pItem.productName}</p>
                                             </a>
                                             <a href="javascript:void(0)" class="btn btn-default add-to-cart" itemid="${pItem.productId}"><i class="fa fa-shopping-cart"></i>Add to cart</a>

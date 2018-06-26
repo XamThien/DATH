@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="layouts/header.jsp" %>
 <section>
     <div class="container">
@@ -42,7 +43,27 @@
                             <h2>${item.productName}</h2>
                             <p></p>
                             <span>
-                                <span>${item.unitPrice} VND</span>
+
+                                <c:set var="breakpoint"  value="${0}"/>       
+                                <c:forEach var="sale" items="${item.pgProductSaleses}">
+                                    <c:choose>
+                                        <c:when test="${sale.endDate ge now and sale.salesStatus eq 1}">
+                                            <c:set var="saleprice"  value="${0}"/>
+                                            <c:if test="${sale.isPercent}">
+                                                <c:set var="saleprice" value="${item.unitPrice-item.unitPrice*sale.saleValue/100}"/>
+                                            </c:if>
+                                            <c:if test="${not sale.isPercent}">
+                                                <c:set var="saleprice" value="${item.unitPrice  - sale.saleValue }"/>
+                                            </c:if>
+                                            <c:set var="breakpoint"  value="${1}"/> 
+                                            <h4 style="text-decoration: line-through;"><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${item.unitPrice}" /> VND</h4>
+                                            <span><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${saleprice}" /> VND</span>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                                <c:if test="${ breakpoint eq 0}">
+                                    <span><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${item.unitPrice}" /> VND</span>
+                                </c:if>
                                 <button type="button" class="btn btn-fefault cart add-to-cart" itemid="${item.productId}">
                                     <i class="fa fa-shopping-cart"></i>
                                     Add to cart
@@ -97,7 +118,26 @@
                                                                 <img src="${path}${pic.path}" alt="" itemid="${pic.pictureSetId}">
                                                             </c:if>
                                                         </c:forEach>
-                                                        <h2>${rel.unitPrice} VND</h2>
+                                                        <c:set var="breakpoint"  value="${0}"/>       
+                                                        <c:forEach var="sale" items="${rel.pgProductSaleses}">
+                                                            <c:choose>
+                                                                <c:when test="${sale.endDate ge now and sale.salesStatus eq 1}">
+                                                                    <c:set var="saleprice"  value="${0}"/>
+                                                                    <c:if test="${sale.isPercent}">
+                                                                        <c:set var="saleprice" value="${rel.unitPrice-rel.unitPrice*sale.saleValue/100}"/>
+                                                                    </c:if>
+                                                                    <c:if test="${not sale.isPercent}">
+                                                                        <c:set var="saleprice" value="${rel.unitPrice  - sale.saleValue }"/>
+                                                                    </c:if>
+                                                                    <c:set var="breakpoint"  value="${1}"/> 
+                                                                    <h4 style="text-decoration: line-through;"><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${rel.unitPrice}" /> VND</h4>
+                                                                    <h2><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${saleprice}" /> VND</h2>
+                                                                </c:when>
+                                                            </c:choose>
+                                                        </c:forEach>
+                                                        <c:if test="${ breakpoint eq 0}">
+                                                            <h2><fmt:formatNumber type = "number" maxFractionDigits  = "3" value = "${rel.unitPrice}" /> VND</h2>
+                                                        </c:if>
                                                         <p>${rel.productName}</p>
                                                     </a>
                                                     <button type="button" class="btn btn-default add-to-cart" itemid="${rel.productId}"><i class="fa fa-shopping-cart"></i>Add to cart</button>

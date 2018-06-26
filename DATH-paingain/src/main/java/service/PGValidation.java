@@ -26,7 +26,7 @@ public class PGValidation {
     }
 
     public boolean checkPhone(String phone) {
-        Matcher matcher = Pattern.compile("^\\+{0,1}[0-9]{10,12}$").matcher(phone);
+        Matcher matcher = Pattern.compile("^\\+{0,1}[0-9]{9,12}$").matcher(phone);
         return matcher.find();
     }
 
@@ -57,6 +57,11 @@ public class PGValidation {
             return "Mat khau khong duoc de trong hoac duoi 6 ki tu";
         } else if (!user.getUserPassword().equals(cfpass)) {
             return "Mat khau khong khop";
+        }
+        if(!user.getCardId().equals("")){
+            if(!validation.checkPhone(user.getCardId())){
+                return "CardId khong hop le";
+            }
         }
         return "valid";
     }

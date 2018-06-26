@@ -23,6 +23,7 @@ import model.PgUsers;
 import org.hibernate.Session;
 
 import DAO.OrderStatusDAO;
+import model.PgProductSales;
 import service.UserAuthentication;
 
 /**
@@ -102,6 +103,17 @@ public class CheckoutAction extends HttpServlet {
             for (PgOrderDetails ord : cart.getPgOrderDetailses()) {
                 ord.setPgOrders(cart);
                 ord.setUnitPrice(ord.getPgProducts().getUnitPrice());
+                for (PgProductSales sale : ord.getPgProducts().getPgProductSaleses()) {
+                    if (sale.getSalesStatus() == 1 && (sale.getEndDate().compareTo(new Date()) == 0 || sale.getEndDate().compareTo(new Date()) == 1)) {
+                        if (sale.getIsPercent()) {
+                            int saleval = ord.getPgProducts().getUnitPrice() * sale.getSaleValue() / 100;
+                            ord.setUnitSale(saleval);
+                        } else {
+                            ord.setUnitSale(sale.getSaleValue());
+                        }
+                        break;
+                    }
+                }
                 session.save(ord);
             }
             session.getTransaction().commit();

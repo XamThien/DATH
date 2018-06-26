@@ -7,16 +7,10 @@ package site.actions.cart;
 
 import DAO.ProductDAO;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
-import database.Hibernate;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.lang.ProcessBuilder.Redirect.Type;
 import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Cart;
 import model.PgOrderDetails;
+import model.PgOrderStatus;
 import model.PgProducts;
-import org.json.simple.JSONObject;
 
 /**
  *
@@ -72,14 +66,10 @@ public class CartAjax extends HttpServlet {
         Cart cart = (Cart) session.getAttribute("mycart");
         if (cart == null) {
             cart = new Cart();
+            cart.setPgOrderStatus(new PgOrderStatus(1, "Dang Tiep nhan"));
         }
         if (!action.equals("delete")) {
-            if (action.equals("add")) {
-                order.setAmount(1);
-            } else if (action.equals("update")) {
-                String quantity = request.getParameter("quantity");
-                order.setAmount(Integer.parseInt(quantity));
-            }
+            order.setAmount(1);
             cart.addToCart(order);
             session.setAttribute("mycart", cart);
             response.getWriter().print("success");

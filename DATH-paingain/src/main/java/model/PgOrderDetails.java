@@ -95,4 +95,19 @@ public class PgOrderDetails implements java.io.Serializable {
 		this.unitSale = unitSale;
 	}
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof PgOrderDetails){
+            obj =(PgOrderDetails)obj;
+            return this.getPgProducts().getProductId() == ((PgOrderDetails)obj).getPgProducts().getProductId();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getPgProducts().getProductId()*1234; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+        
 }

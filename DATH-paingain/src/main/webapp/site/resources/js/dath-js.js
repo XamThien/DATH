@@ -29,7 +29,7 @@ $(document).ready(function () {
             data: {pId: dId, action: "delete"},
             success: function (data) {
                 if (data !== "success") {
-                    alert("error");
+                    alert(data);
                 } else {
                     location.reload();
                 }
@@ -92,7 +92,8 @@ $(document).ready(function () {
             type: "POST"
         }).done(function (data) {
             if (data === "success") {
-                location.reload();
+                $("#notify-content").html("Dat hang thanh cong view <a href='" + path + "/purchase-orders'>Purchase orders</a>");
+                    $('#notify').modal('show');
             } else {
                 alert(data);
             }

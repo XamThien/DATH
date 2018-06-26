@@ -74,9 +74,11 @@ public class Search extends HttpServlet {
                 .createAlias("product.pgCategories", "category")
                 .add(Restrictions.or(Restrictions.like("product.productName", str, MatchMode.ANYWHERE),
                         Restrictions.like("category.categoryName", str, MatchMode.ANYWHERE)))
+                .add(Restrictions.and(Restrictions.eq("product.productStatus", 1),Restrictions.eq("category.categoryStatus", 1)))
                 .list();
         session.getTransaction().commit();
         List<PgCategories> categorieses = session.createCriteria(PgCategories.class)
+                .add(Restrictions.eq("categoryStatus", 1))
                 .addOrder(Order.asc("sortIndex"))
                 .list();
         request.setAttribute("items", products);

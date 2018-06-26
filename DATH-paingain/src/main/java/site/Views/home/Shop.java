@@ -6,10 +6,8 @@
 package site.Views.home;
 
 import DAO.CategoryDAO;
-import DAO.ProductDAO;
 import database.Hibernate;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +15,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.PgCategories;
+import model.PgProducts;
+import org.hibernate.Session;
+import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -54,15 +57,26 @@ public class Shop extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int id = Integer.parseInt(request.getParameter("id"));
-        List categoriesList = new CategoryDAO().getCategories();
-        Hibernate.getSessionFactory().getCurrentSession().close();
+        Session session = Hibernate.getSessionFactory().openSession();
+        session.beginTransaction();
+        List categoriesList = session.createCriteria(PgCategories.class)
+                .add(Restrictions.eq("categoryStatus", 1)).list();
+        List<PgProducts> products = session.createCriteria(PgProducts.class, "products")
+                .createAlias("products.pgCategories", "category")
+                .add(Restrictions.and(Restrictions.eq("category.categoryStatus", 1),
+                        Restrictions.eq("category.categoryId", id),
+                        Restrictions.eq("products.productStatus", 1)
+                ))
+                .addOrder(Order.desc("products.isNew"))
+                .addOrder(Order.desc("products.isHot"))
+                .list();
+        PgCategories category = (PgCategories) session.get(PgCategories.class, id);
+        session.getTransaction().commit();
         request.setAttribute("categories", categoriesList);
-        PgCategories category = new CategoryDAO().getCategory(id);
-        Hibernate.getSessionFactory().getCurrentSession().close();
-        request.setAttribute("title", "Shop| "+category.getCategoryName());
-        request.setAttribute("cCategory", category.getCategoryName());
+        request.setAttribute("title", "Shop| " + category.getCategoryName());
         request.setAttribute("category", category);
-        
+        request.setAttribute("items", products);
+
         request.getRequestDispatcher("site/shop.jsp").forward(request, response);
     }
 
