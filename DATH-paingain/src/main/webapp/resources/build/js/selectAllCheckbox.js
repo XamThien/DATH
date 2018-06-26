@@ -97,7 +97,7 @@ $(document).ready(function(){
 	else
 	{
 		document.getElementById("lstid").value = items.toString();
-		//alert(document.getElementById("lstid").value);
+		alert(document.getElementById("lstid").value);
 	}
 	});
 	
