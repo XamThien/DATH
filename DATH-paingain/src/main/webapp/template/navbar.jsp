@@ -51,7 +51,7 @@
 										</ul>
 									</div>
 								</li>
-		                   		<li><a href="#">Hủy khuyến mại</a></li>
+		                   		<li><a href="/manager/danhsachkhuyenmai.jsp">Hủy khuyến mại</a></li>
 		                    </ul>
 	                  </li>
 	                  <li><a href="/manager/nhanvien.jsp"><i class="fa fa-users"></i>Quản lý tài khoản </a></li>

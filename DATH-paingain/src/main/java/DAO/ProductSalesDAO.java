@@ -25,11 +25,32 @@ public class ProductSalesDAO {
 	        	
 	        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		        Transaction transaction = session.beginTransaction();
-		        String hql ="from ProductSales where salesStatus=1 order by saleId DESC";
+		        String hql ="from PgProductSales order by saleId DESC";
 		        Query que = session.createQuery(hql);
 		        list = que.list();
 		        transaction.commit();
-		        session.close();
+		        //session.close();
+	        }
+	        catch  (HibernateException e) {
+	        	 e.printStackTrace();
+	        }
+	        return list;
+	}
+	public  List<Integer> getAllPgProductSalesAvtive(){
+		 List<Integer> list=null;
+	        try
+	        {
+	        	Configuration configuration =  new Configuration().configure();
+	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
+	        	Session session = sessionFactory.openSession();
+	        	
+	        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		        Transaction transaction = session.beginTransaction();
+		        String hql =" select ps.pgProducts.productId from PgProductSales ps where  salesStatus = 1";
+		        Query que = session.createQuery(hql);
+		        list = que.list();
+		        transaction.commit();
+		        //session.close();
 	        }
 	        catch  (HibernateException e) {
 	        	 e.printStackTrace();
@@ -97,4 +118,17 @@ public class ProductSalesDAO {
         transaction.commit();
         session.close();
     }
+ public static void main(String[] args) {
+//	 List<PgProductSales> lst = new ProductSalesDAO().getAllPgProducts();
+//	 for (PgProductSales ps : lst)
+//	 {
+//		 System.out.println(ps.getPgProducts().getProductName());
+//	 } getAllPgProductSalesAvtive
+	 
+	 List<Integer> lst = new ProductSalesDAO().getAllPgProductSalesAvtive();
+	 for (Integer ps : lst)
+	 {
+		 System.out.println(ps);
+	 }
+}
 }

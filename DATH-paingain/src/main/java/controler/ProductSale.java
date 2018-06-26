@@ -56,78 +56,71 @@ public class ProductSale extends HttpServlet {
 		{
 		
 		case "edit":
-//			try
-//			{
-//				int id = Integer.parseInt(request.getParameter("eid"));
-//				String ten = request.getParameter("eten");
-//				int categoryid = Integer.parseInt(request.getParameter("edanhmuc"));
-//				int nccid = Integer.parseInt(request.getParameter("encc"));
-//				int sl = Integer.parseInt(request.getParameter("esoluong"));
-//				int gianhap = Integer.parseInt(request.getParameter("egianhap"));
-//				int giaban = Integer.parseInt(request.getParameter("egiaban"));
-//				boolean ishot = Boolean.parseBoolean((request.getParameter("ehot")==null || !request.getParameter("ehot").equals("true"))?"false":"true");
-//				boolean isnew = Boolean.parseBoolean((request.getParameter("enew")==null || !request.getParameter("enew").equals("true"))?"false":"true");
-//				String mota = request.getParameter("emota");
-//				
-//				 Date Ngay = new Date();
-//			     SimpleDateFormat datefrmat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//			     String datestr = datefrmat.format(Ngay);
-//			     Date now = datefrmat.parse(datestr);
-//				
-//			     
-//			    PgCategories cate = new CategoryDAO().getCategory(categoryid);
-//			    //anh===============================
-//			    //ncc 
-//			    PgSuppliers su = new PgSuppliersDAO().findByID(nccid);
-//				PgProducts tl = new ProductDAO().getPgProductsByID(id);//new PgProducts(cate, su, ten, sl, giaban, gianhap, mota, now, now, ishot, isnew);
-//				tl.setPgCategories(cate);
-//				tl.setPgSuppliers(su);
-//				tl.setProductName(ten);
-//				tl.setQuantity(sl);
-//				tl.setUnitPrice(giaban);
-//				tl.setUnitOrder(gianhap);
-//				tl.setDescription(mota);
-//				tl.setModifiedTime(now);
-//				tl.setIsHot(ishot);
-//				tl.setIsNew(isnew);
-//	            try
-//	            {
-//	            	new ProductDAO().updatePgProduct(tl);
-//	            	
-//	            	String img_photo = uploadFile(request,"ephoto");
-//	            	if(img_photo== null || img_photo.equals(""))
-//	            	{
-//	            		
-//	            	}
-//	            	else
-//	            	{
-//	            		PgProductPictures prpic = new ProductPictures().getPgProductPicturesByID(id);
-//	            		prpic.setPath(request.getContextPath()+img_photo);
-//	            		new ProductPictures().updatePgProductPictures(prpic);
-//	            	}
-//	            	
-//	            	
-//	            	message = "Sửa thông tin sản phẩm thành công.";
-//	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
-//					request.setAttribute("msg", message );
-//					xxx.forward(request, response);
-//	            	
-//	            }
-//	            catch(Exception e)
-//				{
-//	            	message = "Sửa thông tin sản phẩm không thành công.1";
-//	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
-//					request.setAttribute("msg", message );
-//					xxx.forward(request, response);
-//				}
-//			}
-//			catch(Exception e)
-//			{
-//				message = "Sửa thông tin sản phẩm không thành công.2"+e;
-//	        	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
-//				request.setAttribute("msg", message );
-//				xxx.forward(request, response);
-//			}
+			try
+			{
+				int idsale = Integer.parseInt(request.getParameter("did"));
+				
+			     
+				PgProductSales ps = new ProductSalesDAO().getProductSalesByID(idsale);
+				if(ps.getSalesStatus() ==1)
+				{
+					// ttawst
+					ps.setSalesStatus(0);
+				}
+				else
+				{
+					//baat
+					boolean ck = true;
+					int prduct_id = ps.getPgProducts().getProductId();
+					List<Integer> lst = new ProductSalesDAO().getAllPgProductSalesAvtive();
+					
+					for (Integer idx : lst)
+					 {
+						if(idx==idsale)
+						{
+							ck = false;
+							break;
+						}
+					 }
+					if(ck)
+					{
+						ps.setSalesStatus(1);
+					}
+					else
+					{
+							message = "Sản phẩm này đang được khuyến mại.";
+			            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/danhsachkhuyenmai.jsp");
+							request.setAttribute("msg", message );
+							xxx.forward(request, response);
+					}
+				}
+			   
+	            try
+	            {
+	            	
+	            	new ProductSalesDAO().updatePgProduct(ps);
+	            	
+	            	message = "Cật nhật thành công.";
+	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/danhsachkhuyenmai.jsp");
+					request.setAttribute("msg", message );
+					xxx.forward(request, response);
+	            	
+	            }
+	            catch(Exception e)
+				{
+	            	message = "Cật nhật không thành công.1";
+	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/danhsachkhuyenmai.jsp");
+					request.setAttribute("msg", message );
+					xxx.forward(request, response);
+				}
+			}
+			catch(Exception e)
+			{
+				message = "Cật nhật không thành công.2"+e;
+	        	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/danhsachkhuyenmai.jsp");
+				request.setAttribute("msg", message );
+				xxx.forward(request, response);
+			}
 			break;
 		case "add":
 			int cateidd = Integer.parseInt(request.getParameter("cateid"));
