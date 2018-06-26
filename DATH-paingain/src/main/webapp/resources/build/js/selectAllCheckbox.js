@@ -1,7 +1,6 @@
 var formValues = JSON.parse(localStorage.getItem('formValues')) || {};
-var $checkboxes = $("#table :checkbox");
+var $checkboxes = $("#tablex :checkbox");
 var $button = $("#checkAll");
-var lstIdCkeck = [];
 
 function allChecked(){
   return $checkboxes.length === $checkboxes.filter(":checked").length;
@@ -18,7 +17,6 @@ function handleButtonClick(){
 function updateStorage(){
   $checkboxes.each(function(){
     formValues[this.id] = this.checked;
-
   });
 
   formValues["buttonText"] = $button.text();
@@ -43,47 +41,11 @@ $.each(formValues, function(key, value) {
 
 $button.text(formValues["buttonText"]);
 
-function pushLstCK()
-{
-	var lstIdCkeck = [];
-
-	var arr = [];
-	arr= document.querySelector("#table .check");
-	var size = arr.length;
-	var ck = true;
-	var dem = 0;
-	for(var i = 0;i<size;i++)
-	{
-		if(arr[i].ckecked == true)
-		{
-			lstIdCkeck.push(arr[i].value);
-		}
-		else
-		{
-			dem= dem+1;
-		}
-	}
-	if(dem == size)
-	{
-		ck=false;
-	}
-	if(ck==true)
-	{
-		//document.getElementById("lstid").value = arr.toString();
-		alert(lstIdCkeck.toString());
-	}
-	else
-	{
-		alert("Chưa lựa chọn sản phẩm");
-	}
-	
-}
-
 
 $(document).ready(function(){
 	$("#smit").click(function(){
 		var items =[];
-	$("#table input[type=checkbox]:checked").each(function(){
+	$("#tablex input[type=checkbox]:checked").each(function(){
 		items.push($(this).val());
 	});
 	//console.log(items);
@@ -93,11 +55,12 @@ $(document).ready(function(){
 	if(items.length==0)
 	{
 		alert("Chưa lựa chọn sản phẩm");
+		window.location.reload();
 	}
 	else
 	{
 		document.getElementById("lstid").value = items.toString();
-		alert(document.getElementById("lstid").value);
+		//alert(document.getElementById("lstid").value);
 	}
 	});
 	
