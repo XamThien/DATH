@@ -35,6 +35,19 @@ public class PgCategories implements java.io.Serializable {
 		this.categoryStatus = categoryStatus;
 	}
 
+	public PgCategories(Integer categoryId,String categoryName, String description, int sortIndex, int categoryStatus) {
+		this.categoryId = categoryId;
+		this.categoryName = categoryName;
+		this.description = description;
+		this.sortIndex = sortIndex;
+		this.categoryStatus = categoryStatus;
+	}
+	public PgCategories(String categoryName, String description, int sortIndex, int categoryStatus) {
+		this.categoryName = categoryName;
+		this.description = description;
+		this.sortIndex = sortIndex;
+		this.categoryStatus = categoryStatus;
+	}
 	public PgCategories(String categoryName, String description, int sortIndex, int categoryStatus,
 			Set<PgProducts> pgProductses) {
 		this.categoryName = categoryName;

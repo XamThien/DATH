@@ -45,6 +45,24 @@ public class PgUsers implements java.io.Serializable {
 	public PgUsers() {
 	}
 
+	public PgUsers(Integer recordId, String userId, String firstName, String lastName, String address,
+			String phoneNumber, String cardId, String email, Boolean sex, String userPassword, Date createTime,
+			Date modifiedTime, int userStatus,PgRoles pgRoles) {
+		this.recordId = recordId;
+		this.pgRoles = pgRoles;
+		this.userId = userId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+		this.cardId = cardId;
+		this.email = email;
+		this.sex = sex;
+		this.userPassword = userPassword;
+		this.createTime = createTime;
+		this.modifiedTime = modifiedTime;
+		this.userStatus = userStatus;
+	}
 	public PgUsers(PgRoles pgRoles, String userId, String firstName, String lastName, String phoneNumber,
 			String userPassword, int userStatus) {
 		this.pgRoles = pgRoles;
@@ -56,6 +74,24 @@ public class PgUsers implements java.io.Serializable {
 		this.userStatus = userStatus;
 	}
 
+	public PgUsers( String userId, String firstName, String lastName, String address,
+			String phoneNumber, String cardId, String email, Boolean sex, String userPassword, Date createTime,
+			Date modifiedTime, int userStatus,PgRoles pgRoles) {
+		this.pgRoles = pgRoles;
+		this.userId = userId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+		this.cardId = cardId;
+		this.email = email;
+		this.sex = sex;
+		this.userPassword = userPassword;
+		this.createTime = createTime;
+		this.modifiedTime = modifiedTime;
+		this.userStatus = userStatus;
+	}
+	
 	public PgUsers(PgRoles pgRoles, String userId, String firstName, String lastName, String address,
 			String phoneNumber, String cardId, String email, Boolean sex, String userPassword, Date createTime,
 			Date modifiedTime, int userStatus, Set<PgOrders> pgOrderses, Set<PgLog> pgLogs) {

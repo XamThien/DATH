@@ -37,7 +37,28 @@ public class PgSuppliers implements java.io.Serializable {
 		this.contactName = contactName;
 		this.phone = phone;
 	}
+	public PgSuppliers(Integer supplierId,String companyName, String contactName, String address, String region, String phone,
+			String email, Integer supplierStatus) {
+		this.supplierId = supplierId;
+		this.companyName = companyName;
+		this.contactName = contactName;
+		this.address = address;
+		this.region = region;
+		this.phone = phone;
+		this.email = email;
+		this.supplierStatus = supplierStatus;
+	}
 
+	public PgSuppliers(String companyName, String contactName, String address, String region, String phone,
+			String email, Integer supplierStatus) {
+		this.companyName = companyName;
+		this.contactName = contactName;
+		this.address = address;
+		this.region = region;
+		this.phone = phone;
+		this.email = email;
+		this.supplierStatus = supplierStatus;
+	} 
 	public PgSuppliers(String companyName, String contactName, String address, String region, String phone,
 			String email, Integer supplierStatus, Set<PgProducts> pgProductses) {
 		this.companyName = companyName;
