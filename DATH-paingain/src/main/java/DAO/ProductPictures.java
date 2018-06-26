@@ -1,6 +1,5 @@
 package DAO;
 
-import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -35,7 +34,7 @@ public class ProductPictures {
 		        Query que = session.createQuery(hql);
 		        cl = (PgProductPictures) que.uniqueResult();
 		        transaction.commit();
-		        //session.close();
+		        session.close();
 	       }
 	       catch  (HibernateException e) {
 	    	   e.printStackTrace();
@@ -57,7 +56,7 @@ public class ProductPictures {
         Transaction transaction = session.beginTransaction();
         session.save(sp);
         transaction.commit();
-        //session.close();
+       session.close();
     }
 
  public void updatePgProductPictures(PgProductPictures sp){
@@ -75,6 +74,13 @@ public class ProductPictures {
         Transaction transaction = session.beginTransaction();
         session.update(sp);
         transaction.commit();
-        //session.close();
+       session.close();
     }
+ public static void main(String[] args) {
+
+	 PgProductPictures prpic = new ProductPictures().getPgProductPicturesByID(1);
+		prpic.setPath("");
+		new ProductPictures().updatePgProductPictures(prpic);
+	 
+}
 }

@@ -48,7 +48,7 @@
 
                 <div>
                   
-                  <p>Phần mềm quản lý thư viện trường . Đồ án tổng hợp ©2018.</p>
+                  <p>Phần mềm quản lý bán hàng online Pain & Gain . Đồ án tổng hợp ©2018.</p>
                 </div>
               </div>
             </form>

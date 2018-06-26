@@ -115,7 +115,6 @@ public class Product extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
     	HttpSession session = request.getSession();
-    	
     	int style = Integer.parseInt(request.getParameter("st"));
     	String path ="";
     	if(style==1) 
@@ -142,7 +141,7 @@ public class Product extends HttpServlet {
 				boolean ishot = Boolean.parseBoolean((request.getParameter("ehot")==null || !request.getParameter("ehot").equals("true"))?"false":"true");
 				boolean isnew = Boolean.parseBoolean((request.getParameter("enew")==null || !request.getParameter("enew").equals("true"))?"false":"true");
 				String mota = request.getParameter("emota");
-				int status = Integer.parseInt(request.getParameter("estatus"));
+				int status = Integer.parseInt(request.getParameter("status"));
 				 Date Ngay = new Date();
 			     SimpleDateFormat datefrmat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			     String datestr = datefrmat.format(Ngay);

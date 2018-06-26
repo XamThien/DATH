@@ -78,7 +78,12 @@
 											    <td><%=pr.getQuantity() %></td>
 											    <td><%=pr.getUnitPrice() %></td>
 											    <td><%=pr.getUnitOrder() %></td>
-											    <td><%=pr.getModifiedTime() %></td>
+											    <td><%
+											    	if(pr.getModifiedTime()== null){
+											    		out.print("");
+											    	} else {
+											    		out.print(pr.getModifiedTime());
+											    	}%></td>
 											    <td><input type="checkbox"  <%=(pr.getIsHot())? "checked":"" %>></td>
 											    <td><input type="checkbox"  <%=(pr.getIsNew())? "checked":"" %>></td>
 											    <% if (pr.getProductStatus()==1) {
@@ -89,7 +94,7 @@
 				                                %>
 											    
 											    <td>
-											    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=pr.getProductId() %>,'<%=new ProductPictures().getPgProductPicturesByID(pr.getProductId()).getPath() %>','<%=pr.getProductName() %>',<%=pr.getPgCategories().getCategoryId() %>,<%=pr.getPgSuppliers().getSupplierId() %>,<%=pr.getQuantity() %>,<%=pr.getUnitPrice() %>,<%=pr.getUnitOrder() %>,'<%=pr.getIsHot() %>','<%=pr.getIsNew() %>','<%=pr.getDescription() %>',<%=pr.getProductStatus() %>,<%=pr.getCreateTime() %>)" > <i class="fa fa-edit"></i> Sửa</a>
+											    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=pr.getProductId() %>,'<%=new ProductPictures().getPgProductPicturesByID(pr.getProductId()).getPath() %>','<%=pr.getProductName() %>',<%=pr.getPgCategories().getCategoryId() %>,<%=pr.getPgSuppliers().getSupplierId() %>,<%=pr.getQuantity() %>,<%=pr.getUnitPrice() %>,<%=pr.getUnitOrder() %>,'<%=pr.getIsHot() %>','<%=pr.getIsNew() %>','<%=pr.getDescription() %>',<%=pr.getProductStatus() %>,'<%=pr.getCreateTime() %>')" > <i class="fa fa-edit"></i> Sửa</a>
 										    	</td>
 											  </tr>
 											  <%dem++;} %>
@@ -248,7 +253,7 @@
                           </button>
                           <h4 class="modal-title" id="myModalLabel">Chỉnh sửa thông tin sản phẩm:</h4>
                         </div>
-                        <form action="/product?action=edit" method="post" enctype="multipart/form-data">
+                        <form action="/product?action=edit&st=1" method="post" enctype="multipart/form-data">
                         <div class="modal-body">
                         		<input type="hidden" id="eid" name="eid">
                         		<input type="hidden" id="ecreate" name="ecreate">
@@ -348,8 +353,8 @@
 				                    <div class="form-group" >
 				                        <div class="form-group" >
 				                            
-				                            <textarea rows="4" cols="50" id="emota" style="width: 450px;" placeholder="Mô tả..." name="emota"></textarea>
-				                        </div>
+				                            <textarea id="emota" name="emota" rows="4" cols="50" style="width: 450px;" placeholder="Mô tả..."></textarea>
+				                       </div>
 				                    </div>
 				                </div>
 				                <div class='col-sm-12'>
@@ -427,7 +432,13 @@
 			    	document.getElementById("encc").value = encc;
 			    	document.getElementById("egiaban").value = egiaban;
 			    	document.getElementById("egianhap").value = egianhap;
-			    	document.getElementById("emota").value = emota;
+			    	if(emota=="null"){
+			    		document.getElementById("emota").value = "";
+			    	} else {
+			    		document.getElementById("emota").value = emota;
+				    	
+			    	}
+			    	
 			    	document.getElementById("esoluong").value = esoluong;
 			    	if(ehot == "true") { document.getElementById("ehot").checked= true;} else { document.getElementById("ehot").checked= false;}
 			    	if(enew == "true") { document.getElementById("enew").checked= true;} else { document.getElementById("enew").checked= false;}

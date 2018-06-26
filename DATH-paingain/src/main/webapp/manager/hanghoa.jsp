@@ -54,6 +54,7 @@
 										  		<th>Cập nhật</th>
 										  		<th>Hot</th>
 										  		<th>New</th>
+										  		<th>Trạng thái</th>
 										  		<th>Tùy chọn</th> 
 										  	</tr>
 										  </thead>
@@ -82,9 +83,8 @@
 				                                }
 				                                %>
 											    <td>
-											    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=pr.getProductId() %>,'<%=new ProductPictures().getPgProductPicturesByID(pr.getProductId()).getPath() %>','<%=pr.getProductName() %>',<%=pr.getPgCategories().getCategoryId() %>,<%=pr.getPgSuppliers().getSupplierId() %>,<%=pr.getQuantity() %>,<%=pr.getUnitPrice() %>,<%=pr.getUnitOrder() %>,'<%=pr.getIsHot() %>','<%=pr.getIsNew() %>','<%=pr.getDescription() %>')" > <i class="fa fa-edit"></i> Sửa</a>
-										    		
-											    </td>
+											    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=pr.getProductId() %>,'<%=new ProductPictures().getPgProductPicturesByID(pr.getProductId()).getPath() %>','<%=pr.getProductName() %>',<%=pr.getPgCategories().getCategoryId() %>,<%=pr.getPgSuppliers().getSupplierId() %>,<%=pr.getQuantity() %>,<%=pr.getUnitPrice() %>,<%=pr.getUnitOrder() %>,'<%=pr.getIsHot() %>','<%=pr.getIsNew() %>','<%=pr.getDescription() %>',<%=pr.getProductStatus() %>,'<%=pr.getCreateTime() %>')" > <i class="fa fa-edit"></i> Sửa</a>
+										    	</td>
 											  </tr>
 											  <%dem++;} %>
 										  </tbody>
@@ -421,7 +421,13 @@
 			    	document.getElementById("encc").value = encc;
 			    	document.getElementById("egiaban").value = egiaban;
 			    	document.getElementById("egianhap").value = egianhap;
-			    	document.getElementById("emota").value = emota;
+			    	if(emota=="null"){
+			    		document.getElementById("emota").value = "";
+			    	} else {
+			    		document.getElementById("emota").value = emota;
+				    	
+			    	}
+			    	
 			    	document.getElementById("esoluong").value = esoluong;
 			    	if(ehot == "true") { document.getElementById("ehot").checked= true;} else { document.getElementById("ehot").checked= false;}
 			    	if(enew == "true") { document.getElementById("enew").checked= true;} else { document.getElementById("enew").checked= false;}
