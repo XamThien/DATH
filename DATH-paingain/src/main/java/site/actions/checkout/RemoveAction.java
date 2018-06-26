@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.PgOrderDetails;
 import model.PgOrderStatus;
 import model.PgOrders;
 import org.hibernate.Session;
@@ -83,6 +84,10 @@ public class RemoveAction extends HttpServlet {
                 status.setOrderStatusKey(0);
             	order.setPgOrderStatus(status);
                 session.update(order);
+                for(PgOrderDetails ord : order.getPgOrderDetailses()){
+                	ord.getPgProducts().setQuantity(ord.getPgProducts().getQuantity()+ord.getAmount());
+                    session.update(ord.getPgProducts());
+                }
                 response.getWriter().print("success");
             } else {
                 response.getWriter().print("Don hang dang trong giai doan ban giao. Khong the huy");

@@ -114,9 +114,13 @@ public class CheckoutAction extends HttpServlet {
                         break;
                     }
                 }
+                ord.getPgProducts().setQuantity(ord.getPgProducts().getQuantity()-ord.getAmount());
+                session.update(ord.getPgProducts());
                 session.save(ord);
+               
             }
             session.getTransaction().commit();
+           
             httpSession.setAttribute("mycart", new Cart());
             response.getWriter().print("success");
         } else {
