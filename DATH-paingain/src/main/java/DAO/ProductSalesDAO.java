@@ -25,7 +25,7 @@ public class ProductSalesDAO {
 	        	
 	        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		        Transaction transaction = session.beginTransaction();
-		        String hql ="from ProductSales where salesStatus=1";
+		        String hql ="from ProductSales where salesStatus=1 order by saleId DESC";
 		        Query que = session.createQuery(hql);
 		        list = que.list();
 		        transaction.commit();
