@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 20, 2018 4:50:52 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 26, 2018 11:27:45 AM by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -66,7 +66,7 @@ public class PgLog implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATED_TIME", length = 19)
+	@Column(name = "CREATED_TIME", length = 26)
 	public Date getCreatedTime() {
 		return this.createdTime;
 	}

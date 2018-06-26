@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 26, 2018 1:39:00 AM by Hibernate Tools 4.3.5.Final
+// Generated Jun 26, 2018 11:27:45 AM by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,18 +35,6 @@ public class PgRolePermission implements java.io.Serializable {
 		this.pgRoles = pgRoles;
 	}
 
-	public PgRolePermission(Integer permissionId,PgModules pgModules, PgRoles pgRoles, Boolean isInsert, Boolean isUpdate, Boolean isRead,
-			Integer perStatus, String description) {
-		this.permissionId = permissionId;
-		this.pgModules = pgModules;
-		this.pgRoles = pgRoles;
-		this.isInsert = isInsert;
-		this.isUpdate = isUpdate;
-		this.isRead = isRead;
-		this.perStatus = perStatus;
-		this.description = description;
-	}
-	
 	public PgRolePermission(PgModules pgModules, PgRoles pgRoles, Boolean isInsert, Boolean isUpdate, Boolean isRead,
 			Integer perStatus, String description) {
 		this.pgModules = pgModules;

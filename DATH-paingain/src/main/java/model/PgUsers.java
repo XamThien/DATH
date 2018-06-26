@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 20, 2018 4:50:52 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 26, 2018 11:27:45 AM by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -39,15 +39,15 @@ public class PgUsers implements java.io.Serializable {
 	private Date createTime;
 	private Date modifiedTime;
 	private int userStatus;
-	private Set<PgOrders> pgOrdersesForCustomerId = new HashSet<PgOrders>(0);
-	private Set<PgOrders> pgOrdersesForEmployeeId = new HashSet<PgOrders>(0);
+	private Set<PgOrders> pgOrderses = new HashSet<PgOrders>(0);
 	private Set<PgLog> pgLogs = new HashSet<PgLog>(0);
 
 	public PgUsers() {
 	}
 
-	public PgUsers(String userId, String firstName, String lastName, String phoneNumber, String userPassword,
-			int userStatus) {
+	public PgUsers(PgRoles pgRoles, String userId, String firstName, String lastName, String phoneNumber,
+			String userPassword, int userStatus) {
+		this.pgRoles = pgRoles;
 		this.userId = userId;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -56,48 +56,9 @@ public class PgUsers implements java.io.Serializable {
 		this.userStatus = userStatus;
 	}
 
-	public PgUsers(Integer recordId,String userId, String firstName, String lastName, String address,
-			String phoneNumber, String cardId, String email, Boolean sex, String userPassword, Date createTime,
-			Date modifiedTime ,int userStatus,PgRoles pgRoles) {
-		this.recordId = recordId;
-		this.userId = userId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.address = address;
-		this.phoneNumber = phoneNumber;
-		this.cardId = cardId;
-		this.email = email;
-		this.sex = sex;
-		this.userPassword = userPassword;
-		this.createTime = createTime;
-		this.modifiedTime = modifiedTime;
-		this.userStatus = userStatus;
-		this.pgRoles = pgRoles;
-	}
-	
-	public PgUsers(String userId, String firstName, String lastName, String address,
-			String phoneNumber, String cardId, String email, Boolean sex, String userPassword, Date createTime,
-			Date modifiedTime ,int userStatus,PgRoles pgRoles) {
-		this.userId = userId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.address = address;
-		this.phoneNumber = phoneNumber;
-		this.cardId = cardId;
-		this.email = email;
-		this.sex = sex;
-		this.userPassword = userPassword;
-		this.createTime = createTime;
-		this.modifiedTime = modifiedTime;
-		this.userStatus = userStatus;
-		this.pgRoles = pgRoles;
-	}	
-	
-	
 	public PgUsers(PgRoles pgRoles, String userId, String firstName, String lastName, String address,
 			String phoneNumber, String cardId, String email, Boolean sex, String userPassword, Date createTime,
-			Date modifiedTime, int userStatus, Set<PgOrders> pgOrdersesForCustomerId,
-			Set<PgOrders> pgOrdersesForEmployeeId, Set<PgLog> pgLogs) {
+			Date modifiedTime, int userStatus, Set<PgOrders> pgOrderses, Set<PgLog> pgLogs) {
 		this.pgRoles = pgRoles;
 		this.userId = userId;
 		this.firstName = firstName;
@@ -111,8 +72,7 @@ public class PgUsers implements java.io.Serializable {
 		this.createTime = createTime;
 		this.modifiedTime = modifiedTime;
 		this.userStatus = userStatus;
-		this.pgOrdersesForCustomerId = pgOrdersesForCustomerId;
-		this.pgOrdersesForEmployeeId = pgOrdersesForEmployeeId;
+		this.pgOrderses = pgOrderses;
 		this.pgLogs = pgLogs;
 	}
 
@@ -129,7 +89,7 @@ public class PgUsers implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ROLE_ID")
+	@JoinColumn(name = "ROLE_ID", nullable = false)
 	public PgRoles getPgRoles() {
 		return this.pgRoles;
 	}
@@ -220,7 +180,7 @@ public class PgUsers implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATE_TIME", length = 19)
+	@Column(name = "CREATE_TIME", length = 26)
 	public Date getCreateTime() {
 		return this.createTime;
 	}
@@ -230,7 +190,7 @@ public class PgUsers implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "MODIFIED_TIME", length = 19)
+	@Column(name = "MODIFIED_TIME", length = 26)
 	public Date getModifiedTime() {
 		return this.modifiedTime;
 	}
@@ -248,22 +208,13 @@ public class PgUsers implements java.io.Serializable {
 		this.userStatus = userStatus;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgUsersByCustomerId")
-	public Set<PgOrders> getPgOrdersesForCustomerId() {
-		return this.pgOrdersesForCustomerId;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgUsers")
+	public Set<PgOrders> getPgOrderses() {
+		return this.pgOrderses;
 	}
 
-	public void setPgOrdersesForCustomerId(Set<PgOrders> pgOrdersesForCustomerId) {
-		this.pgOrdersesForCustomerId = pgOrdersesForCustomerId;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgUsersByEmployeeId")
-	public Set<PgOrders> getPgOrdersesForEmployeeId() {
-		return this.pgOrdersesForEmployeeId;
-	}
-
-	public void setPgOrdersesForEmployeeId(Set<PgOrders> pgOrdersesForEmployeeId) {
-		this.pgOrdersesForEmployeeId = pgOrdersesForEmployeeId;
+	public void setPgOrderses(Set<PgOrders> pgOrderses) {
+		this.pgOrderses = pgOrderses;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pgUsers")

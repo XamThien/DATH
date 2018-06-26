@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 20, 2018 4:50:52 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 26, 2018 11:27:45 AM by Hibernate Tools 4.3.5.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,31 +38,6 @@ public class PgSuppliers implements java.io.Serializable {
 		this.phone = phone;
 	}
 
-	public PgSuppliers(Integer supplierId,String companyName, String contactName, String address, String region, String phone,
-			String email, Integer supplierStatus) {
-		this.supplierId = supplierId;
-		this.companyName = companyName;
-		this.contactName = contactName;
-		this.address = address;
-		this.region = region;
-		this.phone = phone;
-		this.email = email;
-		this.supplierStatus = supplierStatus;
-		
-	}
-	
-	public PgSuppliers(String companyName, String contactName, String address, String region, String phone,
-			String email, Integer supplierStatus) {
-		this.companyName = companyName;
-		this.contactName = contactName;
-		this.address = address;
-		this.region = region;
-		this.phone = phone;
-		this.email = email;
-		this.supplierStatus = supplierStatus;
-		
-	}	
-	
 	public PgSuppliers(String companyName, String contactName, String address, String region, String phone,
 			String email, Integer supplierStatus, Set<PgProducts> pgProductses) {
 		this.companyName = companyName;

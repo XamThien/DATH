@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 20, 2018 4:50:52 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 26, 2018 11:27:45 AM by Hibernate Tools 4.3.5.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,17 +32,6 @@ public class PgModules implements java.io.Serializable {
 		this.moduleName = moduleName;
 	}
 
-	public PgModules(String moduleName, Integer parent, Integer moduleStatus) {
-		this.moduleName = moduleName;
-		this.parent = parent;
-		this.moduleStatus = moduleStatus;
-	}
-	public PgModules(Integer moduleId,String moduleName, Integer parent, Integer moduleStatus) {
-		this.moduleId = moduleId;
-		this.moduleName = moduleName;
-		this.parent = parent;
-		this.moduleStatus = moduleStatus;
-	}
 	public PgModules(String moduleName, Integer parent, Integer moduleStatus, Set<PgRolePermission> pgRolePermissions) {
 		this.moduleName = moduleName;
 		this.parent = parent;

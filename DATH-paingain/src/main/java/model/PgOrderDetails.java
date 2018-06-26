@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 20, 2018 4:50:52 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 26, 2018 11:27:45 AM by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -94,19 +94,5 @@ public class PgOrderDetails implements java.io.Serializable {
 	public void setUnitSale(int unitSale) {
 		this.unitSale = unitSale;
 	}
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof PgOrderDetails){
-            return this.pgProducts.getProductId() == ((PgOrderDetails)obj).getPgProducts().getProductId();
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return pgProducts.getProductId(); //To change body of generated methods, choose Tools | Templates.
-    }
-        
 
 }

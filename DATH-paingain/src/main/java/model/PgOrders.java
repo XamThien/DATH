@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 26, 2018 1:39:00 AM by Hibernate Tools 4.3.5.Final
+// Generated Jun 26, 2018 11:27:45 AM by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -41,16 +41,6 @@ public class PgOrders implements java.io.Serializable {
 		this.pgUsers = pgUsers;
 	}
 
-	public PgOrders(Integer orderId,PgOrderStatus pgOrderStatus, PgUsers pgUsers, Date orderDate,  String shipName,
-			String shipAddress, String shipPhone) {
-		this.orderId = orderId;
-		this.pgOrderStatus = pgOrderStatus;
-		this.pgUsers = pgUsers;
-		this.orderDate = orderDate;
-		this.shipName = shipName;
-		this.shipAddress = shipAddress;
-		this.shipPhone = shipPhone;
-	}
 	public PgOrders(PgOrderStatus pgOrderStatus, PgUsers pgUsers, Date orderDate, Date approvedDate, String shipName,
 			String shipAddress, String shipPhone, Set<PgOrderDetails> pgOrderDetailses) {
 		this.pgOrderStatus = pgOrderStatus;
