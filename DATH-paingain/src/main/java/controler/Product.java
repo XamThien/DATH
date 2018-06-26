@@ -179,7 +179,7 @@ public class Product extends HttpServlet {
 	            }
 	            catch(Exception e)
 				{
-	            	message = "Sửa thông tin sản phẩm không thành công.1";
+	            	message = "Sửa thông tin sản phẩm không thành công.1"+e;
 	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 					request.setAttribute("msg", message );
 					xxx.forward(request, response);
@@ -221,7 +221,9 @@ public class Product extends HttpServlet {
 	            try
 	            {
 	            	new ProductDAO().insertPgProduct(tl);
-	            	PgProductPictures prpic = new PgProductPictures(tl,request.getContextPath()+uploadFile(request,"photo"),1); 
+	            	
+	            	PgProducts xxxx = new PgProducts(new ProductDAO().getLastProduct());
+	            	PgProductPictures prpic = new PgProductPictures(xxxx,request.getContextPath()+uploadFile(request,"photo"),1); 
 	            	new ProductPictures().insertPgProductPictures(prpic);
 	            	message = "Thêm sản phẩm thành công.";
 	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
@@ -231,7 +233,7 @@ public class Product extends HttpServlet {
 	            }
 	            catch(Exception e)
 				{
-	            	message = "Thêm sản phẩm không thành công.1";
+	            	message = "Thêm sản phẩm không thành công.1"+e;
 	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 					request.setAttribute("msg", message );
 					xxx.forward(request, response);
@@ -239,7 +241,7 @@ public class Product extends HttpServlet {
 			}
 			catch(Exception e)
 			{
-				message = "Thêm sản phẩm không thành công.2";
+				message = "Thêm sản phẩm không thành công.2"+e;
 	        	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 				request.setAttribute("msg", message );
 				xxx.forward(request, response);
