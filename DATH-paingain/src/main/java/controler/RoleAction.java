@@ -2,7 +2,6 @@ package controler;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -54,7 +53,7 @@ public class RoleAction extends HttpServlet{
 				
 				 if(per.equals(a) ){
 					 int status =1;
-					 Boolean read, inse, update, del;
+					 Boolean read, inse, update;
 					 String des = request.getParameter("desc");
 					 if(request.getParameter("read") == null || request.getParameter("read") == ""){
 						 read = false;
@@ -71,14 +70,9 @@ public class RoleAction extends HttpServlet{
 					 } else {
 						  update = true;
 					}
-					 if(request.getParameter("del") == null || request.getParameter("del") == ""){
-						 del = false;
-					 } else {
-						 del = true;
-					}
 					 PgModules mol = new ModuleDAO().getPgModulesByID(module);
 					 PgRoles rol = new  RoleDAO().getPgRolesByID(role);
-					 PgRolePermission sup = new PgRolePermission(mol,rol,inse,update,del,read,status,des);
+					 PgRolePermission sup = new PgRolePermission(mol,rol,inse,update,read,status,des);
 					 try 
 					 {
 						
@@ -117,7 +111,7 @@ public class RoleAction extends HttpServlet{
 				 int rolee = new RolePermissionDAO().getPgRolePermissionByID(perid).getPgRoles().getRoleId();
 				 
 				 int status =Integer.parseInt(request.getParameter("estatus"));
-				 Boolean read, inse, update, del;
+				 Boolean read, inse, update;
 				 String des = request.getParameter("edes");
 				 if(request.getParameter("eread") == null || request.getParameter("eread") == ""){
 					 read = false;
@@ -134,16 +128,11 @@ public class RoleAction extends HttpServlet{
 				 } else {
 					  update = true;
 				}
-				 if(request.getParameter("edel") == null || request.getParameter("edel") == ""){
-					 del = false;
-				 } else {
-					 del = true;
-				}
 				 PgModules mol = new RolePermissionDAO().getPgRolePermissionByID(perid).getPgModules();
 				 PgRoles rol = new  RolePermissionDAO().getPgRolePermissionByID(perid).getPgRoles();
 				 try 
 				 {
-					 PgRolePermission sup = new PgRolePermission(perid,mol,rol,inse,update,del,read,status,des);
+					 PgRolePermission sup = new PgRolePermission(perid,mol,rol,inse,update,read,status,des);
 					 
 					 new RolePermissionDAO().updatePgRolePermission(sup);
 					 message = "Cập nhật thành công!";

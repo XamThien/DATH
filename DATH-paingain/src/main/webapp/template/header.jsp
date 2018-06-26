@@ -56,11 +56,14 @@
 		    <link rel="stylesheet" href="/resources/vendors/bootstrap-daterangepicker/daterangepicker.css">
 			<link href="/resources/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
 
-		    
-		
+		    <!-- Custom CSS -->
+			<link href="/resources/css/customCss/helper.css" rel="stylesheet">
+    		<link href="/resources/css/customCss/style.css" rel="stylesheet">
+			
 		    <!-- Custom Theme Style -->
 		    <link rel="stylesheet" href="/resources/build/css/custom.min.css">
 		    
 		    <link rel="stylesheet" href="/resources/build/css/configstyle.css">
+		    <link rel="stylesheet" href="/resources/build/css/nav.css">
 		    
 		    <link rel="stylesheet" href="/resources/build/css/jquery.boot-tab-slider.min.css">

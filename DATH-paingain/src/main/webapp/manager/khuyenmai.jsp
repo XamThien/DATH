@@ -5,6 +5,17 @@
 <%@ page import="DAO.CategoryDAO" %>
 <%@ page import="DAO.ProductDAO" %>
 <%@ page import="DAO.ProductSalesDAO" %>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="javax.servlet.http.HttpServletResponse" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="model.PgUsers" %>
+<%
+	HttpSession sesion = request.getSession();
+	PgUsers u = (PgUsers) sesion.getAttribute("login");
+	if(u.getPgRoles().getRoleId()!=1){
+		response.sendRedirect("/site/layouts/accessdenied.jsp");
+	}
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -117,7 +128,7 @@
 								                    <div >
 								                    	<div class="form-group">
 												            <div class=" xdisplay_inputx form-group has-feedback">
-								                                <input type="text" class="form-control " name="bgtime" aria-describedby="inputSuccess2Status" id="single_cal4" required="required" />
+								                                <input type="text" class="form-control " name="bgtime"  id="single_cal4" required="required" />
 								                                <span class="fa fa-calendar-o form-control-feedback right" aria-hidden="true"></span>
 								                            </div>
 									                    </div>
@@ -139,11 +150,11 @@
 								                </div>
 							                </div>
 					                	</div>
-					                	<button type="submit" id="smit" style="float: right;width: 91px;margin-right: 26px;" class="btn btn-primary"  > Lưu</button>      
+					                	<button type="submit" id="smit" style="float: right;width: 91px;margin-right: 26px;" class="btn btn-primary" <%=(lstsp.size()==0)?"disabled='disabled'":"" %> > Lưu</button>      
 							       		<button type="button" type="button" id="checkAll" onclick="selectAll();" style="float: right;width: 91px;margin-right: 26px;" class="btn btn-primary" <%=(lstsp.size()==0)?"disabled='disabled'":"" %>>Check all</button>
 					                </form>
 					                </div>
-					                
+									<!--<button type="button" id="smit" style="float: right;width: 91px;margin-right: 26px;" class="btn btn-primary"  > Test</button> -->     
 				            </div>
 				            
 			        		</div>
@@ -164,9 +175,9 @@
 
 
         	<script type="text/javascript">
-	        	var smit=document.getElementById("smit");
-	        	smit.addEventListener("click",pushLstCK,false);
-			    
+	        	//var smit=document.getElementById("smit");
+	        	//smit.addEventListener("click",pushLstCK,false);   onclick="pushLstCK();"
+			    //
 			</script>
 					<!-- ----------------------------------------------->
 			    </div>

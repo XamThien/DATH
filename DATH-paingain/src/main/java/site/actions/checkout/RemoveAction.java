@@ -14,9 +14,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import model.PgOrderStatus;
 import model.PgOrders;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+
+import DAO.OrderStatusDAO;
 import service.UserAuthentication;
 
 /**
@@ -74,8 +78,9 @@ public class RemoveAction extends HttpServlet {
                     .add(Restrictions.and(Restrictions.eq("orderId", Integer.parseInt(id)),
                             Restrictions.eq("pgUsersByCustomerId", auth.getUsers())))
                     .uniqueResult();
-            if (order.getOrderStatus() == 1) {
-                order.setOrderStatus(0);
+            if (order.getPgOrderStatus().getOrderStatusKey() == 1) {
+            	PgOrderStatus st = new OrderStatusDAO().getPgOrderStatusByID(0);
+            	order.setPgOrderStatus(st);
                 session.update(order);
                 response.getWriter().print("success");
             } else {

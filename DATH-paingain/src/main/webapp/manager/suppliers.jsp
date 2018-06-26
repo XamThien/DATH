@@ -4,6 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.PgSuppliers" %>
 <%@ page import="DAO.PgSuppliersDAO" %>
+<%@ page import="model.PgUsers" %>
 <title>Quản lý nhà cung cấp</title>
 		<%@include file="/template/header.jsp"%>
 			<div class="nav-md">
@@ -40,7 +41,7 @@
 					                <div class="col-sm-12">
 					                	<table id="datatable" class="table table-striped table-bordered dataTable no-footer">
 										  <thead>
-										  	<tr>
+										  	<tr style="font-size: 12px;">
 										  		<th>Mã</th>
 										  		<th>Nhà cung cấp</th>
 										  		<th>Contact name</th>
@@ -49,13 +50,10 @@
 										  		<th>Số điện thoại</th>
 										  		<th>Email</th>
 										  		<th>Trạng thái</th>
-										  		<th><a href="#" style="color: white;" data-toggle="modal" data-target="#modal-add"  > <i class="fa fa-plus" ></i> Thêm mới</a></th> 
-										  		
+										  		<th><a href="#" style="color: white;" data-toggle="modal" data-target="#modal-add"  > <i class="fa fa-plus" ></i> Thêm mới</a></th> 									  		
 										  	</tr>
 										  </thead>
-										   <tbody>
-										  
-										 
+										   <tbody>		 
 										  <%
 										  PgSuppliersDAO dao = new PgSuppliersDAO();
 										  List<PgSuppliers> list = new ArrayList<PgSuppliers>();
@@ -63,7 +61,7 @@
 										  if(list != null){
 										  for(PgSuppliers sup:list){
 										  %>
-										  <tr>
+										  <tr style="font-size: 12px;">
 										    <td><%=sup.getSupplierId()%></td>
 										    <td><%=sup.getCompanyName()%></td>
 										    <td><%=sup.getContactName()%></td>

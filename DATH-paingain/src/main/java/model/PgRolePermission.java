@@ -1,5 +1,5 @@
 package model;
-// Generated Jun 20, 2018 4:50:52 PM by Hibernate Tools 4.3.5.Final
+// Generated Jun 26, 2018 1:39:00 AM by Hibernate Tools 4.3.5.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,6 @@ public class PgRolePermission implements java.io.Serializable {
 	private PgRoles pgRoles;
 	private Boolean isInsert;
 	private Boolean isUpdate;
-	private Boolean isDelete;
 	private Boolean isRead;
 	private Integer perStatus;
 	private String description;
@@ -36,25 +35,24 @@ public class PgRolePermission implements java.io.Serializable {
 		this.pgRoles = pgRoles;
 	}
 
-	public PgRolePermission(Integer permissionId,PgModules pgModules, PgRoles pgRoles, Boolean isInsert, Boolean isUpdate, Boolean isDelete,
-			Boolean isRead, Integer perStatus, String description) {
+	public PgRolePermission(Integer permissionId,PgModules pgModules, PgRoles pgRoles, Boolean isInsert, Boolean isUpdate, Boolean isRead,
+			Integer perStatus, String description) {
 		this.permissionId = permissionId;
 		this.pgModules = pgModules;
 		this.pgRoles = pgRoles;
 		this.isInsert = isInsert;
 		this.isUpdate = isUpdate;
-		this.isDelete = isDelete;
 		this.isRead = isRead;
 		this.perStatus = perStatus;
 		this.description = description;
 	}
-	public PgRolePermission(PgModules pgModules, PgRoles pgRoles, Boolean isInsert, Boolean isUpdate, Boolean isDelete,
-			Boolean isRead, Integer perStatus, String description) {
+	
+	public PgRolePermission(PgModules pgModules, PgRoles pgRoles, Boolean isInsert, Boolean isUpdate, Boolean isRead,
+			Integer perStatus, String description) {
 		this.pgModules = pgModules;
 		this.pgRoles = pgRoles;
 		this.isInsert = isInsert;
 		this.isUpdate = isUpdate;
-		this.isDelete = isDelete;
 		this.isRead = isRead;
 		this.perStatus = perStatus;
 		this.description = description;
@@ -108,15 +106,6 @@ public class PgRolePermission implements java.io.Serializable {
 
 	public void setIsUpdate(Boolean isUpdate) {
 		this.isUpdate = isUpdate;
-	}
-
-	@Column(name = "IS_DELETE")
-	public Boolean getIsDelete() {
-		return this.isDelete;
-	}
-
-	public void setIsDelete(Boolean isDelete) {
-		this.isDelete = isDelete;
 	}
 
 	@Column(name = "IS_READ")

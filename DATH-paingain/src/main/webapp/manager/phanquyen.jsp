@@ -3,6 +3,16 @@
 <%@ page import="model.*" %>
 <%@ page import="DAO.*" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="javax.servlet.http.HttpServletResponse" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%
+	HttpSession sesion = request.getSession();
+	PgUsers u = (PgUsers) sesion.getAttribute("login");
+	if(u.getPgRoles().getRoleId()!=1){
+		response.sendRedirect("/site/layouts/accessdenied.jsp");
+	}
+%>
 <!DOCTYPE html>
 <html>
 	<head>

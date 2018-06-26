@@ -17,9 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Cart;
 import model.PgOrderDetails;
+import model.PgOrderStatus;
 import model.PgOrders;
 import model.PgUsers;
 import org.hibernate.Session;
+
+import DAO.OrderStatusDAO;
 import service.UserAuthentication;
 
 /**
@@ -84,9 +87,10 @@ public class CheckoutAction extends HttpServlet {
         PgOrders cart = new PgOrders();
         PgUsers user = auth.getUsers();
         if (!cartc.getPgOrderDetailses().isEmpty()) {
-            cart.setPgUsersByCustomerId(user);
+            cart.setPgUsers(user);
             cart.setOrderDate(new Date());
-            cart.setOrderStatus(0);
+            PgOrderStatus st = new OrderStatusDAO().getPgOrderStatusByID(0);
+            cart.setPgOrderStatus(st);
             cart.setShipName(user.getFirstName() + " " + user.getLastName());
             cart.setShipAddress(user.getAddress());
             cart.setShipPhone(user.getPhoneNumber());

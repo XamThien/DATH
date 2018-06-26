@@ -75,7 +75,7 @@
 											try{
 					        				PgOrders or = new PgOrdersDAO().getPgOrdersByID(id);
 					        			%>
-					        				<%=or.getPgUsersByCustomerId().getFirstName() %> <%=or.getPgUsersByCustomerId().getLastName() %> <br/>
+					        				<%=or.getPgUsers().getFirstName() %> <%=or.getPgUsers().getLastName() %> <br/>
 					        				<%=or.getShipName() %> <br/>
 					        				<%=or.getShipAddress() %> <br/>
 					        				<%=or.getShipPhone() %>
@@ -83,8 +83,7 @@
 					        		</div>
 					        		<div class="col-sm-6" style="padding-left: 53px;">
 					        		<form action="/order" method="post">
-					        			<input type="hidden" name="cus" value="<%=or.getPgUsersByCustomerId().getRecordId() %>">
-					        			<input type="hidden" name="emp" value="<%=or.getPgUsersByEmployeeId().getRecordId() %>">
+					        			<input type="hidden" name="cus" value="<%=or.getPgUsers().getRecordId() %>">
 					        			<input type="hidden" name="name" value="<%=or.getShipName() %>">
 					        			<input type="hidden" name="add" value="<%=or.getShipAddress() %>">
 					        			<input type="hidden" name="phone" value="<%=or.getShipPhone() %>">

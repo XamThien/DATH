@@ -113,7 +113,6 @@
 										  		<th>Xem chi tiết</th>
 										  		<th>Thêm mới</th> 
 										  		<th>Cập nhật</th>
-										  		<th>Xóa</th>
 										  		<th>Trạng thái</th>
 										  	</tr>
 										  </thead>
@@ -152,13 +151,7 @@
 										    		out.print("<input type=\"checkbox\" disabled=\"disabled\">");
 											    	}
 										    %></td>
-										   <td><%
-										    	if(per.getIsDelete()){
-										    		out.print("<input type=\"checkbox\" checked=\"checked\" disabled=\"disabled\">");
-										    	} else {
-										    		out.print("<input type=\"checkbox\" disabled=\"disabled\">");
-											    	}
-										    %></td>
+										   
 			                                <% if (per.getPerStatus()==1) {
 			                                        out.print("<td>Active</td>");
 			                                    } else {

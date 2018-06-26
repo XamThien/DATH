@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import database.Hibernate;
@@ -46,7 +41,6 @@ public class ProductDAO {
         productses = criteria.list();
         return productses;
     }
-
     // phương thức do Huy viết để get sp theo thẻ loại
     @SuppressWarnings("unchecked")
     public List<PgProducts> getAllPgProducts(int CATEGORY_ID) {
@@ -62,13 +56,31 @@ public class ProductDAO {
             Query que = session.createQuery(hql);
             list = que.list();
             transaction.commit();
-            session.close();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
         return list;
     }
+ // phương thức do Huy viết để get sp
+    @SuppressWarnings("unchecked")
+    public List<PgProducts> getAllProducts() {
+        List<PgProducts> list = null;
+        try {
+            Configuration configuration = new Configuration().configure();
+            SessionFactory sessionFactory = configuration.buildSessionFactory();
+            Session session = sessionFactory.openSession();
 
+            //Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+            String hql = "from PgProducts where productStatus=1";
+            Query que = session.createQuery(hql);
+            list = que.list();
+            transaction.commit();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     public PgProducts getPgProductsByID(int id) {
         Session session = Hibernate.getSessionFactory().openSession();
         session.beginTransaction();
@@ -96,9 +108,11 @@ public class ProductDAO {
         Transaction transaction = session.beginTransaction();
         session.save(sp);
         transaction.commit();
-        //session.close();
+        session.close();
     }
+
      // phuong thuc get nhuwng sp khong co trong bang sale
+    
     @SuppressWarnings("unchecked")
     public List<PgProducts> getPgProductsNotSale(int CATEGORY_ID) {
         List<PgProducts> list = null;
@@ -109,7 +123,7 @@ public class ProductDAO {
 
             //Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             Transaction transaction = session.beginTransaction();
-            String hql = "from PgProducts p where p.pgCategories.categoryId =" + CATEGORY_ID + " and p.productStatus=1 and p not in (from PgProductSales where PRODUCT_ID = p.productId and salesStatus = 1)";
+            String hql = "from PgProducts p where p.pgCategories.categoryId =" + CATEGORY_ID + " and p.productStatus=1 and p.productId not in (select ps.pgProducts.productId from PgProductSales ps where  salesStatus = 1)";
             Query que = session.createQuery(hql);
             list = que.list();
             transaction.commit();
@@ -131,7 +145,7 @@ public class ProductDAO {
         Transaction transaction = session.beginTransaction();
         session.update(sp);
         transaction.commit();
-        //session.close();
+        session.close();
     }
 
     public static void main(String[] args) {
@@ -166,10 +180,24 @@ public class ProductDAO {
 // 		new ProductPictures().updatePgProductPictures(prpic);
 // 		PgProductPictures prpic1 = new ProductPictures().getPgProductPicturesByID(1);
 // 		System.out.println(prpic1.getPath());
-        List<PgProducts> lst = new ProductDAO().getAllPgProducts(1);
-        for (PgProducts xxx : lst) {
-            PgProducts tl = new ProductDAO().getPgProductsByID(xxx.getProductId());
-            System.out.println(tl.getProductName());
-        }
+    	PgProducts tll = new ProductDAO().getPgProductsByID(Integer.parseInt("1"));
+		
+		Integer productId = tll.getProductId();
+		PgCategories pgCategories = tll.getPgCategories();
+		PgSuppliers pgSuppliers = tll.getPgSuppliers();
+		String productName = tll.getProductName();
+		int quantity = tll.getQuantity();
+		int unitPrice = tll.getUnitPrice();
+		int unitOrder = tll.getUnitOrder();
+		String description= tll.getDescription();
+		int productStatus = tll.getProductStatus();
+		Date createTime = tll.getCreateTime();
+		Date modifiedTime = tll.getModifiedTime();
+		 Boolean isNew = tll.getIsNew();
+		 Boolean isHot = tll.getIsHot();
+		 PgProducts tl = new PgProducts(productId,pgCategories,pgSuppliers,productName,quantity,unitPrice,unitOrder,description,productStatus,createTime,modifiedTime,isHot,isNew);
+		tl.setProductStatus(0);
+      new ProductDAO().updatePgProduct(tl);
     }
+
 }

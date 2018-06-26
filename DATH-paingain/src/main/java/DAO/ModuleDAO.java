@@ -5,11 +5,11 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
-import database.Hibernate;
 import model.PgModules;
-import util.HibernateUtils;;
 
 public class ModuleDAO {
 
@@ -18,8 +18,9 @@ public class ModuleDAO {
 		 List<PgModules> list=null;
 	        try
 	        {
-	        	Session session = Hibernate.getSessionFactory().openSession();
-	        	
+	        	Configuration configuration =  new Configuration().configure();
+	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
+	        	Session session = sessionFactory.openSession();
 		        Transaction transaction = session.beginTransaction();
 		        String hql ="from PgModules";
 		        Query que = session.createQuery(hql);
@@ -36,8 +37,9 @@ public class ModuleDAO {
 		 List<PgModules> list=null;
 	        try
 	        {
-	        	Session session = Hibernate.getSessionFactory().openSession();
-	        	
+	        	Configuration configuration =  new Configuration().configure();
+	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
+	        	Session session = sessionFactory.openSession();
 		        Transaction transaction = session.beginTransaction();
 		        String hql ="from PgModules where moduleStatus=1";
 		        Query que = session.createQuery(hql);
@@ -53,8 +55,9 @@ public class ModuleDAO {
 		 PgModules cl = null;
 	       try
 	       {
-	    	   Session session = Hibernate.getSessionFactory().openSession();
-	        	
+	    	   Configuration configuration =  new Configuration().configure();
+	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
+	        	Session session = sessionFactory.openSession();
 		        Transaction transaction = session.beginTransaction();
 		        String hql ="from PgModules where moduleId="+id;
 		        Query que = session.createQuery(hql);
@@ -69,7 +72,9 @@ public class ModuleDAO {
 
 
 	 public boolean insertPgModules(PgModules sp){
-		 Session session = HibernateUtils.getSessionFactory().openSession();
+		 Configuration configuration =  new Configuration().configure();
+     	SessionFactory sessionFactory = configuration.buildSessionFactory();
+     	Session session = sessionFactory.openSession();
 	        try {
 				Transaction transaction = session.beginTransaction();
 				session.save(sp);
@@ -86,7 +91,9 @@ public class ModuleDAO {
 	    }
 	
 	 public void updatePgModules(PgModules sp){
-		 Session session = HibernateUtils.getSessionFactory().openSession();
+		 Configuration configuration =  new Configuration().configure();
+     	SessionFactory sessionFactory = configuration.buildSessionFactory();
+     	Session session = sessionFactory.openSession();
 			try {
 				Transaction transaction = session.beginTransaction();
 				session.update(sp);

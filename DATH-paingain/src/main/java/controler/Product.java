@@ -115,50 +115,20 @@ public class Product extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
     	HttpSession session = request.getSession();
-    	int cateid = (int)session.getAttribute("cateid");
     	
+    	int style = Integer.parseInt(request.getParameter("st"));
+    	String path ="";
+    	if(style==1) 
+    	{
+    		int cateid = (int)session.getAttribute("cateid");
+    		path="/manager/sanpham.jsp?id="+cateid;
+    	}
+    	if(style==2) {path="/manager/hanghoa.jsp";}
 		String action = request.getParameter("action");
 		String message ="";
 		switch(action)
 		{
-		case "delete":
-			try
-			{
-				String id = request.getParameter("did");
-				
-				
-				PgProducts tll = new ProductDAO().getPgProductsByID(Integer.parseInt(id));
-						
-				
-				tll.setProductStatus(0);
-	            
-	            try
-	            {
-	            	new ProductDAO().updatePgProduct(tll);
-	            	
-	            	message = "Xóa sản phẩm thành công.";
-	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
-					request.setAttribute("msg", message );
-					xxx.forward(request, response);
-	            	
-	            }
-	            catch(Exception e)
-				{
-	            	message = "Xóa sản phẩm không thành công .";
-	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
-					request.setAttribute("msg", message );
-					xxx.forward(request, response);
-				}
-			}
-			catch(Exception e)
-			{
-				message = "Xóa sản phẩm không thành công .";
-            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
-				request.setAttribute("msg", message );
-				xxx.forward(request, response);
-			}
-			
-			break;
+		
 		case "edit":
 			try
 			{
@@ -172,28 +142,19 @@ public class Product extends HttpServlet {
 				boolean ishot = Boolean.parseBoolean((request.getParameter("ehot")==null || !request.getParameter("ehot").equals("true"))?"false":"true");
 				boolean isnew = Boolean.parseBoolean((request.getParameter("enew")==null || !request.getParameter("enew").equals("true"))?"false":"true");
 				String mota = request.getParameter("emota");
-				
+				int status = Integer.parseInt(request.getParameter("estatus"));
 				 Date Ngay = new Date();
 			     SimpleDateFormat datefrmat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			     String datestr = datefrmat.format(Ngay);
 			     Date now = datefrmat.parse(datestr);
-				
+				Date create = datefrmat.parse(request.getParameter("ecreate"));
 			     
 			    PgCategories cate = new CategoryDAO().getCategory(categoryid);
 			    //anh===============================
 			    //ncc 
 			    PgSuppliers su = new PgSuppliersDAO().findByID(nccid);
-				PgProducts tl = new ProductDAO().getPgProductsByID(id);//new PgProducts(cate, su, ten, sl, giaban, gianhap, mota, now, now, ishot, isnew);
-				tl.setPgCategories(cate);
-				tl.setPgSuppliers(su);
-				tl.setProductName(ten);
-				tl.setQuantity(sl);
-				tl.setUnitPrice(giaban);
-				tl.setUnitOrder(gianhap);
-				tl.setDescription(mota);
-				tl.setModifiedTime(now);
-				tl.setIsHot(ishot);
-				tl.setIsNew(isnew);
+				PgProducts tl = new PgProducts(id, cate, su, ten, sl, giaban, gianhap, mota,status, create, now, ishot, isnew);
+			
 	            try
 	            {
 	            	new ProductDAO().updatePgProduct(tl);
@@ -212,7 +173,7 @@ public class Product extends HttpServlet {
 	            	
 	            	
 	            	message = "Sửa thông tin sản phẩm thành công.";
-	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
+	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 					request.setAttribute("msg", message );
 					xxx.forward(request, response);
 	            	
@@ -220,7 +181,7 @@ public class Product extends HttpServlet {
 	            catch(Exception e)
 				{
 	            	message = "Sửa thông tin sản phẩm không thành công.1";
-	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
+	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 					request.setAttribute("msg", message );
 					xxx.forward(request, response);
 				}
@@ -228,7 +189,7 @@ public class Product extends HttpServlet {
 			catch(Exception e)
 			{
 				message = "Sửa thông tin sản phẩm không thành công.2"+e;
-	        	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
+	        	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 				request.setAttribute("msg", message );
 				xxx.forward(request, response);
 			}
@@ -264,7 +225,7 @@ public class Product extends HttpServlet {
 	            	PgProductPictures prpic = new PgProductPictures(tl,request.getContextPath()+uploadFile(request,"photo"),1); 
 	            	new ProductPictures().insertPgProductPictures(prpic);
 	            	message = "Thêm sản phẩm thành công.";
-	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
+	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 					request.setAttribute("msg", message );
 					xxx.forward(request, response);
 	            	
@@ -272,7 +233,7 @@ public class Product extends HttpServlet {
 	            catch(Exception e)
 				{
 	            	message = "Thêm sản phẩm không thành công.1";
-	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
+	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 					request.setAttribute("msg", message );
 					xxx.forward(request, response);
 				}
@@ -280,7 +241,7 @@ public class Product extends HttpServlet {
 			catch(Exception e)
 			{
 				message = "Thêm sản phẩm không thành công.2";
-	        	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/sanpham.jsp?id="+cateid);
+	        	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 				request.setAttribute("msg", message );
 				xxx.forward(request, response);
 			}

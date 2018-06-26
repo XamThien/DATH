@@ -6,6 +6,7 @@
   <table-filter match-catalog="dath" match-name="pg_log"/>
   <table-filter match-catalog="dath" match-name="pg_modules"/>
   <table-filter match-catalog="dath" match-name="pg_order_details"/>
+  <table-filter match-catalog="dath" match-name="pg_order_status"/>
   <table-filter match-catalog="dath" match-name="pg_orders"/>
   <table-filter match-catalog="dath" match-name="pg_product_pictures"/>
   <table-filter match-catalog="dath" match-name="pg_product_sales"/>

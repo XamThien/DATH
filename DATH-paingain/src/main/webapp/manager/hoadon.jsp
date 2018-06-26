@@ -3,6 +3,16 @@
 <%@ page import="model.*" %>
 <%@ page import="DAO.*" %>
 <%@ page import="java.util.List" %>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="javax.servlet.http.HttpServletResponse" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%
+	HttpSession sesion = request.getSession();
+	PgUsers u = (PgUsers) sesion.getAttribute("login");
+	if(u.getPgRoles().getRoleId() != 1 && u.getPgRoles().getRoleId() != 2){
+		response.sendRedirect("/site/layouts/accessdenied.jsp");
+	}
+%>
 <!DOCTYPE html>
 <html>
 	<% 
@@ -78,10 +88,9 @@
 										    <td><%=dem %></td>
 										    <td><%=or.getOrderDate() %></td>
 										    <td><%=or.getApprovedDate() %></td>
-										    <td><%=or.getPgUsersByCustomerId().getFirstName() %> <%=or.getPgUsersByCustomerId().getLastName() %></td>
+										    <td><%=or.getPgUsers().getFirstName() %> <%=or.getPgUsers().getLastName() %></td>
 										    <td><%=or.getShipPhone() %></td>
-											<td><%=or.getPgUsersByEmployeeId().getFirstName() %> <%=or.getPgUsersByEmployeeId().getLastName() %></td>
-										    <td>
+											<td>
 										    	<a href="/manager/chitiethoadon.jsp?stt=<%=stt %>&id=<%=or.getOrderId()%>"  class="btn btn-link">  Chi tiết</a>
 										    	
 										    	
