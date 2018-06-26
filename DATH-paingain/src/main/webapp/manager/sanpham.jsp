@@ -125,7 +125,7 @@
                           </button>
                           <h4 class="modal-title" id="myModalLabel">Thêm mới sản phẩm: </h4>
                         </div>
-                        <form action="/product?action=add" method="post" enctype="multipart/form-data">
+                        <form action="/product?action=add&st=1" method="post" enctype="multipart/form-data">
                         <div class="modal-body">
                         		<div class='col-sm-12'>
 	                        		<label >Ảnh sản phẩm:</label>
