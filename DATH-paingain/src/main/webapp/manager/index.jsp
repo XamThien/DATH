@@ -21,7 +21,7 @@
 				
 				<%@include file="/template/topnav.jsp"%>
 				<%
-				int doanhthu = (int) request.getAttribute("revenueday");
+				long doanhthu = (long) request.getAttribute("revenueday");
 				int orderc = (int) request.getAttribute("order");
 				int userrc = (int) request.getAttribute("user");
 				 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
