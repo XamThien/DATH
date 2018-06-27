@@ -141,8 +141,7 @@ CREATE TABLE PG_PRODUCT_PICTURES(
 )ENGINE = INNODB
 DEFAULT CHARACTER SET = utf8;
 
-INSERT INTO PG_PRODUCT_PICTURES(PRODUCT_ID, PATH, ORDER_INDEX) 
-VALUES (1,'http://media.bizwebmedia.net/sites/127046/data/images/2017/10/5750153ao_thun_dai_tay_off_white_arrows_chuan_authentic.jpg',1);
+INSERT INTO PG_PRODUCT_PICTURES(PRODUCT_ID, PATH, ORDER_INDEX)
 
 -- PHAN QUYEN NG DUNG VOI CAC CHUC NANG
 CREATE TABLE PG_ROLE_PERMISSION(
@@ -322,7 +321,7 @@ VALUES('/site/layouts/images/shop/product12.jpg',1,1,1,1)
 ,('/site/layouts/images/shop/product11.jpg',1,1,18,1)
 ,('/site/layouts/images/shop/product12.jpg',1,1,19,1)
 ,('/site/layouts/images/shop/product7.jpg',1,1,20,1)
-,('/site/layouts/images/shop/product8.jpg',1,1,12,1)
+,('/site/layouts/images/shop/product8.jpg',1,1,21,1)
 ,('/site/layouts/images/shop/product9.jpg',1,1,22,1)
 ,('/site/layouts/images/shop/product10.jpg',1,1,23,1)
 ,('/site/layouts/images/shop/product11.jpg',1,1,24,1)
@@ -349,7 +348,7 @@ VALUES('/site/layouts/images/shop/product12.jpg',1,1,1,1)
 ,('/site/layouts/images/shop/product12.jpg',0,1,18,1)
 ,('/site/layouts/images/shop/product7.jpg',0,1,19,1)
 ,('/site/layouts/images/shop/product8.jpg',0,1,20,1)
-,('/site/layouts/images/shop/product9.jpg',0,1,12,1)
+,('/site/layouts/images/shop/product9.jpg',0,1,21,1)
 ,('/site/layouts/images/shop/product10jpg',0,1,22,1)
 ,('/site/layouts/images/shop/product11.jpg',0,1,23,1)
 ,('/site/layouts/images/shop/product12.jpg',0,1,24,1)
