@@ -75,7 +75,7 @@
 								  </div>
 								  <div class="x_content">
 <!--===========================================================================-->							  
-									<div class="col-md-9 col-sm-12 col-xs-12" style="height:400px;overflow: auto;">
+									<div class="col-md-12 col-sm-12 col-xs-12" style="height:400px;overflow: auto;">
 									
 									  <div class="x_panel">
 										
