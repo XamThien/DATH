@@ -34,7 +34,7 @@ import javax.servlet.http.Part;
         maxRequestSize = 1024 * 1024 * 100
 )
 public class Product extends HttpServlet {
-	private static final String UPLOAD_DIR = "images";
+	private static final String UPLOAD_DIR = "site/layouts/images/shop";
 	private static final long serialVersionUID = 1L;
 
 	/**

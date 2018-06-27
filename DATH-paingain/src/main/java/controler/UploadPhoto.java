@@ -36,7 +36,7 @@ import model.PgProducts;
  */
 @WebServlet("/uploadphoto")
 public class UploadPhoto extends HttpServlet {
-	private static final String UPLOAD_DIR = "images";
+	private static final String UPLOAD_DIR = "site/layouts/images/shop";
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -119,7 +119,7 @@ public class UploadPhoto extends HttpServlet {
 		                    
 		                    lastorderpic= lastorderpic+1;
 		                    PgProductPictures ppic = new PgProductPictures(pr,"/images/"+itemName,lastorderpic);
-		                    ppic.setPictureType("2");
+		                    ppic.setPictureType("0");
 		                    new ProductPictures().insertPgProductPictures(ppic);
 	                    } 
 	                    catch (Exception e) 
