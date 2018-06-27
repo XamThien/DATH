@@ -23,6 +23,7 @@ import model.PgUsers;
 import org.hibernate.Session;
 
 import DAO.OrderStatusDAO;
+import DAO.ProductDAO;
 import model.PgProductSales;
 import service.UserAuthentication;
 
@@ -114,13 +115,14 @@ public class CheckoutAction extends HttpServlet {
                         break;
                     }
                 }
+                session.save(ord);
+            }
+            for (PgOrderDetails ord : cart.getPgOrderDetailses()) {
                 ord.getPgProducts().setQuantity(ord.getPgProducts().getQuantity()-ord.getAmount());
                 session.update(ord.getPgProducts());
-                session.save(ord);
-               
+                
             }
             session.getTransaction().commit();
-           
             httpSession.setAttribute("mycart", new Cart());
             response.getWriter().print("success");
         } else {

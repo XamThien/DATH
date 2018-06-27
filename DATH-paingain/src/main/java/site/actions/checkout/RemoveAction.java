@@ -18,10 +18,16 @@ import javax.servlet.http.HttpSession;
 import model.PgOrderDetails;
 import model.PgOrderStatus;
 import model.PgOrders;
+import model.PgProducts;
+
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 
 import DAO.OrderStatusDAO;
+import DAO.ProductDAO;
 import service.UserAuthentication;
 
 /**
@@ -83,9 +89,12 @@ public class RemoveAction extends HttpServlet {
                 PgOrderStatus status = new PgOrderStatus();
                 status.setOrderStatusKey(0);
             	order.setPgOrderStatus(status);
+                
+                
                 session.update(order);
                 for(PgOrderDetails ord : order.getPgOrderDetailses()){
                 	ord.getPgProducts().setQuantity(ord.getPgProducts().getQuantity()+ord.getAmount());
+                	//new ProductDAO().updatePgProduct(ord.getPgProducts());
                     session.update(ord.getPgProducts());
                 }
                 response.getWriter().print("success");
@@ -98,7 +107,7 @@ public class RemoveAction extends HttpServlet {
         }
     }
 
-    /**
+	/**
      * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request

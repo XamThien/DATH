@@ -12,9 +12,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.Session;
+
 import DAO.OrderStatusDAO;
 import DAO.PgOrdersDAO;
+import DAO.ProductDAO;
 import DAO.UserDAO;
+import database.Hibernate;
+import model.PgOrderDetails;
 import model.PgOrderStatus;
 import model.PgOrders;
 
@@ -70,13 +75,14 @@ public class PgOrder extends HttpServlet {
 			        	SimpleDateFormat datefrmats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			        	String datestr = datefrmats.format(Ngay);
 					    
-						Date now = datefrmat.parse(datestr);
+						Date now = datefrmats.parse(datestr);
 						ors.setApprovedDate(now);
 		        	}
 					
 		            try
 		            {
 		            	new PgOrdersDAO().updatePgOrders(ors);
+		            	
 		            	message = "Cập nhật đơn hàng thành công.";
 		            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/chitiethoadon.jsp?stt="+tt+"&id="+order_id);
 						request.setAttribute("msg", message );

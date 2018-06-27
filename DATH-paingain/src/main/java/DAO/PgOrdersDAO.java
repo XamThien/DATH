@@ -1,5 +1,8 @@
 package DAO;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -87,8 +90,20 @@ public class PgOrdersDAO {
 			 /*PgOrders or = new PgOrdersDAO().getPgOrdersByID(3);
 			 System.out.println(or.getOrderStatus());
 			 or.setOrderStatus(3);*/
-//			 PgOrders ors = new PgOrders(1,new UserDAO().getPgUsersByID(2),new UserDAO().getPgUsersByID(1),3,"Anh khánh","102 Trường CHinh","01662108386");
-//			 new PgOrdersDAO().updatePgOrders(ors);
+			 Date Ngay = new Date();
+	        	SimpleDateFormat datefrmats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	        	String datestr = datefrmats.format(Ngay);
+			    
+				Date now;
+				try {
+					now = datefrmats.parse(datestr);
+					PgOrders ors = new PgOrders(1,new OrderStatusDAO().getPgOrderStatusByID(0),new UserDAO().getPgUsersByID(2),now,"Anh khánh","102 Trường CHinh","01662108386");
+					 new PgOrdersDAO().updatePgOrders(ors);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			 
 //			 PgOrders orr = new PgOrdersDAO().getPgOrdersByID(3);
 //			 System.out.println(orr.getOrderStatus());
 		}
