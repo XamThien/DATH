@@ -34,7 +34,7 @@ import javax.servlet.http.Part;
         maxRequestSize = 1024 * 1024 * 100
 )
 public class Product extends HttpServlet {
-	private static final String UPLOAD_DIR = "site/layouts/images/shop";
+	//private static final String UPLOAD_DIR = "site/layouts/images/shop";
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -63,8 +63,8 @@ public class Product extends HttpServlet {
             //applicationPath: C:\Users\Lonely\Documents\NetBeansProjects\Shop_Bonfire\build\web
             String applicationPath = request.getServletContext().getRealPath("");
 
-            //File.separator: \ 
-            String basePath = applicationPath + File.separator + UPLOAD_DIR + File.separator;
+            //File.separator: \  site/layouts/images/shop
+            String basePath = applicationPath + File.separator + "site"+File.separator+"layouts"+File.separator+"images"+File.separator+"shop" + File.separator;
             if(checkFolderExist(basePath)==false)
             {
             	File f=new File(basePath);
@@ -76,7 +76,7 @@ public class Product extends HttpServlet {
             try {
             	
                 File outputFilePath = new File(basePath + fileName);
-                fileName = "/images/"+fileName;
+                fileName = "/site/layouts/images/shop/"+fileName;
                 inputStream = filePart.getInputStream();
                 outputStream = new FileOutputStream(outputFilePath);
                 int read = 0;

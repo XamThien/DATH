@@ -41,7 +41,7 @@ import model.PgUsers;
  */
 @WebServlet("/uploadphoto")
 public class UploadPhoto extends HttpServlet {
-	private static final String UPLOAD_DIR = "site/layouts/images/shop";
+	//private static final String UPLOAD_DIR = "site/layouts/images/shop";
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -105,7 +105,7 @@ public class UploadPhoto extends HttpServlet {
 	          //applicationPath: C:\Users\Lonely\Documents\NetBeansProjects\Shop_Bonfire\build\web
 	            String applicationPath = request.getServletContext().getRealPath("");
 	          //File.separator: \ 
-	            String basePath = applicationPath + File.separator + UPLOAD_DIR + File.separator;
+	            String basePath = applicationPath + File.separator + "site"+File.separator+"layouts"+File.separator+"images"+File.separator+"shop" + File.separator;
 	            if(checkFolderExist(basePath)==false)
 	            {
 	            	File f=new File(basePath);
@@ -128,7 +128,7 @@ public class UploadPhoto extends HttpServlet {
 		                    item.write(savedFile);
 		                    
 		                    lastorderpic= lastorderpic+1;
-		                    PgProductPictures ppic = new PgProductPictures(pr,"/images/"+itemName,lastorderpic);
+		                    PgProductPictures ppic = new PgProductPictures(pr,"/site/layouts/images/shop/"+itemName,lastorderpic);
 		                    ppic.setPictureType("0");
 		                    new ProductPictures().insertPgProductPictures(ppic);
 	                    } 

@@ -1,5 +1,5 @@
 var formValues = JSON.parse(localStorage.getItem('formValues')) || {};
-var $checkboxes = $("#tablex :checkbox");
+var $checkboxes = $("#tablexxx :checkbox");
 var $button = $("#checkAll");
 
 function allChecked(){
@@ -43,9 +43,9 @@ $button.text(formValues["buttonText"]);
 
 
 $(document).ready(function(){
-	$("#smit").click(function(){
+	$("#smitx").click(function(){
 		var items =[];
-	$("#tablex input[type=checkbox]:checked").each(function(){
+	$("#tablexxx input[type=checkbox]:checked").each(function(){
 		items.push($(this).val());
 	});
 	//console.log(items);

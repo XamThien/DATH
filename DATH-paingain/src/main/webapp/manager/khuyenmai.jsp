@@ -73,7 +73,7 @@
 					                    <div class="box-body suggest" id="sugges1">
 					                        <ul class="list-suggest" id="result1"></ul>
 					                    </div>
-					                	<table id= "tablex" class="table table-striped table-bordered dataTable no-footer">
+					                	<table id= "tablexxx" class="table table-striped table-bordered dataTable no-footer">
 										  <thead>
 										  	<tr>
 										  		<th>Chọn sản phẩm</th>
@@ -154,7 +154,7 @@
 								                </div>
 							                </div>
 					                	</div>
-					                	<button type="submit" id="smit" style="float: right;width: 91px;margin-right: 26px;" class="btn btn-primary" <%=(lstsp.size()==0)?"disabled='disabled'":"" %> > Lưu</button>      
+					                	<button type="submit" id="smitx" style="float: right;width: 91px;margin-right: 26px;" class="btn btn-primary" <%=(lstsp.size()==0)?"disabled='disabled'":"" %> > Lưu</button>      
 							       		<button type="button"  id="checkAll" onclick="selectAll();" style="float: right;width: 91px;margin-right: 26px;" class="btn btn-primary" <%=(lstsp.size()==0)?"disabled='disabled'":"" %> >Check all</button>
 					                </form>
 					                </div>
@@ -166,7 +166,7 @@
 		}
 		catch(Exception e)
 		{
-			response.sendRedirect("/manager/index.jsp");
+			response.sendRedirect("/manager/homes");
 		}
 	%>
 					        <!-- ========================== -->
