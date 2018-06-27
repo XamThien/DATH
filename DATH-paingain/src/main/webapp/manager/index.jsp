@@ -21,9 +21,15 @@
 				
 				<%@include file="/template/topnav.jsp"%>
 				<%
+<<<<<<< HEAD
 				long doanhthu = (long) request.getAttribute("revenueday");
 				int orderc = (int) request.getAttribute("order");
 				int userrc = (int) request.getAttribute("user");
+=======
+				//int doanhthu = (int) request.getAttribute("revenueday");
+				//int orderc = (int) request.getAttribute("order");
+				//int userrc = (int) request.getAttribute("user");
+>>>>>>> d411237a8bc81ef060f29ceb6fc8b6a3e79ced0f
 				 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 				try {
 		            Date date = request.getParameter("filter") != null ? formatter.parse(request.getParameter("filter"))
@@ -39,81 +45,84 @@
 					<div class="row top_tiles">
 						  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
-							  <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
+							  <div class="icon"><i class="fa fa-money" style="color: blue;"></i></div>
 							  <div class="count">179</div>
-							  <h3>Cái gì đấy</h3>
-							  <p>Lorem ipsum psdea itgum rixt.</p>
+							  <h3>Doanh thu trong ngày</h3>
+							  <p>.</p>
 							</div>
 						  </div>
 						  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
-							  <div class="icon"><i class="fa fa-comments-o"></i></div>
+							  <div class="icon"><i class="fa fa-credit-card" style="color: blue;"></i></div>
 							  <div class="count">179</div>
-							  <h3>Cái gì đấy</h3>
-							  <p>Lorem ipsum psdea itgum rixt.</p>
+							  <h3>Đơn đặt hàng trong ngày</h3>
+							  <p>.</p>
 							</div>
 						  </div>
 						  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
-							  <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
+							  <div class="icon"><i class="fa fa-slideshare" style="color: blue;"></i></div>
 							  <div class="count">179</div>
-							  <h3>Cái gì đấy</h3>
-							  <p>Lorem ipsum psdea itgum rixt.</p>
+							  <h3>Khách mới trong ngày</h3>
+							  <p>.</p>
 							</div>
 						  </div>
-						  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
-							<div class="tile-stats">
-							  <div class="icon"><i class="fa fa-check-square-o"></i></div>
-							  <div class="count">179</div>
-							  <h3>Cái gì đấy</h3>
-							  <p>Lorem ipsum psdea itgum rixt.</p>
-							</div>
-						  </div>
+						  
 						</div>
 						<!--thông số tổng quan-->
 						<div class="row">
 							  <div class="col-md-12">
 								<div class="x_panel">
 								  <div class="x_title">
-									<h2>Biểu đồ thống kê doanh thu <small>Weekly progress</small></h2>
-									<div class="filter">
-									  <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-										<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-										<span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
-									  </div>
-									</div>
+									<h2>Thống kê hoạt động hàng ngày:</h2>
+									
 									<div class="clearfix"></div>
 								  </div>
 								  <div class="x_content">
 <!--===========================================================================-->							  
-									<div class="col-md-9 col-sm-12 col-xs-12">
-									  <div class="demo-container" style="height:280px">
-										<div id="chart_plot_02" class="demo-placeholder"></div>
-									  </div>
-									  <div class="tiles">
-										<div class="col-md-4 tile">
-										  <span>Total Sessions</span>
-										  <h2>231,809</h2>
-										  <span class="sparkline11 graph" style="height: 160px;">
-											   <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-										  </span>
-										</div>
-										<div class="col-md-4 tile">
-										  <span>Total Revenue</span>
-										  <h2>$231,809</h2>
-										  <span class="sparkline22 graph" style="height: 160px;">
-												<canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-										  </span>
-										</div>
-										<div class="col-md-4 tile">
-										  <span>Total Sessions</span>
-										  <h2>231,809</h2>
-										  <span class="sparkline11 graph" style="height: 160px;">
-												 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
-										  </span>
-										</div>
-									  </div>
+									<div class="col-md-9 col-sm-12 col-xs-12" style="height:400px;overflow: auto;">
+									
+									  <div class="x_panel">
+										
+										<div class="x_content" >
+										  <div class="dashboard-widget-content">
 
+											<ul class="list-unstyled timeline widget">
+											
+											  <li>
+												<div class="block">
+												  <div class="block_content">
+													<h2 class="title">
+																	  <a>Nhân viên xxx</a>
+																  </h2>
+													<div class="byline">
+													  <span>13 hours ago</span>
+													</div>
+													<p class="excerpt"> Gạ gẫm admin đi nghỉ ahihi
+													</p>
+												  </div>
+												</div>
+											  </li>
+											
+												<li>
+												<div class="block">
+												  <div class="block_content">
+													<h2 class="title">
+																	  <a>Nhân viên xxx</a>
+																  </h2>
+													<div class="byline">
+													  <span>13 hours ago</span>
+													</div>
+													<p class="excerpt"> Gạ gẫm admin đi nghỉ ahihi
+													</p>
+												  </div>
+												</div>
+											  </li>
+											  
+											</ul>
+										  </div>
+										</div>
+									  </div>
 									</div>
 <!--===========================================================================-->	
 									<div class="col-md-3 col-sm-12 col-xs-12" style="overflow: auto">

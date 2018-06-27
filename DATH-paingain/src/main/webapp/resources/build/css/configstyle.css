@@ -285,3 +285,7 @@ ul.to_do li {
 {
 	text-align: center;
 }
+
+.col-lg-3 {
+    width: 33%;
+}
