@@ -9,13 +9,13 @@
 }
 .preview-images-zone > .preview-image:first-child {
     /*height: 185px;*/
-    width: 185px;
+    width: 150px;
     position: relative;
     margin-right: 5px;
 }
 .preview-images-zone > .preview-image {
     /*height: 90px;*/
-    width: 90px;
+    width: 150px;
     position: relative;
     margin-right: 5px;
     float: left;

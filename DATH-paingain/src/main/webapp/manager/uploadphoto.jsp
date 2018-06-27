@@ -9,7 +9,7 @@
 	<head>
 	<%
 		int id = Integer.parseInt(request.getParameter("id"));
-		//stt là trạng thái hiện tại
+		session.setAttribute("spidx", id);
 		
 		  
 	%>
@@ -50,7 +50,7 @@
 					        	<div class="row">
 					        	
 					        		<div class="col-sm-6" style="border-right: 1px solid; padding-left: 53px;">
-					        			<label>Thông tin khách hàng:</label>
+					        			<label></label>
 										<div class="clearfix"></div>
 					        			<div class="col-sm-4" >
 											<div style="float:right;">
@@ -72,7 +72,7 @@
 					        			</div>
 					        		</div>
 					        		<div class="col-sm-6" style="padding-left: 53px;">
-											<label>Thông tin khách hàng:</label>
+										<label></label>
 										<div class="clearfix"></div>
 					        			<div class="col-sm-4" >
 											<div style="float:right;">
@@ -98,11 +98,24 @@
 					        	</div>
 					        	<br/>
 					        	<div class="ln_solid"></div>
-								<h2>Danh sách hàng hóa:</h2>
+								<h2>Ảnh sản phẩm:</h2>
 					        	
 				            	<div class="row">
 					                <div class="col-sm-12">
-					                	// vùng ảnh ở đây
+					                	<fieldset class="form-group">
+						                	<form action="/uploadphoto" method="post" enctype="multipart/form-data">
+										         <div class="col-sm-6">
+											         <a href="javascript:void(0)" class="btn btn-primary" onclick="$('#pro-image').click()">Chọn ảnh</a>
+											        <input type="file" id="pro-image" name="pro-image" style="display: none;" class="form-control" multiple>
+										         </div>
+										         <div class="col-sm-6">
+										         	<button type="submit" style="float:right;" class="btn btn-primary">Upload</button>
+										         </div>
+									         </form>
+									    </fieldset>
+									    <div class="preview-images-zone">
+									        
+									    </div>
 					                </div>
 					                
 					              <div class="clearfix"></div>
@@ -113,7 +126,7 @@
 				            </div>
 
 			        		</div>
-					        <!-- ========================== -->
+					        <!-- ========================== style="display: none;" -->
 					      </div>
 	             </div>
 		    	 </div>
@@ -122,15 +135,7 @@
            
 			<script type="text/javascript">
 			    
-			    function pass_update(pid,sid,name,tg,sl) {
-			    	document.getElementById("pid").value = pid; 
-			    	document.getElementById("sid").value = sid; 
-			    	document.getElementById("name").value = name; 
-			    	document.getElementById("tg").value = tg; 
-			    	document.getElementById("sl").value = sl; 
-			    	
-			    	
-			    };
+			    
 			    
 			</script>
 					<!-- ----------------------------------------------->

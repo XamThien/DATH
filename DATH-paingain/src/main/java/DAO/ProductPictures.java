@@ -3,6 +3,7 @@ package DAO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.hibernate.HibernateException;
@@ -29,7 +30,7 @@ public class ProductPictures {
 	        	
 	        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		        Transaction transaction = session.beginTransaction();
-		        String hql ="from PgProductPictures where PRODUCT_ID="+id;
+		        String hql ="from PgProductPictures where PRODUCT_ID="+id+" and orderIndex=1";
 		        Query que = session.createQuery(hql);
 		        cl = (PgProductPictures) que.uniqueResult();
 		        transaction.commit();
@@ -40,6 +41,27 @@ public class ProductPictures {
 	        }
 	        return cl;
 	    }
+	public int getLastOrderIndex(int prid)
+	{
+		PgProductPictures pr = null;
+    	
+    	try {
+            Configuration configuration = new Configuration().configure();
+            SessionFactory sessionFactory = configuration.buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            //Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+            String hql = "from PgProductPictures where PRODUCT_ID="+prid +" order by orderIndex DESC";
+            Query que = session.createQuery(hql);
+            pr = (PgProductPictures)que.list().get(0);
+            transaction.commit();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+    	return pr.getOrderIndex();
+	}
 	public void insertPgProductPictures(PgProductPictures sp){
 	 	Configuration configuration =  new Configuration().configure();
 	 	SessionFactory sessionFactory = configuration.buildSessionFactory();
