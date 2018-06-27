@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
   		<title>Pain And Gain| Trang chủ</title>
 		<%@include file="/template/header.jsp"%>
@@ -18,116 +18,181 @@
 				<%@include file="/template/topnav.jsp"%>
 				
 				<div class="right_col" role="main">
-					<div class="row">
-						<div class="col-md-4">
-							<div class="card p-30">
-								<div class="media">
-									<div class="media-left meida media-middle">
-										<span>
-											<i class="fa fa-money f-s-40 color-primary"></i>
-										</span>
-									</div>
-									<div class="media-body media-text-right">
-										<h2>16,870,000</h2>
-										<p class="m-b-0">Doanh thu hôm nay</p>
-									</div>
-								</div>
+					<!-- ----------------------------------------------->
+					<div class="row top_tiles">
+						  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+							<div class="tile-stats">
+							  <div class="icon"><i class="fa fa-caret-square-o-right"></i></div>
+							  <div class="count">179</div>
+							  <h3>Cái gì đấy</h3>
+							  <p>Lorem ipsum psdea itgum rixt.</p>
 							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card p-30">
-								<div class="media">
-									<div class="media-left meida media-middle">
-										<span>
-											<i class="fa fa-shopping-cart f-s-40 color-primary"></i>
-										</span>
-									</div>
-									<div class="media-body media-text-right">
-										<h2>23</h2>
-										<p class="m-b-0">Số đơn hàng</p>
-									</div>
-								</div>
+						  </div>
+						  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+							<div class="tile-stats">
+							  <div class="icon"><i class="fa fa-comments-o"></i></div>
+							  <div class="count">179</div>
+							  <h3>Cái gì đấy</h3>
+							  <p>Lorem ipsum psdea itgum rixt.</p>
 							</div>
-						</div>
-						
-						<div class="col-md-4">
-							<div class="card p-30">
-								<div class="media">
-									<div class="media-left meida media-middle">
-										<span>
-											<i class="fa fa-user f-s-40 color-primary"></i>
-										</span>
-									</div>
-									<div class="media-body media-text-right">
-										<h2>11</h2>
-										<p class="m-b-0">Khách hàng mới</p>
-									</div>
-								</div>
+						  </div>
+						  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+							<div class="tile-stats">
+							  <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
+							  <div class="count">179</div>
+							  <h3>Cái gì đấy</h3>
+							  <p>Lorem ipsum psdea itgum rixt.</p>
 							</div>
-						</div>
-					</div>
-					
-					<div class="col-md-8">
-						<!-- Bar Chart -->
-					<div class="card">
-						<div class="card-title">
-							<h4>Doanh thu</h4>
-							<select style="font-size: 14px; float: right;">
-								<option>Hôm nay</option>
-								<option>7 ngày vừa qua</option>
-								<option>Tháng này</option>
-								<option>Tháng trước</option>
-							</select>
-						</div>
-						<div class="flot-container">
-							<div id="flotBar" style="padding: 0px; position: relative;">
-								<canvas class="flot-base" width="422" height="275" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 422.5px; height: 275px;"></canvas>
-								<div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
-									<div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;">
-										<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 52px; top: 256px; left: 67px; text-align: center;">9:00</div>
-										<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 52px; top: 256px; left: 125px; text-align: center;">12:00</div>
-										<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 52px; top: 256px; left: 183px; text-align: center;">14:00</div>
-										<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 52px; top: 256px; left: 242px; text-align: center;">15:00</div>
-										<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 52px; top: 256px; left: 300px; text-align: center;">18:00</div>
-										<div class="flot-tick-label tickLabel" style="position: absolute; max-width: 52px; top: 256px; left: 358px; text-align: center;">21:00</div>
-									</div>
-									<div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;">
-										<div class="flot-tick-label tickLabel" style="position: absolute; top: 241px; left: 23px; text-align: right;">0</div>
-										<div class="flot-tick-label tickLabel" style="position: absolute; top: 207px; left: 0px; text-align: right;">500,000</div>
-										<div class="flot-tick-label tickLabel" style="position: absolute; top: 173px; left: 0px; text-align: right;">1,000,000</div>
-										<div class="flot-tick-label tickLabel" style="position: absolute; top: 138px; left: 0px; text-align: right;">1,500,000</div>
-										<div class="flot-tick-label tickLabel" style="position: absolute; top: 104px; left: 0px; text-align: right;">2,000,000</div>
-										<div class="flot-tick-label tickLabel" style="position: absolute; top: 69px; left: 0px; text-align: right;">2,500,000</div>
-										<div class="flot-tick-label tickLabel" style="position: absolute; top: 35px; left: 0px; text-align: right;">3,000,000</div>
-										<div class="flot-tick-label tickLabel" style="position: absolute; top: 1px; left: 0px; text-align: right;">3,500,000</div>
-									</div>
-								</div>
-								<canvas class="flot-overlay" width="422" height="275" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 422.5px; height: 275px;"></canvas>
+						  </div>
+						  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+							<div class="tile-stats">
+							  <div class="icon"><i class="fa fa-check-square-o"></i></div>
+							  <div class="count">179</div>
+							  <h3>Cái gì đấy</h3>
+							  <p>Lorem ipsum psdea itgum rixt.</p>
 							</div>
+						  </div>
 						</div>
-					</div>
-					<!-- Bar Chart -->
-					</div>
-					<!-- Recent Activity -->
-					<div class="col-md-4">
-					<div class="panel">
-						<div class="panel-body">
-							<h3 class="title-hero">Hoạt động gần đây</h3>
-							<ul>
-								<li><b>- Admin</b> vừa thực hiện kiểm hàng
-									<p style="font-size: 11px;"><i>20 phút trước</i></p>
-								</li>
-								<li><b>- Nhan vien 1</b> vừa đăng nhập
-									<p style="font-size: 11px;"><i>15 phút trước</i></p>
-								</li>
-								<li><b>- Nhan vien 1</b> vừa bán đơn hàng trị giá 300,000đ
-									<p style="font-size: 11px;"><i>Vừa xong</i></p>
-								</li>
-							</ul>
-						</div>
-					</div>
-				<!-- Recent Activity -->
-				</div>
+						<!--thông số tổng quan-->
+						<div class="row">
+							  <div class="col-md-12">
+								<div class="x_panel">
+								  <div class="x_title">
+									<h2>Biểu đồ thống kê doanh thu <small>Weekly progress</small></h2>
+									<div class="filter">
+									  <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+										<i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+										<span>December 30, 2014 - January 28, 2015</span> <b class="caret"></b>
+									  </div>
+									</div>
+									<div class="clearfix"></div>
+								  </div>
+								  <div class="x_content">
+<!--===========================================================================-->							  
+									<div class="col-md-9 col-sm-12 col-xs-12">
+									  <div class="demo-container" style="height:280px">
+										<div id="chart_plot_02" class="demo-placeholder"></div>
+									  </div>
+									  <div class="tiles">
+										<div class="col-md-4 tile">
+										  <span>Total Sessions</span>
+										  <h2>231,809</h2>
+										  <span class="sparkline11 graph" style="height: 160px;">
+											   <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+										  </span>
+										</div>
+										<div class="col-md-4 tile">
+										  <span>Total Revenue</span>
+										  <h2>$231,809</h2>
+										  <span class="sparkline22 graph" style="height: 160px;">
+												<canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+										  </span>
+										</div>
+										<div class="col-md-4 tile">
+										  <span>Total Sessions</span>
+										  <h2>231,809</h2>
+										  <span class="sparkline11 graph" style="height: 160px;">
+												 <canvas width="200" height="60" style="display: inline-block; vertical-align: top; width: 94px; height: 30px;"></canvas>
+										  </span>
+										</div>
+									  </div>
+
+									</div>
+<!--===========================================================================-->	
+									<div class="col-md-3 col-sm-12 col-xs-12" style="overflow: auto">
+									  <div>
+										<div class="x_title">
+										  <h2>Hoạt động</h2>
+										  
+										  <div class="clearfix"></div>
+										</div>
+										<ul class="list-unstyled top_profiles scroll-view">
+										  <li class="media event">
+											<a class="pull-left border-aero profile_thumb">
+											  <i class="fa fa-user aero"></i>
+											</a>
+											<div class="media-body">
+											  <a class="title" href="#">Nhân viên xxx</a>
+											  <p><strong>Vừa gạ gẫm Admin. </strong></p>
+											  <p> <small>27/6/2018 22:38</small>
+											  </p>
+											</div>
+										  </li>
+										  <li class="media event">
+											<a class="pull-left border-green profile_thumb">
+											  <i class="fa fa-user green"></i>
+											</a>
+											<div class="media-body">
+											  <a class="title" href="#">Nhân viên yyy</a>
+											  <p><strong> Thử thai trong giờ</strong></p>
+											  <p> <small>27/6/2018 22:38</small>
+											  </p>
+											</div>
+										  </li>
+										  <li class="media event">
+											<a class="pull-left border-green profile_thumb">
+											  <i class="fa fa-user green"></i>
+											</a>
+											<div class="media-body">
+											  <a class="title" href="#">Nhân viên yyy</a>
+											  <p><strong> Thử thai trong giờ</strong></p>
+											  <p> <small>27/6/2018 22:38</small>
+											  </p>
+											</div>
+										  </li>
+										  <li class="media event">
+											<a class="pull-left border-green profile_thumb">
+											  <i class="fa fa-user green"></i>
+											</a>
+											<div class="media-body">
+											  <a class="title" href="#">Nhân viên yyy</a>
+											  <p><strong> Thử thai trong giờ</strong></p>
+											  <p> <small>27/6/2018 22:38</small>
+											  </p>
+											</div>
+										  </li>
+										  <li class="media event">
+											<a class="pull-left border-green profile_thumb">
+											  <i class="fa fa-user green"></i>
+											</a>
+											<div class="media-body">
+											  <a class="title" href="#">Nhân viên yyy</a>
+											  <p><strong> Thử thai trong giờ</strong></p>
+											  <p> <small>27/6/2018 22:38</small>
+											  </p>
+											</div>
+										  </li>
+										  <li class="media event">
+											<a class="pull-left border-green profile_thumb">
+											  <i class="fa fa-user green"></i>
+											</a>
+											<div class="media-body">
+											  <a class="title" href="#">Nhân viên yyy</a>
+											  <p><strong> Thử thai trong giờ</strong></p>
+											  <p> <small>27/6/2018 22:38</small>
+											  </p>
+											</div>
+										  </li><li class="media event">
+											<a class="pull-left border-green profile_thumb">
+											  <i class="fa fa-user green"></i>
+											</a>
+											<div class="media-body">
+											  <a class="title" href="#">Nhân viên yyy</a>
+											  <p><strong> Thử thai trong giờ</strong></p>
+											  <p> <small>27/6/2018 22:38</small>
+											  </p>
+											</div>
+										  </li>
+										  
+										</ul>
+									  </div>
+									</div>
+<!--===========================================================================-->	
+								  </div>
+								</div>
+							  </div>
+							</div>
+					<!-- ----------------------------------------------->
 			    </div>
 			    
 			    <%@include file="/template/footer.jsp"%>
