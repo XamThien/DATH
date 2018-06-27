@@ -99,7 +99,20 @@
 					        	<br/>
 					        	<div class="ln_solid"></div>
 								<h2>Ảnh sản phẩm:</h2>
-					        	
+					        	<div class="row">
+					        		<div class="col-sm-12">
+					        		<%
+					        			List<String> lst = new ProductPictures().getLstPhoto(id);
+					        			for (String path :lst)
+					        			{
+					        				%>
+					        				<img alt="xxx" src="<%=path%>" width="150px;">
+					        				<%
+					        			}
+					        		%>
+					        		</div>
+					        	</div>
+					        	<hr/>
 				            	<div class="row">
 					                <div class="col-sm-12">
 					                	<fieldset class="form-group">

@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -62,6 +63,30 @@ public class ProductPictures {
         }
     	return pr.getOrderIndex();
 	}
+	public List<String> getLstPhoto(int prid)
+	{
+		
+		List<String> lstpath = null;
+    	
+    	try {
+            Configuration configuration = new Configuration().configure();
+            SessionFactory sessionFactory = configuration.buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            //Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+            String hql = " select pp.path from PgProductPictures pp where pp.pgProducts.productId="+prid;
+            Query que = session.createQuery(hql);
+            lstpath = que.list();
+            transaction.commit();
+            session.close();
+            
+           
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+    	return lstpath;
+	}
 	public void insertPgProductPictures(PgProductPictures sp){
 	 	Configuration configuration =  new Configuration().configure();
 	 	SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -90,15 +115,15 @@ public class ProductPictures {
 	 PgCategories cate = new CategoryDAO().getCategory(1);
 	    //anh===============================
 	    //ncc 
-	 Date Ngay = new Date();
-     SimpleDateFormat datefrmat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-     String datestr = datefrmat.format(Ngay);
-     Date now = datefrmat.parse(datestr);
-	    PgSuppliers su = new PgSuppliersDAO().findByID(1);
-		PgProducts tl = new PgProducts(cate, su, "ccc", 12, 12345, 12345, "", now, now, true, false);
-		new ProductDAO().insertPgProduct(tl);
-	 
- 	PgProductPictures prpic = new PgProductPictures(tl,"ssdvsdv",1); 
- 	new ProductPictures().insertPgProductPictures(prpic);
+	 PgProducts pr = new ProductDAO().getPgProductsByID(1);
+	 int lastorderpic = new ProductPictures().getLastOrderIndex(1);
+	 System.out.println(pr);
+	 System.out.println(lastorderpic);
+	 lastorderpic= lastorderpic+1;
+	 PgProductPictures ppic = new PgProductPictures(pr,"/images/"+"xxx",lastorderpic);
+//	 System.out.println(ppic.getPgProducts());
+//	 System.out.println(ppic.getPath());
+//	 System.out.println(ppic.getOrderIndex());
+     new ProductPictures().insertPgProductPictures(ppic);
 }
 }
