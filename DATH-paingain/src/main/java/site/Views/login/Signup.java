@@ -8,16 +8,22 @@ package site.Views.login;
 import database.Hibernate;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import model.PgLog;
 import model.PgRoles;
 import model.PgUsers;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+
+import DAO.LogDAO;
 import service.PGValidation;
 
 /**
@@ -105,6 +111,17 @@ public class Signup extends HttpServlet {
                 session.getTransaction().commit();
                 session.close();
                 request.setAttribute("spMsg", "Dang ky thanh cong");
+                Date Ngay = new Date();
+            	SimpleDateFormat datefrmats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            	String datestr = datefrmats.format(Ngay);
+            	try {
+            		Date now = datefrmats.parse(datestr);
+            		String ms = "Khách hàng vừa đăng kí tài khoản với tên tài khoản "+user.getUserId();
+   				 PgLog log = new PgLog(user,now,ms,"");
+   				 new LogDAO().insertPgLog(log);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
                 request.getRequestDispatcher(href).forward(request, response);
             }
         } else {
