@@ -22,8 +22,11 @@ public class PgOrderStatus implements java.io.Serializable {
 	private Set<PgOrders> pgOrderses = new HashSet<PgOrders>(0);
 
 	public PgOrderStatus() {
+		
 	}
-
+	public PgOrderStatus(int key) {
+		this.orderStatusKey= key;
+	}
 	public PgOrderStatus(int orderStatusKey, String orderStatusName) {
 		this.orderStatusKey = orderStatusKey;
 		this.orderStatusName = orderStatusName;

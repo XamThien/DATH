@@ -44,6 +44,9 @@ public class PgUsers implements java.io.Serializable {
 
 	public PgUsers() {
 	}
+	public PgUsers(String id) {
+		this.userId = id;
+	}
 
 	public PgUsers(Integer recordId, String userId, String firstName, String lastName, String address,
 			String phoneNumber, String cardId, String email, Boolean sex, String userPassword, Date createTime,

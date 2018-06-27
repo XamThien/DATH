@@ -83,10 +83,7 @@
 					        		</div>
 					        		<div class="col-sm-6" style="padding-left: 53px;">
 					        		<form action="/order" method="post">
-					        			<input type="hidden" name="cus" value="<%=or.getPgUsers().getRecordId() %>">
-					        			<input type="hidden" name="name" value="<%=or.getShipName() %>">
-					        			<input type="hidden" name="add" value="<%=or.getShipAddress() %>">
-					        			<input type="hidden" name="phone" value="<%=or.getShipPhone() %>">
+					        			
 					        			<input type="hidden" name="dateorder" value="<%=or.getOrderDate() %>">
 					        			<input type="hidden" name="oid" value="<%=id %>">
 					        			<label>Cập nhật đơn hàng:</label>

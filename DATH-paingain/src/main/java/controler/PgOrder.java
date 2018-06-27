@@ -22,6 +22,7 @@ import database.Hibernate;
 import model.PgOrderDetails;
 import model.PgOrderStatus;
 import model.PgOrders;
+import model.PgUsers;
 
 /**
  * Servlet implementation class PgOrder
@@ -54,22 +55,23 @@ public class PgOrder extends HttpServlet {
 	        request.setCharacterEncoding("utf-8");
 	        int order_id = Integer.parseInt(request.getParameter("oid").trim());
 	        int tt = Integer.parseInt(request.getParameter("tt").trim());
-	        int cus = Integer.parseInt(request.getParameter("cus"));
-	        String name = request.getParameter("name");
-	        String address = request.getParameter("add");
-	        String phone = request.getParameter("phone");
-	        PgOrderStatus st = new OrderStatusDAO().getPgOrderStatusByID(tt);
+//	        String cus = request.getParameter("cus");
+//	        String name = request.getParameter("name");
+//	        String address = request.getParameter("add");
+//	        String phone = request.getParameter("phone");
+	        PgOrderStatus st =  new PgOrderStatus(tt,"xxx"); //new OrderStatusDAO().getPgOrderStatusByID(tt);
 	   /*     */
 	        SimpleDateFormat datefrmat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	        try {
 				Date orderdate = datefrmat.parse(request.getParameter("dateorder"));
 			
 		        String message="";
-		        
+		        //PgUsers us = new PgUsers(cus);
 		        try
 				{
-		        	PgOrders ors = new PgOrders(order_id,st,new UserDAO().getPgUsersByID(cus),orderdate,name,address,phone);
-			        	
+		        	//PgOrders ors = new PgOrders(order_id,st,us,orderdate,name,address,phone);
+			        PgOrders ors = new	PgOrdersDAO().getPgOrdersByIDxx(order_id);
+			        ors.setPgOrderStatus(st);
 		        	if(tt==3){
 			        	Date Ngay = new Date();
 			        	SimpleDateFormat datefrmats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

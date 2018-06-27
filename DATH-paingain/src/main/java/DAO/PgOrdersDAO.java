@@ -61,7 +61,28 @@ public class PgOrdersDAO {
 		        } 
 		        return cl;
 		    }
-		 
+	 public PgOrders getPgOrdersByIDxx(int id) {
+		 PgOrders cl = null;
+		 Configuration configuration =  new Configuration().configure();
+     	SessionFactory sessionFactory = configuration.buildSessionFactory();
+     	Session session = sessionFactory.openSession();
+		       try
+		       {
+		    	    
+		        	
+		        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+			        Transaction transaction = session.beginTransaction();
+			        String hql ="from PgOrders where orderId="+id;
+			        Query que = session.createQuery(hql);
+			        cl = (PgOrders) que.uniqueResult();
+			        transaction.commit();
+					session.close();
+		       }
+		       catch  (HibernateException e) {
+		    	   e.printStackTrace();
+		        } 
+		        return cl;
+		    }
 		 public void insertPgOrders(PgOrders sp){
 			 	Configuration configuration =  new Configuration().configure();
 			 	SessionFactory sessionFactory = configuration.buildSessionFactory();
