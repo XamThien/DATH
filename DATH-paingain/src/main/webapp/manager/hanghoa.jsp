@@ -96,7 +96,7 @@
 				                                %>
 											    <td>
 											    <%if(rs.getIsUpdate()== true){ %>
-											    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=pr.getProductId() %>,'<%=new ProductPictures().getPgProductPicturesByID(pr.getProductId()).getPath() %>','<%=pr.getProductName() %>',<%=pr.getPgCategories().getCategoryId() %>,<%=pr.getPgSuppliers().getSupplierId() %>,<%=pr.getQuantity() %>,<%=pr.getUnitPrice() %>,<%=pr.getUnitOrder() %>,'<%=pr.getIsHot() %>','<%=pr.getIsNew() %>','<%=pr.getDescription() %>',<%=pr.getProductStatus() %>,'<%=pr.getCreateTime() %>')" > <i class="fa fa-edit"></i> Sửa</a>
+											    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=pr.getProductId() %>,'<%=new ProductPictures().getPgProductPicturesByIDxx(pr.getProductId()).getPath() %>','<%=pr.getProductName() %>',<%=pr.getPgCategories().getCategoryId() %>,<%=pr.getPgSuppliers().getSupplierId() %>,<%=pr.getQuantity() %>,<%=pr.getUnitPrice() %>,<%=pr.getUnitOrder() %>,'<%=pr.getIsHot() %>','<%=pr.getIsNew() %>','<%=pr.getDescription() %>',<%=pr.getProductStatus() %>,'<%=pr.getCreateTime() %>')" > <i class="fa fa-edit"></i> Sửa</a>
 											    	<a href="/manager/uploadphoto.jsp?id=<%=pr.getProductId() %>"  class="btn btn-link"  > <i class="fa fa-file-image-o"></i> Upload ảnh</a>
 										    	<%} %>
 										    	</td>
