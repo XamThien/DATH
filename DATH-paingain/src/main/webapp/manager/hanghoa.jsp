@@ -186,7 +186,7 @@
 				                    <label >Đơn giá bán:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="number" class="form-control" min="10000"  name="giaban" placeholder="Đơn giá bán" required="required" />
+				                            <input type="number" class="form-control" min="10000" id="ngb"  name="giaban" placeholder="Đơn giá bán" required="required" />
 				                        </div>
 				                    </div>
 				                </div>
@@ -194,7 +194,7 @@
 				                    <label >Đơn giá nhập:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="number" class="form-control" min="10000"  name="gianhap" placeholder="Đơn giá nhập" required="required" />
+				                            <input type="number" class="form-control" min="10000" id="ngn"  name="gianhap" placeholder="Đơn giá nhập" required="required" onblur="checknew()" />
 				                        </div>
 				                    </div>
 				                </div>
@@ -324,7 +324,7 @@
 				                    <label >Đơn giá nhập:</label>
 				                    <div class="form-group">
 				                        <div class="form-group" >
-				                            <input type="number" class="form-control" min="10000"  id="egianhap" name="egianhap" placeholder="Đơn giá nhập" required="required" />
+				                            <input type="number" class="form-control" min="10000"  id="egianhap" name="egianhap" placeholder="Đơn giá nhập" required="required" onblur="checkedit()" />
 				                        </div>
 				                    </div>
 				                </div>
@@ -446,6 +446,24 @@
 	                 };
 	                 reader.readAsDataURL(event.target.files[0]);
 	             };
+	             function checknew() {
+				    	
+			    	 var ngb = document.getElementById("ngb").value;
+			    	 var ngn = document.getElementById("ngn").value;
+			    	 if(ngb<ngn)
+				    	 {
+			    		 alert("Giá bán phải lớn hơn giá nhập");
+				    	 }
+			    };
+			    function checkedit() {
+			    	
+			    	 var egb = document.getElementById("egiaban").value;
+			    	 var egn = document.getElementById("egianhap").value;
+			    	 if(egb<egn)
+				    	 {
+			    		 alert("Giá bán phải lớn hơn giá nhập");
+				    	 }
+			    };
 			</script>
 					<!-- ----------------------------------------------->
 			    </div>
