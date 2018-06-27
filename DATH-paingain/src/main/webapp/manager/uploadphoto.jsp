@@ -106,7 +106,7 @@
 					        			for (String path :lst)
 					        			{
 					        				%>
-					        				<img alt="xxx" src="<%=path%>" width="150px;">
+					        				<img alt="xxx" src="<%=path%>" width="150px;" data-toggle="modal" data-target="#modal-delete" onclick="pass_del('<%=path%>');">
 					        				<%
 					        			}
 					        		%>
@@ -116,7 +116,7 @@
 				            	<div class="row">
 					                <div class="col-sm-12">
 					                	<fieldset class="form-group">
-						                	<form action="/uploadphoto" method="post" enctype="multipart/form-data">
+						                	<form action="/uploadphoto?action=add" method="post" enctype="multipart/form-data">
 										         <div class="col-sm-6">
 											         <a href="javascript:void(0)" class="btn btn-primary" onclick="$('#pro-image').click()">Chọn ảnh</a>
 											        <input type="file" id="pro-image" name="pro-image" style="display: none;" class="form-control" multiple>
@@ -145,9 +145,38 @@
 		    	 </div>
               </div>
             </div>
-           
+           <!-- Delete modal -->
+            <div class="modal fade bs-example-modal-lg" id="modal-delete" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-delete">
+                      <div class="modal-content">
+
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                          </button>
+                          <h4 class="modal-title" id="myModalLabel">Xác nhận xóa ảnh</h4>
+                        </div>
+                        
+                        <div class="modal-footer">
+                        	<form action="/uploadphoto?action=delete" method="post">
+                        		<div class="edit">
+                        			<input type="hidden" id="pathx" name="path" />
+                        			<input type="hidden" id="did" name="did" value="<%=id%>" />
+                        		</div>
+                          		<button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                          		<button type="submit" class="btn btn-info">Xóa</button>
+                          
+                          	</form>
+                        </div>
+
+                      </div>
+                    </div>
+            </div>
+			<!--  Delete modal -->
 			<script type="text/javascript">
-			    
+			function pass_del(id) {
+		    	
+		    	document.getElementById("pathx").value = id;
+		    };
 			    
 			    
 			</script>

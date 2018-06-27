@@ -63,82 +63,113 @@ public class UploadPhoto extends HttpServlet {
 	        return file.exists();
 	    }
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		String action = request.getParameter("action");
 		HttpSession session = request.getSession();
 		int spid = (int)session.getAttribute("spidx");
+		switch(action)
+		{
+		case "add":
+			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+			
+			
+			PgProducts pr = new ProductDAO().getPgProductsByID(spid);
+			int lastorderpic = new ProductPictures().getLastOrderIndex(spid);
+			
+	        if (!isMultipart) 
+	        {
+	        } 
+	        else 
+	        {
+	            FileItemFactory factory = new DiskFileItemFactory();
+	            ServletFileUpload upload = new ServletFileUpload(factory);
+	            List items = null;
+	            try 
+	            {
+	                items = upload.parseRequest(request);
+	            } 
+	            catch (FileUploadException e) 
+	            {
+	                 e.printStackTrace();
+	            }
+	            Iterator itr = items.iterator();
+	          //applicationPath: C:\Users\Lonely\Documents\NetBeansProjects\Shop_Bonfire\build\web
+	            String applicationPath = request.getServletContext().getRealPath("");
+	          //File.separator: \ 
+	            String basePath = applicationPath + File.separator + UPLOAD_DIR + File.separator;
+	            if(checkFolderExist(basePath)==false)
+	            {
+	            	File f=new File(basePath);
+	    			f.mkdir();
+	            }
+	            boolean ckk = true;
+	            String message="";
+	            while (itr.hasNext()) 
+	            {
+	                FileItem item = (FileItem) itr.next();
+	                if (item.isFormField()) 
+	                {
+	                } 
+	                else 
+	                {
+	                    try 
+	                    {
+		                    String itemName = item.getName();
+		                    File savedFile = new File(basePath+itemName);
+		                    item.write(savedFile);
+		                    
+		                    lastorderpic= lastorderpic+1;
+		                    PgProductPictures ppic = new PgProductPictures(pr,"/images/"+itemName,lastorderpic);
+		                    new ProductPictures().insertPgProductPictures(ppic);
+	                    } 
+	                    catch (Exception e) 
+	                    {
+	                    	message = e.toString();
+	                    	ckk=false;
+	                    	break;
+	                    }
+	                }
+	            }
+	            
+	            if(ckk)
+	            {
+	            	message = "Upload ảnh sản phẩm thành công.";
+	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/uploadphoto.jsp?id="+spid);
+					request.setAttribute("msg", message );
+					xxx.forward(request, response);
+	            }
+	            else
+	            {
+	            	//message = "Upload ảnh sản phẩm thành công.";
+	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/uploadphoto.jsp?id="+spid);
+					request.setAttribute("msg", message );
+					xxx.forward(request, response);
+	            }
+	        }
 		
-		PgProducts pr = new ProductDAO().getPgProductsByID(spid);
-		int lastorderpic = new ProductPictures().getLastOrderIndex(spid);
-		
-        if (!isMultipart) 
-        {
-        } 
-        else 
-        {
-            FileItemFactory factory = new DiskFileItemFactory();
-            ServletFileUpload upload = new ServletFileUpload(factory);
-            List items = null;
-            try 
-            {
-                items = upload.parseRequest(request);
-            } 
-            catch (FileUploadException e) 
-            {
-                 e.printStackTrace();
-            }
-            Iterator itr = items.iterator();
-          //applicationPath: C:\Users\Lonely\Documents\NetBeansProjects\Shop_Bonfire\build\web
-            String applicationPath = request.getServletContext().getRealPath("");
-          //File.separator: \ 
-            String basePath = applicationPath + File.separator + UPLOAD_DIR + File.separator;
-            if(checkFolderExist(basePath)==false)
-            {
-            	File f=new File(basePath);
-    			f.mkdir();
-            }
-            boolean ckk = true;
-            String message="";
-            while (itr.hasNext()) 
-            {
-                FileItem item = (FileItem) itr.next();
-                if (item.isFormField()) 
-                {
-                } 
-                else 
-                {
-                    try 
-                    {
-	                    String itemName = item.getName();
-	                    File savedFile = new File(basePath+itemName);
-	                    item.write(savedFile);
-	                    
-	                    lastorderpic= lastorderpic+1;
-	                    PgProductPictures ppic = new PgProductPictures(pr,"/images/"+itemName,lastorderpic);
-	                    new ProductPictures().insertPgProductPictures(ppic);
-                    } 
-                    catch (Exception e) 
-                    {
-                    	message = e.toString();
-                    	ckk=false;
-                    	break;
-                    }
-                }
-            }
-            
-            if(ckk)
-            {
-            	message = "Upload ảnh sản phẩm thành công.";
+			break;
+		case "delete":
+			String path = request.getParameter("path");
+			int did = Integer.parseInt(request.getParameter("did"));
+			try
+			{
+				PgProductPictures ppic = new ProductPictures().getPgProductPictures(did, path);
+				ppic.setPictureStatus(0);
+				new ProductPictures().updatePgProductPictures(ppic);
+				String message = "Xóa ảnh sản phẩm thành công.";
             	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/uploadphoto.jsp?id="+spid);
 				request.setAttribute("msg", message );
 				xxx.forward(request, response);
-            }
-            else
-            {
-            	//message = "Upload ảnh sản phẩm thành công.";
+			}
+			catch(Exception e)
+			{
+				String message = "Xóa ảnh sản phẩm không thành công."+e;
             	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/uploadphoto.jsp?id="+spid);
 				request.setAttribute("msg", message );
 				xxx.forward(request, response);
-            }
-        }
+			}
+			break;
+		default:
+				break;
+		}
 	}
 }
