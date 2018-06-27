@@ -25,6 +25,7 @@ import org.hibernate.Session;
 import DAO.OrderStatusDAO;
 import DAO.ProductDAO;
 import model.PgProductSales;
+import model.PgProducts;
 import service.UserAuthentication;
 
 /**
@@ -98,10 +99,16 @@ public class CheckoutAction extends HttpServlet {
             cart.setShipAddress(user.getAddress());
             cart.setShipPhone(user.getPhoneNumber());
             cart.setPgOrderDetailses(cartc.getPgOrderDetailses());
-            Session session = Hibernate.getSessionFactory().getCurrentSession();
+
+            Session session = Hibernate.getSessionFactory().openSession();
             session.beginTransaction();
             session.save(cart);
+            session.getTransaction().commit();
+            session.close();
+            session = Hibernate.getSessionFactory().openSession();
+            session.beginTransaction();
             for (PgOrderDetails ord : cart.getPgOrderDetailses()) {
+
                 ord.setPgOrders(cart);
                 ord.setUnitPrice(ord.getPgProducts().getUnitPrice());
                 for (PgProductSales sale : ord.getPgProducts().getPgProductSaleses()) {
@@ -117,12 +124,8 @@ public class CheckoutAction extends HttpServlet {
                 }
                 session.save(ord);
             }
-            for (PgOrderDetails ord : cart.getPgOrderDetailses()) {
-                ord.getPgProducts().setQuantity(ord.getPgProducts().getQuantity()-ord.getAmount());
-                session.update(ord.getPgProducts());
-                
-            }
             session.getTransaction().commit();
+            session.close();;
             httpSession.setAttribute("mycart", new Cart());
             response.getWriter().print("success");
         } else {
