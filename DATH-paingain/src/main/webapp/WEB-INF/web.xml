@@ -43,7 +43,7 @@
   <servlet-class>controler.ListModule</servlet-class>
  </servlet>
  <servlet>
-  <servlet-name>Home</servlet-name>
+  <servlet-name>Homes</servlet-name>
   <servlet-class>controler.Home</servlet-class>
  </servlet>
  <servlet>
@@ -84,8 +84,8 @@
   <url-pattern>/manager/chucnang</url-pattern>
  </servlet-mapping>
  <servlet-mapping>
-  <servlet-name>Home</servlet-name>
-  <url-pattern>/manager/home</url-pattern>
+  <servlet-name>Homes</servlet-name>
+  <url-pattern>/manager/homes</url-pattern>
  </servlet-mapping>
  <welcome-file-list>
   <welcome-file>index.jsp</welcome-file>

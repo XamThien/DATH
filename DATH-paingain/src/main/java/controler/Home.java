@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
+import DAO.CategoryDAO;
 import database.Hibernate;
 import model.PgLog;
 import model.PgOrderDetails;
@@ -62,11 +63,18 @@ public class Home extends HttpServlet{
         }
         int numOrder = orders != null ? orders.size() : 0;
         int numUser = users != null ? users.size() : 0;
-        session.close();
-        request.setAttribute("revenueday", revenueDay);
-        request.setAttribute("order", numOrder);
-        request.setAttribute("user", numUser);
-        request.getRequestDispatcher("/manager/danhmuc.jsp").forward(request, response);
+        try
+		{
+        	request.setAttribute("revenueday", revenueDay);
+            request.setAttribute("order", numOrder);
+            request.setAttribute("user", numUser);
+            request.getRequestDispatcher("/manager/index.jsp").forward(request, response);
+		}
+		catch (Exception e)
+		{
+			response.getWriter().print("Loi: "+ e.getMessage());
+		}
+        
         //response.getWriter().print(numOrder + "@" + numUser + " @ " + revenueDay);
         
     }

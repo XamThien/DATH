@@ -18,7 +18,7 @@
 	              <div class="menu_section">
 	                <h3>Chức năng:</h3>
 	                <ul class="nav side-menu">
-	                  <li><a href="/manager/home"><i class="fa fa-home"></i> Trang chủ </a></li>
+	                  <li><a href="/manager/homes"><i class="fa fa-home"></i> Trang chủ </a></li>
 	                 
 	                  <li><a><i class="fa fa-cube"></i>Quản lý sản phẩm <span class="fa fa-chevron-down"></span></a>
 	                    	<ul class="nav child_menu">
