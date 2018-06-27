@@ -42,6 +42,27 @@ public class ProductPictures {
 	        }
 	        return cl;
 	    }
+	public PgProductPictures getPgProductPicturesByIDxx(int id) {
+		PgProductPictures cl = null;
+	       try
+	       {
+	    	    Configuration configuration =  new Configuration().configure();
+	        	SessionFactory sessionFactory = configuration.buildSessionFactory();
+	        	Session session = sessionFactory.openSession();
+	        	
+	        	//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		        Transaction transaction = session.beginTransaction();
+		        String hql ="from PgProductPictures where PRODUCT_ID="+id+" and orderIndex=1";
+		        Query que = session.createQuery(hql);
+		        cl =  (PgProductPictures)que.list().get(0);
+		        transaction.commit();
+		        session.close();
+	       }
+	       catch  (HibernateException e) {
+	    	   e.printStackTrace();
+	        }
+	        return cl;
+	    }
 	public PgProductPictures getPgProductPictures(int id,String path) {
 		PgProductPictures cl = null;
 	       try
