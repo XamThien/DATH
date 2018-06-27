@@ -1,20 +1,26 @@
 package controler;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import DAO.LogDAO;
 import DAO.ModuleDAO;
 import DAO.RoleDAO;
 import DAO.RolePermissionDAO;
+import model.PgLog;
 import model.PgModules;
 import model.PgRolePermission;
 import model.PgRoles;
+import model.PgUsers;
 
 public class RoleAction extends HttpServlet{
 
@@ -41,8 +47,14 @@ public class RoleAction extends HttpServlet{
     	response.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 		String message = "";
+		HttpSession sesion = request.getSession();
+		PgUsers u = (PgUsers) sesion.getAttribute("login");
+		Date Ngay = new Date();
+    	SimpleDateFormat datefrmats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	String datestr = datefrmats.format(Ngay);
 		 try
 		 {
+			 Date now = datefrmats.parse(datestr);
 			 switch (action) {
 			 case "add":
 				 int module = Integer.parseInt(request.getParameter("module"));
@@ -79,6 +91,9 @@ public class RoleAction extends HttpServlet{
 						 if(new RolePermissionDAO().insertPgRolePermission(sup))
 						 {
 							 message = "Thêm thành công!";
+							 String ms = "Thêm phân quyền thao tác với chức năng "+mol.getModuleName()+" cho vai trò "+rol.getRoleName();
+							 PgLog log = new PgLog(u,now,ms,"");
+							 new LogDAO().insertPgLog(log);
 							 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/editrole.jsp?roleid="+role);
 							 request.setAttribute("msg", message);
 							 dispatcher.forward(request, response);						 
@@ -136,6 +151,9 @@ public class RoleAction extends HttpServlet{
 					 
 					 new RolePermissionDAO().updatePgRolePermission(sup);
 					 message = "Cập nhật thành công!";
+					 String ms = "Cập nhật phân quyền thao tác với chức năng "+mol.getModuleName()+" cho vai trò "+rol.getRoleName();
+					 PgLog log = new PgLog(u,now,ms,"");
+					 new LogDAO().insertPgLog(log);
 					 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/editrole.jsp?roleid="+rolee);
 					 request.setAttribute("msg", message);
 					 dispatcher.forward(request, response);						 

@@ -1,6 +1,8 @@
 package controler;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,9 +10,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import model.PgLog;
 import model.PgSuppliers;
+import model.PgUsers;
 import service.PGValidation;
+import DAO.LogDAO;
 import DAO.PgSuppliersDAO;
 
 public class SupplierController extends HttpServlet {
@@ -41,8 +47,14 @@ public class SupplierController extends HttpServlet {
     	response.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 		String message = "";
+		HttpSession sesion = request.getSession();
+		PgUsers u = (PgUsers) sesion.getAttribute("login");
+		Date Ngay = new Date();
+    	SimpleDateFormat datefrmats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	String datestr = datefrmats.format(Ngay);
 		 try
 		 {
+			 Date now = datefrmats.parse(datestr);
 			 switch (action) {
 			 case "add":
 			 //
@@ -81,6 +93,9 @@ public class SupplierController extends HttpServlet {
 					 if(new PgSuppliersDAO().insert(sup))
 					 {
 						 message = "Thành công!";
+						 String ms = "Thêm nhà cung cấp "+company;
+						 PgLog log = new PgLog(u,now,ms,"");
+						 new LogDAO().insertPgLog(log);
 						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/suppliers.jsp");
 						 request.setAttribute("msg", message);
 						 dispatcher.forward(request, response);						 
@@ -132,6 +147,9 @@ public class SupplierController extends HttpServlet {
 							PgSuppliers supE = new PgSuppliers(ma,companyE,contactE,addE,rgE,phoneE,emailE,statusE);
 						    new PgSuppliersDAO().edit(supE);
 						    message = "Cập nhật thành công!";
+						    String ms = "Cập nhật thông tin nhà cung cấp "+companyE+ " có mã là "+ma;
+							 PgLog log = new PgLog(u,now,ms,"");
+							 new LogDAO().insertPgLog(log);
 							RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/suppliers.jsp");
 							request.setAttribute("msg", message );
 							dispatcher.forward(request, response);

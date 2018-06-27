@@ -1,6 +1,7 @@
 package controler;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,10 +28,13 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import DAO.LogDAO;
 import DAO.ProductDAO;
 import DAO.ProductPictures;
+import model.PgLog;
 import model.PgProductPictures;
 import model.PgProducts;
+import model.PgUsers;
 
 /**
  * Servlet implementation class UploadPhoto
@@ -66,6 +71,11 @@ public class UploadPhoto extends HttpServlet {
 		String action = request.getParameter("action");
 		HttpSession session = request.getSession();
 		int spid = (int)session.getAttribute("spidx");
+		HttpSession sesion = request.getSession();
+		PgUsers u = (PgUsers) sesion.getAttribute("login");
+		Date Ngay = new Date();
+    	SimpleDateFormat datefrmats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	String datestr = datefrmats.format(Ngay);
 		switch(action)
 		{
 		case "add":
@@ -86,6 +96,7 @@ public class UploadPhoto extends HttpServlet {
 	            try 
 	            {
 	                items = upload.parseRequest(request);
+	                
 	            } 
 	            catch (FileUploadException e) 
 	            {
@@ -133,6 +144,15 @@ public class UploadPhoto extends HttpServlet {
 	            if(ckk)
 	            {
 	            	message = "Upload ảnh sản phẩm thành công.";
+	            	try {
+	            		Date now = datefrmats.parse(datestr);
+	            		String ms = "Thêm ảnh cho sản phẩm "+pr.getProductName();
+						 PgLog log = new PgLog(u,now,ms,"");
+						 new LogDAO().insertPgLog(log);
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+	            	
 	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/uploadphoto.jsp?id="+spid);
 					request.setAttribute("msg", message );
 					xxx.forward(request, response);
@@ -152,9 +172,15 @@ public class UploadPhoto extends HttpServlet {
 			int did = Integer.parseInt(request.getParameter("did"));
 			try
 			{
+				Date now = datefrmats.parse(datestr);
+				
 				PgProductPictures ppic = new ProductPictures().getPgProductPictures(did, path);
 				ppic.setPictureStatus(0);
 				new ProductPictures().updatePgProductPictures(ppic);
+				PgProducts s = ppic.getPgProducts();
+				String ms = "Xóa ảnh của sản phẩm "+s.getProductName()+" có mã là "+ppic.getPictureSetId();
+				 PgLog log = new PgLog(u,now,ms,"");
+				 new LogDAO().insertPgLog(log);
 				String message = "Xóa ảnh sản phẩm thành công.";
             	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/uploadphoto.jsp?id="+spid);
 				request.setAttribute("msg", message );
