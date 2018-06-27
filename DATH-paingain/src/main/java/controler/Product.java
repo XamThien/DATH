@@ -230,6 +230,7 @@ public class Product extends HttpServlet {
 					 new LogDAO().insertPgLog(log);
 	            	PgProducts xxxx = new PgProducts(new ProductDAO().getLastProduct());
 	            	PgProductPictures prpic = new PgProductPictures(xxxx,request.getContextPath()+uploadFile(request,"photo"),1); 
+	            	prpic.setPictureType("1");
 	            	new ProductPictures().insertPgProductPictures(prpic);
 	            	message = "Thêm sản phẩm thành công.";
 	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
