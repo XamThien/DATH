@@ -21,15 +21,10 @@
 				
 				<%@include file="/template/topnav.jsp"%>
 				<%
-<<<<<<< HEAD
 				long doanhthu = (long) request.getAttribute("revenueday");
 				int orderc = (int) request.getAttribute("order");
 				int userrc = (int) request.getAttribute("user");
-=======
-				//int doanhthu = (int) request.getAttribute("revenueday");
-				//int orderc = (int) request.getAttribute("order");
-				//int userrc = (int) request.getAttribute("user");
->>>>>>> d411237a8bc81ef060f29ceb6fc8b6a3e79ced0f
+
 				 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 				try {
 		            Date date = request.getParameter("filter") != null ? formatter.parse(request.getParameter("filter"))
@@ -46,7 +41,7 @@
 						  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
 							  <div class="icon"><i class="fa fa-money" style="color: blue;"></i></div>
-							  <div class="count">179</div>
+							  <div class="count"><%=doanhthu %></div>
 							  <h3>Doanh thu trong ngày</h3>
 							  <p>.</p>
 							</div>
@@ -54,7 +49,7 @@
 						  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
 							  <div class="icon"><i class="fa fa-credit-card" style="color: blue;"></i></div>
-							  <div class="count">179</div>
+							  <div class="count"><%=orderc %></div>
 							  <h3>Đơn đặt hàng trong ngày</h3>
 							  <p>.</p>
 							</div>
@@ -62,7 +57,7 @@
 						  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
 							<div class="tile-stats">
 							  <div class="icon"><i class="fa fa-slideshare" style="color: blue;"></i></div>
-							  <div class="count">179</div>
+							  <div class="count"><%=userrc %></div>
 							  <h3>Khách mới trong ngày</h3>
 							  <p>.</p>
 							</div>
@@ -86,84 +81,45 @@
 										
 										<div class="x_content" >
 										  <div class="dashboard-widget-content">
-
+						
 											<ul class="list-unstyled timeline widget">
-											
+												<%
+													for (PgLog log : logs) {
+										                long logc = new Date().getTime() - log.getCreatedTime().getTime();
+										                long diffMinutes = logc / (60 * 1000) % 60;
+										                long diffHours = logc / (60 * 60 * 1000) % 24;
+										                long diffDays = logc / (24 * 60 * 60 * 1000);
+										                String str = diffDays != 0 ? diffDays + " day " : "";
+										                str += diffHours != 0 ? diffHours + " hours " : "";
+										                str += diffMinutes != 0 ? diffMinutes + " minutes" : "just now";
+										                /* content += "<li><b>- " + log.getPgUsers().getUserId() + " </b> " + log.getDescription()
+										                        + " " + log.getLogValue() + " "
+										                        + "<p style='font-size: 11px;'><i>" + str + "</i></p></li>"; */
+										            
+													%>
 											  <li>
 												<div class="block">
 												  <div class="block_content">
 													<h2 class="title">
-																	  <a>Nhân viên xxx</a>
+																	  <a><%=log.getPgUsers().getUserId() %></a>
 																  </h2>
 													<div class="byline">
-													  <span>13 hours ago</span>
+													  <span><%=str %></span>
 													</div>
-													<p class="excerpt"> Gạ gẫm admin đi nghỉ ahihi
+													<p class="excerpt"> <%=log.getDescription() + " " + log.getLogValue() + " " %>
 													</p>
 												  </div>
 												</div>
 											  </li>
 											
-												<li>
-												<div class="block">
-												  <div class="block_content">
-													<h2 class="title">
-																	  <a>Nhân viên xxx</a>
-																  </h2>
-													<div class="byline">
-													  <span>13 hours ago</span>
-													</div>
-													<p class="excerpt"> Gạ gẫm admin đi nghỉ ahihi
-													</p>
-												  </div>
-												</div>
-											  </li>
-											  
+											  <%} %>
 											</ul>
 										  </div>
 										</div>
 									  </div>
 									</div>
 <!--===========================================================================-->	
-									<div class="col-md-3 col-sm-12 col-xs-12" style="overflow: auto">
-									  <div>
-										<div class="x_title">
-										  <h2>Hoạt động</h2>
-										  
-										  <div class="clearfix"></div>
-										</div>
-										<ul class="list-unstyled top_profiles scroll-view">
-										<%
-										for (PgLog log : logs) {
-							                long logc = new Date().getTime() - log.getCreatedTime().getTime();
-							                long diffMinutes = logc / (60 * 1000) % 60;
-							                long diffHours = logc / (60 * 60 * 1000) % 24;
-							                long diffDays = logc / (24 * 60 * 60 * 1000);
-							                String str = diffDays != 0 ? diffDays + " day " : "";
-							                str += diffHours != 0 ? diffHours + " hours " : "";
-							                str += diffMinutes != 0 ? diffMinutes + " minutes" : "just now";
-							                /* content += "<li><b>- " + log.getPgUsers().getUserId() + " </b> " + log.getDescription()
-							                        + " " + log.getLogValue() + " "
-							                        + "<p style='font-size: 11px;'><i>" + str + "</i></p></li>"; */
-							            
-										%>
-										  <li class="media event">
-											<a class="pull-left border-aero profile_thumb">
-											  <i class="fa fa-user aero"></i>
-											</a>
-											<div class="media-body">
-											  <a class="title" href="#"><%=log.getPgUsers().getUserId() %></a>
-											  <p><strong><%=log.getDescription()
-								                        + " " + log.getLogValue() + " " %></strong></p>
-											  <p> <small><%=str %></small>
-											  </p>
-											</div>
-										  </li>
-										  <%} %>
-										  
-										</ul>
-									  </div>
-									</div>
+								
 <!--===========================================================================-->	
 								  </div>
 								</div>
