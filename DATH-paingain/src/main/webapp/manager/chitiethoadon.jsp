@@ -4,6 +4,17 @@
 <%@ page import="DAO.*" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.*" %>
+<%
+	HttpSession sesion = request.getSession();
+	PgUsers u = (PgUsers) sesion.getAttribute("login");
+	if(u.getPgRoles().getRoleId() != 1 && u.getPgRoles().getRoleId() != 2){
+		response.sendRedirect("/site/layouts/accessdenied.jsp");
+	}
+	PgRolePermission rs = new RolePermissionDAO().getPgRolePermissionByRoleIDModuleID(u.getPgRoles().getRoleId(), 5);
+	if(rs.getPerStatus()==1){
+		if(rs.getIsRead()== true){
+
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -114,7 +125,9 @@
 				                            	<option value="0">Hủy</option>
 				                            </select>
 											<div class="clearfix"></div>
+											<%if(rs.getIsUpdate()==true){ %>
 											<button type="submit" style="margin-top: 7px;" class="btn btn-primary" <%=(stt==0 || stt==3)? "disabled='disabled'":"" %>>Cập nhật</button>
+					        				<%} %>
 					        				</div>
 					        			</form>
 					        			
@@ -381,3 +394,4 @@
     	
 	</body>
 </html>
+<%}}%>

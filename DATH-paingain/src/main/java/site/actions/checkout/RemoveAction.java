@@ -85,18 +85,14 @@ public class RemoveAction extends HttpServlet {
                     .add(Restrictions.and(Restrictions.eq("orderId", Integer.parseInt(id)),
                             Restrictions.eq("pgUsers", auth.getUsers())))
                     .uniqueResult();
+            session.getTransaction().commit();
+            session =Hibernate.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
             if (order.getPgOrderStatus().getOrderStatusKey() == 1) {
                 PgOrderStatus status = new PgOrderStatus();
                 status.setOrderStatusKey(0);
             	order.setPgOrderStatus(status);
-                
-                
                 session.update(order);
-                for(PgOrderDetails ord : order.getPgOrderDetailses()){
-                	ord.getPgProducts().setQuantity(ord.getPgProducts().getQuantity()+ord.getAmount());
-                	//new ProductDAO().updatePgProduct(ord.getPgProducts());
-                    session.update(ord.getPgProducts());
-                }
                 response.getWriter().print("success");
             } else {
                 response.getWriter().print("Don hang dang trong giai doan ban giao. Khong the huy");

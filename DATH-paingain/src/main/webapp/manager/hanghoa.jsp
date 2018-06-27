@@ -3,6 +3,17 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%
+	HttpSession sesion = request.getSession();
+	PgUsers u = (PgUsers) sesion.getAttribute("login");
+	if(u.getPgRoles().getRoleId() != 1 && u.getPgRoles().getRoleId() != 2){
+		response.sendRedirect("/site/layouts/accessdenied.jsp");
+	}
+	PgRolePermission rs = new RolePermissionDAO().getPgRolePermissionByRoleIDModuleID(u.getPgRoles().getRoleId(), 3);
+	if(rs.getPerStatus()==1){
+		if(rs.getIsRead()== true){
+
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -28,8 +39,9 @@
 	              	<h2><strong>Quản lý sản phẩm</strong></h2>
 	              	<span style="color:red"><i>${msg}</i></span>
 	              	<hr/>
-	                
+	                <% if(rs.getIsInsert()== true){ %>
 	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới</button> </a>
+	               <%} %>
 	                <!-- show table-->
 	                <div class="x_panel">
 		                  <div class="x_title">
@@ -83,8 +95,10 @@
 				                                }
 				                                %>
 											    <td>
+											    <%if(rs.getIsUpdate()== true){ %>
 											    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=pr.getProductId() %>,'<%=new ProductPictures().getPgProductPicturesByID(pr.getProductId()).getPath() %>','<%=pr.getProductName() %>',<%=pr.getPgCategories().getCategoryId() %>,<%=pr.getPgSuppliers().getSupplierId() %>,<%=pr.getQuantity() %>,<%=pr.getUnitPrice() %>,<%=pr.getUnitOrder() %>,'<%=pr.getIsHot() %>','<%=pr.getIsNew() %>','<%=pr.getDescription() %>',<%=pr.getProductStatus() %>,'<%=pr.getCreateTime() %>')" > <i class="fa fa-edit"></i> Sửa</a>
 											    	<a href="/manager/uploadphoto.jsp?id=<%=pr.getProductId() %>"  class="btn btn-link"  > <i class="fa fa-file-image-o"></i> Upload ảnh</a>
+										    	<%} %>
 										    	</td>
 											  </tr>
 											  <%dem++;} %>
@@ -476,3 +490,4 @@
     	
 	</body>
 </html>
+<%}}%>

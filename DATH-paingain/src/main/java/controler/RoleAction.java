@@ -48,8 +48,8 @@ public class RoleAction extends HttpServlet{
 				 int module = Integer.parseInt(request.getParameter("module"));
 				 
 				 int role = Integer.parseInt(request.getParameter("roleid"));
-				 ArrayList<PgRolePermission> a = new ArrayList<PgRolePermission>() ;
-				 ArrayList<PgRolePermission> per = (ArrayList<PgRolePermission>) new RolePermissionDAO().getPgRolePermissionByRoleIDModuleID(1, 2);
+				 PgRolePermission a = new PgRolePermission() ;
+				 PgRolePermission per = new RolePermissionDAO().getPgRolePermissionByRoleIDModuleID(1, 2);
 				
 				 if(per.equals(a) ){
 					 int status =1;

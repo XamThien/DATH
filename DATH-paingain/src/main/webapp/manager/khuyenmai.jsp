@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ page import="model.PgCategories" %>
+<%@ page import="model.*" %>
 <%@ page import="model.PgProducts" %>
-<%@ page import="DAO.CategoryDAO" %>
+<%@ page import="DAO.*" %>
 <%@ page import="DAO.ProductDAO" %>
 <%@ page import="DAO.ProductSalesDAO" %>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
@@ -15,6 +15,10 @@
 	if(u.getPgRoles().getRoleId()!=1){
 		response.sendRedirect("/site/layouts/accessdenied.jsp");
 	}
+	PgRolePermission rs = new RolePermissionDAO().getPgRolePermissionByRoleIDModuleID(u.getPgRoles().getRoleId(), 6);
+	if(rs.getPerStatus()==1){
+		if(rs.getIsInsert()== true){
+
 %>
 <!DOCTYPE html>
 <html>
@@ -187,6 +191,6 @@
 			
 		      </div>
 		    </div>
-    	</div>
 	</body>
 </html>
+<%}}%>

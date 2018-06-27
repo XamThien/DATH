@@ -27,7 +27,16 @@ CREATE TABLE PG_MODULES(
 	PARENT INT,
     MODULE_STATUS int default 1
 );
-	INSERT INTO PG_MODULES(MODULE_NAME,PARENT) VALUE ('Danh mục Sản phẩm',0);
+	INSERT INTO PG_MODULES(MODULE_NAME,PARENT) VALUE ('Quản lý sản phẩm',0),
+													('Quản lý danh mục',1),
+													('Quản lý hàng hóa',1),
+													('Quản lý nhà cung cấp',1),
+													('Quản lý đơn hàng',0),
+													('Quản lý khuyến mãi',0),
+													('Quản lý tài khoản',0),
+													('Quản lý phân quyền',0),
+													('Phân quyền',8),
+													('Quản lý danh mục chức năng',8);
 CREATE TABLE PG_USERS(
 	RECORD_ID INT auto_increment PRIMARY KEY,
 	USER_ID varchar(50) unique NOT NULL,
@@ -141,7 +150,8 @@ CREATE TABLE PG_ROLE_PERMISSION(
 );
 
 INSERT INTO PG_ROLE_PERMISSION(ROLE_ID, MODULE_ID, IS_INSERT,IS_UPDATE,IS_READ) 
-VALUES (1,1,1,1,1);
+VALUES (1,1,1,1,1),(1,2,1,1,1),(1,3,1,1,1),(1,4,1,1,1),(1,5,1,1,1),(1,6,1,1,1),(1,7,1,1,1),(1,8,1,1,1),(1,9,1,1,1),(1,10,1,1,1)
+	,(2,2,1,1,1),(2,3,1,1,1),(2,4,1,1,1),(2,5,1,1,1),(2,6,1,1,1);
 
 CREATE TABLE PG_ORDER_STATUS(
 	
@@ -187,5 +197,26 @@ CREATE TABLE PG_ORDER_DETAILS(
 INSERT INTO PG_ORDER_DETAILS(ORDER_ID, PRODUCT_ID,AMOUNT,UNIT_PRICE,UNIT_SALE) 
 VALUES (2,1,2,75000,15000),(3,1,2,75000,15000);
 
-
-
+  DELIMITER $$
+CREATE TRIGGER after_insert_order_detail after insert ON pg_order_details
+FOR EACH ROW
+BEGIN
+	update pg_products set pg_products.QUANTITY = pg_products.QUANTITY - New.AMOUNT where pg_products.PRODUCT_ID = NEW.PRODUCT_ID ;
+    
+ END$$
+ DELIMITER ; 
+ 
+   DELIMITER $$
+CREATE TRIGGER after_update_order after Update ON pg_orders
+FOR EACH ROW
+BEGIN
+	if((new.ORDER_STATUS_KEY =0)) then
+		update pg_products,pg_order_details set pg_products.QUANTITY = pg_products.QUANTITY + pg_order_details.AMOUNT where pg_products.PRODUCT_ID = pg_order_details.PRODUCT_ID and pg_order_details.ORDER_ID = New.ORDER_ID;
+    end if;
+END$$
+ DELIMITER ;
+ 
+INSERT INTO PG_ORDER_DETAILS(ORDER_ID, PRODUCT_ID,AMOUNT,UNIT_PRICE,UNIT_SALE) 
+VALUES (1,1,2,75000,15000);
+update pg_orders set pg_orders.ORDER_STATUS_KEY=0 where pg_orders.ORDER_ID=1;
+select * from pg_products

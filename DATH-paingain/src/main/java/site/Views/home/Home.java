@@ -53,12 +53,10 @@ public class Home extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         List productList = new ProductDAO().getProductforHome();
-        Hibernate.getSessionFactory().getCurrentSession().close();
         request.setAttribute("pList", productList);
         request.setAttribute("title", "Home | E-Shopper");
         request.setAttribute("cCategory", "HOT");
         List categoriesList = new CategoryDAO().getCategories();
-        Hibernate.getSessionFactory().getCurrentSession().close();
         request.setAttribute("categories", categoriesList);
         request.getRequestDispatcher("site/index.jsp").forward(request, response);
     }

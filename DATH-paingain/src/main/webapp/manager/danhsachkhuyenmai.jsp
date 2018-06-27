@@ -4,6 +4,17 @@
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%
+	HttpSession sesion = request.getSession();
+	PgUsers u = (PgUsers) sesion.getAttribute("login");
+	if(u.getPgRoles().getRoleId() != 1 && u.getPgRoles().getRoleId() != 2){
+		response.sendRedirect("/site/layouts/accessdenied.jsp");
+	}
+	PgRolePermission rs = new RolePermissionDAO().getPgRolePermissionByRoleIDModuleID(u.getPgRoles().getRoleId(), 6);
+	if(rs.getPerStatus()==1){
+		if(rs.getIsRead()== true){
+
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -29,8 +40,9 @@
 	              	<h2><strong>Dừng khuyến mại</strong></h2>
 	              	<span style="color:red"><i>${msg}</i></span>
 	              	<hr/>
-	                
+	                <% if(rs.getIsInsert()== true){ %>
 	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới</button> </a>
+	               <%} %>
 	                <!-- show table-->
 	                <div class="x_panel">
 		                  <div class="x_title">
@@ -77,16 +89,16 @@
 											    <td><%=pr.getStartDate() %></td>
 											    <td><%=pr.getEndDate() %></td>
 											    <td><%=pr.getSaleValue() %></td>
-											    
-											    <% if (pr.getSalesStatus()==1) {
-				                                        out.print("<td>Active</td>");
+											    <% if(pr.getSalesStatus()==1){
+											    	out.print("<td>Active</td>");
 				                                    } else {
 				                                        out.print("<td>InActive</td>");
-				                                }
+				                                	}
 				                                %>
 											    <td>
+											    <%if(rs.getIsUpdate()== true){ %>
 											    	<a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-link"  onclick="pass_del(<%=pr.getSaleId()%>);"><%=(pr.getSalesStatus()==1)?"Inactive":"Active" %></a>
-										    		
+										    		<%} %>
 											    </td>
 											  </tr>
 											  <%dem++;} %>
@@ -154,3 +166,4 @@
     	
 	</body>
 </html>
+<%}}%>
