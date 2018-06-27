@@ -3,8 +3,19 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page import="java.util.List" %>
 <%@ page import="model.PgSuppliers" %>
-<%@ page import="DAO.PgSuppliersDAO" %>
-<%@ page import="model.PgUsers" %>
+<%@ page import="DAO.*" %>
+<%@ page import="model.*" %>
+<%
+	HttpSession sesion = request.getSession();
+	PgUsers u = (PgUsers) sesion.getAttribute("login");
+	if(u.getPgRoles().getRoleId() != 1 && u.getPgRoles().getRoleId() != 2){
+		response.sendRedirect("/site/layouts/accessdenied.jsp");
+	}
+	PgRolePermission rs = new RolePermissionDAO().getPgRolePermissionByRoleIDModuleID(u.getPgRoles().getRoleId(), 4);
+	if(rs.getPerStatus()==1){
+		if(rs.getIsRead()== true){
+
+%>
 <title>Quản lý nhà cung cấp</title>
 		<%@include file="/template/header.jsp"%>
 			<div class="nav-md">
@@ -50,7 +61,10 @@
 										  		<th>Số điện thoại</th>
 										  		<th>Email</th>
 										  		<th>Trạng thái</th>
-										  		<th><a href="#" style="color: white;" data-toggle="modal" data-target="#modal-add"  > <i class="fa fa-plus" ></i> Thêm mới</a></th> 									  		
+										  		<th>
+										  		<%if(rs.getIsInsert()== true){ %>
+										  		<a href="#" style="color: white;" data-toggle="modal" data-target="#modal-add"  > <i class="fa fa-plus" ></i> Thêm mới</a></th> 									  		
+										  		<%} %>
 										  	</tr>
 										  </thead>
 										   <tbody>		 
@@ -89,7 +103,9 @@
 										    	<% } %>
 										    
 										    <td>
+										    <%if(rs.getIsUpdate()== true){ %>
 										    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=sup.getSupplierId()%>,'<%=sup.getCompanyName()%>','<%=sup.getContactName()%>','<%=sup.getAddress()%>','<%=sup.getRegion()%>','<%=sup.getPhone()%>','<%=sup.getEmail()%>',<%=sup.getSupplierStatus()%>)" > <i class="fa fa-edit"></i> Sửa</a>
+										    	<%} %>
 										    	</td>
 										  
 										  </tr>
@@ -415,4 +431,4 @@
 			
 		      </div>
 		    </div>
-
+<%}} %>

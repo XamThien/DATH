@@ -12,6 +12,8 @@
 	if(u.getPgRoles().getRoleId() != 1 && u.getPgRoles().getRoleId() != 2){
 		response.sendRedirect("/site/layouts/accessdenied.jsp");
 	}
+	PgRolePermission role = new RolePermissionDAO().getPgRolePermissionByRoleIDModuleID(u.getPgRoles().getRoleId(), 5);
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -22,6 +24,8 @@
 		if(stt==2) {title = "đang giao";}
 		if(stt==3) {title = "hoàn thành";}
 		if(stt==0) {title = "hủy";}
+		
+			
 	%>
 	<head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -57,6 +61,11 @@
 		                  <div class="x_content">
 		                  	<!-- search-->
 					        <!-- ========================== -->
+					        <% 
+					        if(role.getPerStatus()==1){
+					        if(role.getIsRead()== true){
+					        	%>
+					      
 					        <div class="container">
 				            	<div class="row">
 					                <div class="col-sm-12">
@@ -91,8 +100,11 @@
 										    <td><%=or.getPgUsers().getFirstName() %> <%=or.getPgUsers().getLastName() %></td>
 										    <td><%=or.getShipPhone() %></td>
 											<td>
+											<% if(role.getIsUpdate()== true){
+												%>
+											
 										    	<a href="/manager/chitiethoadon.jsp?stt=<%=stt %>&id=<%=or.getOrderId()%>"  class="btn btn-link">  Chi tiết</a>
-										    	
+										    <%} %>
 										    	
 										    </td>
 										  </tr>
@@ -114,6 +126,8 @@
 
 			        		</div>
 					        <!-- ========================== -->
+					        <%}
+					        }%>
 					      </div>
 	             </div>
 				 </div>
@@ -130,6 +144,7 @@
 			
 		      </div>
 		    </div>
-    	</div>
+    	
 	</body>
+
 </html>

@@ -3,6 +3,17 @@
 <%@ page import="model.*" %>
 <%@ page import="DAO.*" %>
 <%@ page import="java.util.ArrayList" %>
+<%
+	HttpSession sesion = request.getSession();
+	PgUsers u = (PgUsers) sesion.getAttribute("login");
+	if(u.getPgRoles().getRoleId() != 1 && u.getPgRoles().getRoleId() != 2){
+		response.sendRedirect("/site/layouts/accessdenied.jsp");
+	}
+	PgRolePermission rs = new RolePermissionDAO().getPgRolePermissionByRoleIDModuleID(u.getPgRoles().getRoleId(), 10);
+	if(rs.getPerStatus()==1){
+		if(rs.getIsRead()== true){
+
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -27,8 +38,9 @@
 	              	<h2><strong>Quản lý chức năng</strong></h2>
 					<span style="color:red"><i>${msg }</i></span>
 	              	<hr/>
-	               
+	               <% if(rs.getIsInsert()== true){ %>
 	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới</button> </a>
+	                <%} %>
 	                <!-- show table-->
 	                <div class="x_panel">
 		                  <div class="x_title">
@@ -81,9 +93,10 @@
 			                                        out.print("<td>InActive</td>");
 			                                }%>
 											<td>
+											<% if(rs.getIsUpdate()== true){ %>
 										    	<a href="#" onclick="pass_update(<%=mol.getModuleId() %>,'<%=mol.getModuleName() %>','<%=mol.getParent() %>',<%=mol.getModuleStatus() %>)" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa</a>
 										    	<%-- <a href="#" onclick="pass_del(<%=catg.getCategoryId() %>)" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" > <i class="fa fa-trash-o" ></i> Xóa</a> --%>
-										    	
+										    	<%} %>
 										    </td>
 										  </tr>
 										  
@@ -304,3 +317,4 @@
 		    </div>
 	</body>
 </html>
+<%}}%>

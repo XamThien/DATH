@@ -3,6 +3,17 @@
 <%@ page import="model.*" %>
 <%@ page import="DAO.*" %>
 <%@ page import="java.util.ArrayList" %>
+<%
+	HttpSession sesion = request.getSession();
+	PgUsers u = (PgUsers) sesion.getAttribute("login");
+	if(u.getPgRoles().getRoleId() != 1 && u.getPgRoles().getRoleId() != 2){
+		response.sendRedirect("/site/layouts/accessdenied.jsp");
+	}
+	PgRolePermission rs = new RolePermissionDAO().getPgRolePermissionByRoleIDModuleID(u.getPgRoles().getRoleId(), 2);
+	if(rs.getPerStatus()==1){
+		if(rs.getIsRead()== true){
+
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -27,8 +38,9 @@
 	              	<h2><strong>Quản lý danh mục sản phẩm</strong></h2>
 					<span style="color:red"><i>${msg }</i></span>
 	              	<hr/>
-	               
+	               <% if(rs.getIsInsert()== true){ %>
 	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới</button> </a>
+	                <%} %>
 	                <!-- show table-->
 	                <div class="x_panel">
 		                  <div class="x_title">
@@ -77,9 +89,10 @@
 			                                }%>
 											<td><a href="/manager/sanpham.jsp?id=<%=catg.getCategoryId()%>" class="btn btn-link">Danh sách sản phẩm</a></td>
 										    <td>
+										    <%if(rs.getIsUpdate()== true){ %>
 										    	<a href="#" onclick="pass_update(<%=catg.getCategoryId() %>,'<%=catg.getCategoryName() %>','<%=catg.getDescription() %>',<%=catg.getSortIndex() %>,<%=catg.getCategoryStatus() %>)" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa</a>
 										    	<%-- <a href="#" onclick="pass_del(<%=catg.getCategoryId() %>)" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" > <i class="fa fa-trash-o" ></i> Xóa</a> --%>
-										    	
+										    <%} %>	
 										    </td>
 										  </tr>
 										  
@@ -300,6 +313,7 @@
 			
 		      </div>
 		    </div>
-    	</div>
+    	
 	</body>
 </html>
+<%}}%>

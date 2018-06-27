@@ -3,6 +3,17 @@
 <%@ page import="model.*" %>
 <%@ page import="DAO.*" %>
 <%@ page import="java.util.ArrayList" %>
+<%
+	HttpSession sesion = request.getSession();
+	PgUsers u = (PgUsers) sesion.getAttribute("login");
+	if(u.getPgRoles().getRoleId() != 1){
+		response.sendRedirect("/site/layouts/accessdenied.jsp");
+	}
+	PgRolePermission rs = new RolePermissionDAO().getPgRolePermissionByRoleIDModuleID(u.getPgRoles().getRoleId(), 9);
+	if(rs.getPerStatus()==1){
+		if(rs.getIsRead()== true){
+		
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -30,8 +41,17 @@
 	              	<h2><strong>Chình sửa vai trò trên trang</strong></h2>
 	              	<hr/>
 	              	<span style="color:red"><i>${msg}</i></span>
+	              	<% 
+	              	PgRolePermission rl = new RolePermissionDAO().getPgRolePermissionByRoleIDModuleID(u.getPgRoles().getRoleId(), 10);
+	              	if(rl.getPerStatus()==1){
+	              		if(rl.getIsInsert()== true){
+	              	
+	              	%>
 	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới chức năng</button> </a>
+	              <%}} %>
+	               <% if (rs.getIsInsert()== true){ %>
 	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add2"><button><i class="fa fa-plus" ></i> Thêm mới thao tác</button> </a>
+	                <%} %>
 	                <!-- show table-->
 	                <div class="x_panel">
 		                  <div class="x_title">
@@ -95,8 +115,10 @@
 			                                    } else {
 			                                        out.print("<td>InActive</td>");
 			                                }%>
-			                                <td><a href="#" onclick="pass_update(<%=per.getPermissionId()%>,'<%=per.getPgModules().getModuleName() %>',<%=per.getIsRead() %>,<%=per.getIsInsert() %>,<%=per.getIsUpdate() %>,<%=per.getPerStatus() %>,'<%=per.getDescription() %>')" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa thao tác</a>
-			                               
+			                                <td>
+			                                <% if(rs.getIsUpdate()== true){ %>
+			                                <a href="#" onclick="pass_update(<%=per.getPermissionId()%>,'<%=per.getPgModules().getModuleName() %>',<%=per.getIsRead() %>,<%=per.getIsInsert() %>,<%=per.getIsUpdate() %>,<%=per.getPerStatus() %>,'<%=per.getDescription() %>')" data-toggle="modal" data-target="#modal-edit" class="btn btn-link"> <i class="fa fa-edit"></i> Sửa thao tác</a>
+			                               <%} %>
 			                                </td>
 										  </tr>
 										  <%
@@ -220,7 +242,7 @@
 				                   <label >Thao tác:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                        	<input type="checkbox" id="read" name="read"> Xem chi tiết <br>	
+				                        	<input type="checkbox" id="read" name="read" onblur="adel_read()"> Xem chi tiết <br>	
 				                        	<input type="checkbox" id="insert" name="insert" onblur="read_add()"> Thêm mới	<br>
 				                        	<input type="checkbox" id="update" name="update" onblur="read_add()"> Cập nhật	<br>
 				                        </div>
@@ -276,7 +298,7 @@
 				                   <label >Thao tác:</label>
 				                    <div class="form-group" >
 				                        <div class="form-group" >
-				                        	<input type="checkbox" id="eread" name="eread"> Xem chi tiết <br>	
+				                        	<input type="checkbox" id="eread" name="eread" onblur="del_read()"> Xem chi tiết <br>	
 				                        	<input type="checkbox" id="einsert" name="einsert" onblur="read_edit()"> Thêm mới	<br>
 				                        	<input type="checkbox" id="eupdate" name="eupdate" onblur="read_edit()"> Cập nhật	<br>
 				                        </div>
@@ -362,6 +384,18 @@
 			    		document.getElementById("read").checked = true;
 			    	}
 			    }
+			    function del_read(){
+			    	if((document.getElementById("eread").checked == false)){
+			    		document.getElementById("einsert").checked = false;
+			    		document.getElementById("eupdate").checked = false;
+			    	}
+			    }
+			    function adel_read(){
+			    	if((document.getElementById("read").checked == false)){
+			    		document.getElementById("insert").checked = false;
+			    		document.getElementById("update").checked = false;
+			    	}
+			    }
 			    
 			</script>
 			    <%@include file="/template/footer.jsp"%>
@@ -371,3 +405,4 @@
 		    </div>
 	</body>
 </html>
+<%}} %>

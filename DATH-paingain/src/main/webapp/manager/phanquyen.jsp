@@ -12,6 +12,9 @@
 	if(u.getPgRoles().getRoleId()!=1){
 		response.sendRedirect("/site/layouts/accessdenied.jsp");
 	}
+	PgRolePermission rs = new RolePermissionDAO().getPgRolePermissionByRoleIDModuleID(u.getPgRoles().getRoleId(), 9);
+	if(rs.getPerStatus()==1){
+		if(rs.getIsRead()== true){
 %>
 <!DOCTYPE html>
 <html>
@@ -37,7 +40,9 @@
 	              	<h2><strong>Vai trò trên trang</strong></h2>
 	              	<hr/>
 	               <span style="color:red"><i>${msg}</i></span> 
+	               <%if(rs.getIsInsert()== true){ %>
 	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới</button> </a>
+	                <%} %>
 	                <!-- show table-->
 	                <div class="x_panel">
 		                  <div class="x_title">
@@ -84,8 +89,11 @@
 										    %>
 										    
 										    <td>
+										    
 										    	<a href="chitietphanquyen.jsp?roleid=<%=role.getRoleId() %>" class="btn btn-link"> <i class="fa fa-eye" ></i> Chi tiết</a>
+										    	<%if(rs.getIsUpdate()== true){ %>
 										    	<a href="editrole.jsp?roleid=<%=role.getRoleId() %>" class="btn btn-link" > <i class="fa fa-edit"></i> Sửa</a>
+										    <%} %>
 										    </td>
 										  </tr>
 										  <%
@@ -195,6 +203,6 @@
 			
 		      </div>
 		    </div>
-    	</div>
 	</body>
 </html>
+<%}}%>

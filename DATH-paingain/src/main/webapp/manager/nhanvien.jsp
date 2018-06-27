@@ -1,9 +1,10 @@
+<%@page import="model.PgRolePermission"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="DAO.UserDAO" %>
 <%@ page import="model.PgRoles" %>
-<%@ page import="DAO.RoleDAO" %>
+<%@ page import="DAO.*" %>
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
 <%@ page import="javax.servlet.http.HttpServletResponse" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
@@ -14,6 +15,11 @@
 	if(u.getPgRoles().getRoleId()!=1){
 		response.sendRedirect("/site/layouts/accessdenied.jsp");
 	}
+	
+	PgRolePermission rs = new RolePermissionDAO().getPgRolePermissionByRoleIDModuleID(u.getPgRoles().getRoleId(), 7);
+	if(rs.getPerStatus()==1){
+		if(rs.getIsRead()== true){
+		
 %>
 <!DOCTYPE html>
 <html>
@@ -71,8 +77,10 @@
 										  		<th>Ngày tạo</th>
 										  		<th>Ngày sửa đổi cuối</th>
 										  		<th>Trạng thái</th>
-										  		<th><a href="#" style="color: white;" data-toggle="modal" data-target="#modal-add"  > <i class="fa fa-plus" ></i> Thêm mới</a></th> 
-										  		
+										  		<th>
+										  		<% if(rs.getIsInsert()== true){ %>
+										  		<a href="#" style="color: white;" data-toggle="modal" data-target="#modal-add"  > <i class="fa fa-plus" ></i> Thêm mới</a></th> 
+										  		<%} else {out.print("Action");} %>
 										  	</tr>
 										  </thead>
 										   <tbody>
@@ -127,11 +135,15 @@
 										    	<% } %>
 											
 										    <td>
-										    <%if(user.getPgRoles()==null){ %>
+										    <%
+										    if(rs.getIsUpdate()== true){
+										    if(user.getPgRoles()==null){ %>
 										    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=user.getRecordId()%>,'<%=user.getUserId()%>','<%=user.getFirstName()%>','<%=user.getLastName()%>','<%=user.getAddress()%>','<%=user.getPhoneNumber()%>','<%=user.getCardId()%>','<%=user.getEmail()%>','<%=user.getUserPassword()%>','<%=user.getCreateTime()%>',<%=user.getSex()%>,<%=user.getUserStatus()%>)" > <i class="fa fa-edit"></i> Sửa</a>										    						    	
 										    <%} else { %>
 										    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" onclick="pass_update(<%=user.getRecordId()%>,'<%=user.getUserId()%>','<%=user.getFirstName()%>','<%=user.getLastName()%>','<%=user.getAddress()%>','<%=user.getPhoneNumber()%>','<%=user.getCardId()%>','<%=user.getEmail()%>','<%=user.getUserPassword()%>','<%=user.getCreateTime()%>',<%=user.getSex()%>,<%=user.getUserStatus()%>,'<%=user.getPgRoles().getRoleId()%>')" > <i class="fa fa-edit"></i> Sửa</a>										    	
-										    <%} %>
+										    <%} 
+										    
+										    }%>
 										    </td>
 										  </tr>
 										  <%}
@@ -576,6 +588,6 @@
 			
 		      </div>
 		    </div>
-    	</div>
 	</body>
 </html>
+<%} }%>

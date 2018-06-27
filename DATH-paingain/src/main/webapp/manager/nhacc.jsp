@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@page import="DAO.*"%>
+<%@page import="model.*"%>
+<%
+	HttpSession sesion = request.getSession();
+	PgUsers u = (PgUsers) sesion.getAttribute("login");
+	if(u.getPgRoles().getRoleId() != 1 && u.getPgRoles().getRoleId() != 2){
+		response.sendRedirect("/site/layouts/accessdenied.jsp");
+	}
+	PgRolePermission rs = new RolePermissionDAO().getPgRolePermissionByRoleIDModuleID(u.getPgRoles().getRoleId(), 4);
+	if(rs.getPerStatus()==1){
+		if(rs.getIsRead()== true){
+
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -24,7 +37,9 @@
 	              	<h2><strong>Quản lý nhà cung cấp</strong></h2>
 	              	<hr/>
 	                <!-- <span style="color:red"><i>${msg}</i></span> -->
+	                <%if(rs.getIsInsert()== true){ %>
 	                <a href="#" style="color: #2c6c8a;" data-toggle="modal" data-target="#modal-add"><button><i class="fa fa-plus" ></i> Thêm mới</button> </a>
+	                <%} %>
 	                <!-- show table-->
 	                <div class="x_panel">
 		                  <div class="x_title">
@@ -60,10 +75,10 @@
 											    <td>123123123</td>
 											    <td>nikebetterworld@gmail.com</td>
 											    <td>Còn hợp tác</td>
-											    <td>
+											    <td><%if(rs.getIsUpdate()== true){ %>
 											    	<a href="#" data-toggle="modal" data-target="#modal-edit" class="btn btn-link" > <i class="fa fa-edit"></i> Sửa</a>
-											    	<a href="#" data-toggle="modal" data-target="#modal-delete" class="btn btn-link" > <i class="fa fa-trash-o" ></i> Xóa</a>
-											    </td>
+											    <%} %>
+											     </td>
 											  </tr>
 										  </tbody>
 										</table>
@@ -291,6 +306,6 @@
 			
 		      </div>
 		    </div>
-    	</div>
 	</body>
 </html>
+<%}}%>
