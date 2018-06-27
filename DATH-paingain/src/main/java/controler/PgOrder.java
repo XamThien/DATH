@@ -11,14 +11,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.hibernate.Session;
 
+import DAO.LogDAO;
 import DAO.OrderStatusDAO;
 import DAO.PgOrdersDAO;
 import DAO.ProductDAO;
 import DAO.UserDAO;
 import database.Hibernate;
+import model.PgLog;
 import model.PgOrderDetails;
 import model.PgOrderStatus;
 import model.PgOrders;
@@ -62,6 +65,8 @@ public class PgOrder extends HttpServlet {
 	        PgOrderStatus st =  new PgOrderStatus(tt,"xxx"); //new OrderStatusDAO().getPgOrderStatusByID(tt);
 	   /*     */
 	        SimpleDateFormat datefrmat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	        HttpSession sesion = request.getSession();
+			PgUsers u = (PgUsers) sesion.getAttribute("login");
 	        try {
 				Date orderdate = datefrmat.parse(request.getParameter("dateorder"));
 			
@@ -69,15 +74,16 @@ public class PgOrder extends HttpServlet {
 		        //PgUsers us = new PgUsers(cus);
 		        try
 				{
+		        	Date Ngay = new Date();
+		        	SimpleDateFormat datefrmats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		        	String datestr = datefrmats.format(Ngay);
+				    
+					Date now = datefrmats.parse(datestr);
 		        	//PgOrders ors = new PgOrders(order_id,st,us,orderdate,name,address,phone);
 			        PgOrders ors = new	PgOrdersDAO().getPgOrdersByIDxx(order_id);
 			        ors.setPgOrderStatus(st);
 		        	if(tt==3){
-			        	Date Ngay = new Date();
-			        	SimpleDateFormat datefrmats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			        	String datestr = datefrmats.format(Ngay);
-					    
-						Date now = datefrmats.parse(datestr);
+			        	
 						ors.setApprovedDate(now);
 		        	}
 					
@@ -85,6 +91,25 @@ public class PgOrder extends HttpServlet {
 		            {
 		            	new PgOrdersDAO().updatePgOrders(ors);
 		            	
+		            	String ms = "Đơn hàng số "+order_id+" được ";
+		            	switch (tt) {
+						case 0:
+							ms +="bị hủy";
+							break;
+						case 1:
+							ms += "đang xử lý tiếp nhận";
+							break;
+						case 2:
+							ms += "đang giao hàng";
+							break;
+						case 3:
+							ms +="đã hoàn thành";
+							break;
+						default:
+							break;
+						}
+						 PgLog log = new PgLog(u,now,ms,"");
+						 new LogDAO().insertPgLog(log);
 		            	message = "Cập nhật đơn hàng thành công.";
 		            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/chitiethoadon.jsp?stt="+tt+"&id="+order_id);
 						request.setAttribute("msg", message );

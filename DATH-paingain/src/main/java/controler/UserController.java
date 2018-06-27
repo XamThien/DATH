@@ -12,8 +12,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import DAO.LogDAO;
 import DAO.UserDAO;
+import model.PgLog;
 import model.PgRoles;
 import model.PgUsers;
 import service.PGValidation;
@@ -60,8 +63,14 @@ public class UserController extends HttpServlet {
     	response.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 		String message = "";
+		HttpSession sesion = request.getSession();
+		PgUsers u = (PgUsers) sesion.getAttribute("login");
+		Date Ngay = new Date();
+    	SimpleDateFormat datefrmats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	String datestr = datefrmats.format(Ngay);
 		 try
 		 {
+			 Date now = datefrmats.parse(datestr);
 			 switch (action) {
 			 case "add":
 			 //
@@ -112,6 +121,9 @@ public class UserController extends HttpServlet {
 						 if(new UserDAO().insertPgUsers(user))
 						 {
 							 message = "Thành công!";
+							 String ms = "Thêm tài khoản "+user.getPgRoles().getRoleName()+" có tên tài khoản là "+user.getUserId();
+							 PgLog log = new PgLog(u,now,ms,"");
+							 new LogDAO().insertPgLog(log);
 							 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/nhanvien.jsp");
 							 request.setAttribute("msg", message);
 							 dispatcher.forward(request, response);						 
@@ -184,6 +196,9 @@ public class UserController extends HttpServlet {
 						{
 							 PgUsers userE = new PgUsers(recordE,maE,firstnameE,lastnameE,addressE,phoneE,cardidE,emailE,sexE,userpassE,createDateE,modifiedDateE,statusE,pgRolesE);
 							    new UserDAO().updatePgUsers(userE);
+							    String ms = "Cập nhật tài khoản có tên tài khoản là "+userE.getUserId()+" với mã là: "+userE.getRecordId();
+								 PgLog log = new PgLog(u,now,ms,"");
+								 new LogDAO().insertPgLog(log);
 							    message = "Cập nhật thành công!";
 								RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/nhanvien.jsp");
 								request.setAttribute("msg", message );

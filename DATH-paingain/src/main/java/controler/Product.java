@@ -125,6 +125,8 @@ public class Product extends HttpServlet {
     	if(style==2) {path="/manager/hanghoa.jsp";}
 		String action = request.getParameter("action");
 		String message ="";
+		HttpSession sesion = request.getSession();
+		PgUsers u = (PgUsers) sesion.getAttribute("login");
 		switch(action)
 		{
 		
@@ -170,7 +172,9 @@ public class Product extends HttpServlet {
 	            		new ProductPictures().updatePgProductPictures(prpic);
 	            	}
 	            	
-	            	
+	            	 String ms = "Cập nhật thông tin sản phẩm "+ten+ " có mã là: "+id;
+					 PgLog log = new PgLog(u,now,ms,"");
+					 new LogDAO().insertPgLog(log);
 	            	message = "Sửa thông tin sản phẩm thành công.";
 	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+path);
 					request.setAttribute("msg", message );
@@ -221,7 +225,9 @@ public class Product extends HttpServlet {
 	            try
 	            {
 	            	new ProductDAO().insertPgProduct(tl);
-	            	
+	            	String ms = "Thêm sản phẩm "+ten;
+					 PgLog log = new PgLog(u,now,ms,"");
+					 new LogDAO().insertPgLog(log);
 	            	PgProducts xxxx = new PgProducts(new ProductDAO().getLastProduct());
 	            	PgProductPictures prpic = new PgProductPictures(xxxx,request.getContextPath()+uploadFile(request,"photo"),1); 
 	            	prpic.setPictureType("1");

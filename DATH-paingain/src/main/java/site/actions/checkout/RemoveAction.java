@@ -8,6 +8,9 @@ package site.actions.checkout;
 import database.Hibernate;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.PgLog;
 import model.PgOrderDetails;
 import model.PgOrderStatus;
 import model.PgOrders;
@@ -26,6 +30,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 
+import DAO.LogDAO;
 import DAO.OrderStatusDAO;
 import DAO.ProductDAO;
 import service.UserAuthentication;
@@ -93,6 +98,18 @@ public class RemoveAction extends HttpServlet {
                 status.setOrderStatusKey(0);
             	order.setPgOrderStatus(status);
                 session.update(order);
+                Date Ngay = new Date();
+            	SimpleDateFormat datefrmats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            	String datestr = datefrmats.format(Ngay);
+            	try {
+            		Date now = datefrmats.parse(datestr);
+            		String ms = "Khách hàng "+auth.getUsers().getUserId()+" đã hủy đơn hàng có mã "+order.getOrderId();
+   				 PgLog log = new PgLog(auth.getUsers(),now,ms,"");
+   				 new LogDAO().insertPgLog(log);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+                
                 response.getWriter().print("success");
             } else {
                 response.getWriter().print("Don hang dang trong giai doan ban giao. Khong the huy");

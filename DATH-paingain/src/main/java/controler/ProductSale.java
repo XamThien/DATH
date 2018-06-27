@@ -15,9 +15,12 @@ import javax.servlet.http.HttpSession;
 
 
 import DAO.ProductSalesDAO;
+import DAO.LogDAO;
 import DAO.ProductDAO;
 
 import model.PgProducts;
+import model.PgUsers;
+import model.PgLog;
 import model.PgProductSales;
 
 /**
@@ -52,12 +55,18 @@ public class ProductSale extends HttpServlet {
     	
 		String action = request.getParameter("action");
 		String message ="";
+		HttpSession sesion = request.getSession();
+		PgUsers u = (PgUsers) sesion.getAttribute("login");
+		Date Ngay = new Date();
+    	SimpleDateFormat datefrmats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	String datestr = datefrmats.format(Ngay);
+    	
 		switch(action)
 		{
 		
 		case "edit":
 			try
-			{
+			{Date now = datefrmats.parse(datestr);
 				int idsale = Integer.parseInt(request.getParameter("did"));
 				
 			     
@@ -101,6 +110,9 @@ public class ProductSale extends HttpServlet {
 	            	new ProductSalesDAO().updatePgProduct(ps);
 	            	
 	            	message = "Cật nhật thành công.";
+	            	String ms = "Cập nhật khuyến mãi có mã "+idsale;
+					 PgLog log = new PgLog(u,now,ms,"");
+					 new LogDAO().insertPgLog(log);
 	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/danhsachkhuyenmai.jsp");
 					request.setAttribute("msg", message );
 					xxx.forward(request, response);
@@ -123,10 +135,11 @@ public class ProductSale extends HttpServlet {
 			}
 			break;
 		case "add":
+			
 			int cateidd = Integer.parseInt(request.getParameter("cateid"));
 			try
 			{
-				
+				Date now = datefrmats.parse(datestr);
 				String[] listid = request.getParameter("lstid").split(",");
 				int km = Integer.parseInt(request.getParameter("kmvalue"));
 				String bg = request.getParameter("bgtime");
@@ -149,9 +162,16 @@ public class ProductSale extends HttpServlet {
 	            			new ProductSalesDAO().insertPgProduct(prsale);
 	            		
 	            	}
-	            	
-	            	
-	            	
+	            	String ms = "Thêm khuyến mãi cho sản phẩm ";
+	            	for( int i=0;i<listid.length;i++)
+	            	{
+	            		String id = listid[i];
+	            		PgProducts s = new ProductDAO().getPgProductsByID(Integer.parseInt(id));
+	            		ms +=s.getProductName()+", ";
+	            	}
+					 PgLog log = new PgLog(u,now,ms,"");
+					 new LogDAO().insertPgLog(log);
+					 
 	            	message = "Thêm khuyến mại thành công.";
 	            	RequestDispatcher xxx = request.getRequestDispatcher(request.getContextPath()+"/manager/khuyenmai.jsp?id="+cateidd);
 					request.setAttribute("msg", message );

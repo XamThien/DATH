@@ -127,8 +127,6 @@ CREATE TABLE PG_PRODUCT_SALES(
 )ENGINE = INNODB
 DEFAULT CHARACTER SET = utf8;
 
-
-
 CREATE TABLE PG_PRODUCT_PICTURES(
 	PICTURE_SET_ID INT AUTO_INCREMENT PRIMARY KEY,
 	PATH VARCHAR(300) NOT NULL,
@@ -139,7 +137,6 @@ CREATE TABLE PG_PRODUCT_PICTURES(
 	FOREIGN KEY (PRODUCT_ID) REFERENCES PG_PRODUCTS(PRODUCT_ID)
 )ENGINE = INNODB
 DEFAULT CHARACTER SET = utf8;
-
 
 
 -- PHAN QUYEN NG DUNG VOI CAC CHUC NANG
@@ -213,24 +210,6 @@ VALUES (2,1,2,75000,15000),(3,1,2,75000,15000);
 INSERT INTO PG_ORDER_DETAILS(ORDER_ID, PRODUCT_ID,AMOUNT,UNIT_PRICE,UNIT_SALE) 
 VALUES (1,1,2,75000,15000);
 UPDATE pg_orders SET pg_orders.ORDER_STATUS_KEY=0 WHERE pg_orders.ORDER_ID=1;
-  DELIMITER $$
-CREATE TRIGGER after_insert_order_detail AFTER INSERT ON pg_order_details
-FOR EACH ROW
-BEGIN
-	UPDATE pg_products SET pg_products.QUANTITY = pg_products.QUANTITY - New.AMOUNT WHERE pg_products.PRODUCT_ID = NEW.PRODUCT_ID ;
-    
- END$$
- DELIMITER ; 
- 
-   DELIMITER $$
-CREATE TRIGGER after_update_order AFTER UPDATE ON pg_orders
-FOR EACH ROW
-BEGIN
-	IF((new.ORDER_STATUS_KEY =0)) THEN
-		UPDATE pg_products,pg_order_details SET pg_products.QUANTITY = pg_products.QUANTITY + pg_order_details.AMOUNT WHERE pg_products.PRODUCT_ID = pg_order_details.PRODUCT_ID AND pg_order_details.ORDER_ID = New.ORDER_ID;
-    END IF;
-END$$
- DELIMITER ;
  
  
  INSERT INTO `pg_categories`(`CATEGORY_NAME`,`DESCRIPTION`,`SORT_INDEX`,`CATEGORY_STATUS`) 
@@ -351,8 +330,27 @@ VALUES('/site/layouts/images/shop/product12.jpg',1,1,1,1)
 ,('/site/layouts/images/shop/product11.jpg',0,1,23,1)
 ,('/site/layouts/images/shop/product12.jpg',0,1,24,1)
 ,('/site/layouts/images/shop/product7.jpg',0,1,25,1)
-,('/site/layouts/images/shop/product8.jpg',0,1,26,1)
+,('/site/layouts/images/shop/product8.jpg',0,1,26,1);
 
 
+DELIMITER //
 
+DROP TRIGGER IF EXISTS after_insert_order_detail //
+CREATE TRIGGER after_insert_order_detail AFTER INSERT ON pg_order_details
+FOR EACH ROW
+BEGIN
+	UPDATE pg_products SET pg_products.QUANTITY = pg_products.QUANTITY - New.AMOUNT WHERE pg_products.PRODUCT_ID = NEW.PRODUCT_ID ;
+    
+ END //
+
+DROP TRIGGER IF EXISTS after_update_order //
+CREATE TRIGGER after_update_order AFTER UPDATE ON pg_orders
+FOR EACH ROW
+BEGIN
+	IF((new.ORDER_STATUS_KEY =0)) THEN
+		UPDATE pg_products,pg_order_details SET pg_products.QUANTITY = pg_products.QUANTITY + pg_order_details.AMOUNT WHERE pg_products.PRODUCT_ID = pg_order_details.PRODUCT_ID AND pg_order_details.ORDER_ID = New.ORDER_ID;
+    END IF;
+END //
+
+DELIMITER ;
 
