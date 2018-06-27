@@ -1,7 +1,9 @@
 package controler;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -9,9 +11,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import DAO.LogDAO;
 import DAO.ModuleDAO;
+import model.PgLog;
 import model.PgModules;
+import model.PgUsers;
 
 public class ModuleAction extends HttpServlet{
 
@@ -39,8 +45,14 @@ public class ModuleAction extends HttpServlet{
     	List<PgModules> result = new ArrayList<PgModules>();
 		String action = request.getParameter("action");
 		String message = "";
+		HttpSession sesion = request.getSession();
+		PgUsers u = (PgUsers) sesion.getAttribute("login");
+		Date Ngay = new Date();
+    	SimpleDateFormat datefrmats = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	String datestr = datefrmats.format(Ngay);
 		 try
 		 {
+			 Date now = datefrmats.parse(datestr);
 			 switch (action) {
 			 case "add":
 				 String name =request.getParameter("name");
@@ -53,6 +65,9 @@ public class ModuleAction extends HttpServlet{
 					 if(new ModuleDAO().insertPgModules(sup))
 					 {
 						 message = "Thêm thành công!";
+						 String ms = "Thêm chức năng "+name;
+						 PgLog log = new PgLog(u,now,ms,"");
+						 new LogDAO().insertPgLog(log);
 						 result = new ModuleDAO().getAllPgModules();
 						 request.setAttribute("result", result);
 						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/module.jsp");
@@ -86,6 +101,9 @@ public class ModuleAction extends HttpServlet{
 					 if(new ModuleDAO().insertPgModules(supq))
 					 {
 						 message = "Thêm chức năng thành công!";
+						 String ms = "Thêm chức năng "+namepq;
+						 PgLog log = new PgLog(u,now,ms,"");
+						 new LogDAO().insertPgLog(log);
 						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/editrole.jsp?roleid="+id);
 						 request.setAttribute("msg", message);
 						 dispatcher.forward(request, response);						 
@@ -113,6 +131,9 @@ public class ModuleAction extends HttpServlet{
 				 		PgModules mol = new PgModules(ma,ename,eparent,statusE);
 					    new ModuleDAO().updatePgModules(mol);
 					    message = "Cập nhật thành công!";
+					    String ms = "Cập nhật chức năng "+ename +" có mã "+ ma;
+						 PgLog log = new PgLog(u,now,ms,"");
+						 new LogDAO().insertPgLog(log);
 					    result = new ModuleDAO().getAllPgModules();
 						 request.setAttribute("result", result);
 						 RequestDispatcher dispatcher = request.getRequestDispatcher("/manager/module.jsp");
