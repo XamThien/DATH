@@ -7,7 +7,6 @@ package site.Views.login;
 
 import database.Hibernate;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.ServletException;
@@ -66,8 +65,8 @@ public class Authentication extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         String username = request.getParameter("username");
         String password;
         password = request.getParameter("lgpassword") !=null?request.getParameter("lgpassword"):"";
@@ -75,7 +74,7 @@ public class Authentication extends HttpServlet {
         String href = !request.getParameter("href").equals("")?"/checkout":"/home";
         if (matcher.find()) {
             if (password.length() == 0) {
-                request.setAttribute("msg", "mat khau qua ngan");
+                request.setAttribute("msg", "Password is too short");
             } else {
                 UserAuthentication auth = new UserAuthentication();
                 if (auth.login(username, password)) {
@@ -85,12 +84,12 @@ public class Authentication extends HttpServlet {
                     response.sendRedirect(request.getContextPath()+href);
                     return;
                 } else {
-                    request.setAttribute("msg", "Password is incorrect");
+                    request.setAttribute("msg", "Username or Password is incorrect");
                     Hibernate.getSessionFactory().getCurrentSession().close();
                 }
             }
         } else {
-            request.setAttribute("msg", "Username is incorrect");
+            request.setAttribute("msg", "Username is invalid");
         }
         request.setAttribute("href", href);
         request.setAttribute("title", "Login and Signup");

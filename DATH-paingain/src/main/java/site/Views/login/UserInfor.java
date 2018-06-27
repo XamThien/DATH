@@ -48,6 +48,7 @@ public class UserInfor extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         if (request.getSession().getAttribute("authentic") != null) {
             request.setAttribute("title", "My account");
             request.getRequestDispatcher("site/account.jsp").forward(request, response);

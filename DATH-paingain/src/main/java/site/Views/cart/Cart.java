@@ -59,6 +59,7 @@ public class Cart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         request.setAttribute("title", "My Cart");
         HttpSession session = request.getSession();
         model.Cart cart = (model.Cart) session.getAttribute("mycart");

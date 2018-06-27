@@ -33,10 +33,12 @@ public class UserAuthentication {
     public boolean login(String username, String password) {
         Session session = Hibernate.getSessionFactory().openSession();
         this.users = (PgUsers) session.createCriteria(PgUsers.class)
+                .createAlias("pgRoles", "role")
                 .add(Restrictions.and(
                         Restrictions.or(Restrictions.eq("userId", username), Restrictions.eq("email", username)),
                         Restrictions.eq("userPassword", password)
                 ))
+                .add(Restrictions.eq("role.roleId", 3))
                 .uniqueResult();
         if (users == null) {
             return false;

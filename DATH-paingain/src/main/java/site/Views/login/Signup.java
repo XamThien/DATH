@@ -68,6 +68,8 @@ public class Signup extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
         String username = request.getParameter("username");
@@ -96,7 +98,7 @@ public class Signup extends HttpServlet {
             List rs = session.createCriteria(PgUsers.class)
                     .add(Restrictions.or(Restrictions.eq("userId", username), Restrictions.eq("email", email)))
                     .list();
-            if (rs == null) {
+            if (!rs.isEmpty()) {
                 request.setAttribute("spMsg", "Email hoac usernam da ton tai trong he thong");
             } else {
                 session.save(user);

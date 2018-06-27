@@ -5,7 +5,6 @@
  */
 package site.Views.checkout;
 
-
 import database.Hibernate;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,7 +42,7 @@ public class PurchaseOrder extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PurchaseOrder</title>");            
+            out.println("<title>Servlet PurchaseOrder</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet PurchaseOrder at " + request.getContextPath() + "</h1>");
@@ -64,9 +63,10 @@ public class PurchaseOrder extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         HttpSession httpSession = request.getSession();
         UserAuthentication auth = (UserAuthentication) httpSession.getAttribute("authentic");
-        if(auth !=null){
+        if (auth != null) {
             Session session = Hibernate.getSessionFactory().openSession();
             session.beginTransaction();
             auth.setUsers((PgUsers) session.get(PgUsers.class, auth.getUsers().getRecordId()));

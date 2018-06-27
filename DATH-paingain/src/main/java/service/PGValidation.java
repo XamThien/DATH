@@ -42,10 +42,9 @@ public class PGValidation {
         PGValidation validation = new PGValidation();
         if (!validation.check(user.getFirstName())) {
             return "Fist name is empty.";
-        }else if(!validation.check(user.getLastName())){
+        } else if (!validation.check(user.getLastName())) {
             return "Last name is empty.";
-        }
-        else if (!validation.checkUsername(user.getUserId())) {
+        } else if (!validation.checkUsername(user.getUserId())) {
             return "Username khong de trong hoac duoi 6 ki tu hoac khong hop le.";
         } else if (!validation.checkMail(user.getEmail()) && !user.getEmail().isEmpty()) {
             return "Email khong hop le";
@@ -58,9 +57,11 @@ public class PGValidation {
         } else if (!user.getUserPassword().equals(cfpass)) {
             return "Mat khau khong khop";
         }
-        if(!user.getCardId().equals("")){
-            if(!validation.checkPhone(user.getCardId())){
-                return "CardId khong hop le";
+        if (user.getCardId() != null) {
+            if (!user.getCardId().equals("")) {
+                if (!validation.checkPhone(user.getCardId())) {
+                    return "CardId khong hop le";
+                }
             }
         }
         return "valid";
