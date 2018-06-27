@@ -119,6 +119,7 @@ public class UploadPhoto extends HttpServlet {
 		                    
 		                    lastorderpic= lastorderpic+1;
 		                    PgProductPictures ppic = new PgProductPictures(pr,"/images/"+itemName,lastorderpic);
+		                    ppic.setPictureType("2");
 		                    new ProductPictures().insertPgProductPictures(ppic);
 	                    } 
 	                    catch (Exception e) 
