@@ -1,3 +1,7 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="DAO.LogDAO"%>
+<%@page import="model.*"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <!DOCTYPE html>
@@ -16,7 +20,20 @@
 		    	<%@include file="/template/navbar.jsp"%>
 				
 				<%@include file="/template/topnav.jsp"%>
+				<%
+				int doanhthu = (int) request.getAttribute("revenueday");
+				int orderc = (int) request.getAttribute("order");
+				int userrc = (int) request.getAttribute("user");
+				 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+				try {
+		            Date date = request.getParameter("filter") != null ? formatter.parse(request.getParameter("filter"))
+		                    : new Date(System.currentTimeMillis() - (24 * 60 * 60 * 1000));
+		            //Session session = Hibernate.getSessionFactory().openSession();
+		            List<PgLog> logs = new LogDAO().getAllPgLog();
+		           
+		            
 				
+				%>
 				<div class="right_col" role="main">
 					<!-- ----------------------------------------------->
 					<div class="row top_tiles">
@@ -107,82 +124,33 @@
 										  <div class="clearfix"></div>
 										</div>
 										<ul class="list-unstyled top_profiles scroll-view">
+										<%
+										for (PgLog log : logs) {
+							                long logc = new Date().getTime() - log.getCreatedTime().getTime();
+							                long diffMinutes = logc / (60 * 1000) % 60;
+							                long diffHours = logc / (60 * 60 * 1000) % 24;
+							                long diffDays = logc / (24 * 60 * 60 * 1000);
+							                String str = diffDays != 0 ? diffDays + " day " : "";
+							                str += diffHours != 0 ? diffHours + " hours " : "";
+							                str += diffMinutes != 0 ? diffMinutes + " minutes" : "just now";
+							                /* content += "<li><b>- " + log.getPgUsers().getUserId() + " </b> " + log.getDescription()
+							                        + " " + log.getLogValue() + " "
+							                        + "<p style='font-size: 11px;'><i>" + str + "</i></p></li>"; */
+							            
+										%>
 										  <li class="media event">
 											<a class="pull-left border-aero profile_thumb">
 											  <i class="fa fa-user aero"></i>
 											</a>
 											<div class="media-body">
-											  <a class="title" href="#">Nhân viên xxx</a>
-											  <p><strong>Vừa gạ gẫm Admin. </strong></p>
-											  <p> <small>27/6/2018 22:38</small>
+											  <a class="title" href="#"><%=log.getPgUsers().getUserId() %></a>
+											  <p><strong><%=log.getDescription()
+								                        + " " + log.getLogValue() + " " %></strong></p>
+											  <p> <small><%=str %></small>
 											  </p>
 											</div>
 										  </li>
-										  <li class="media event">
-											<a class="pull-left border-green profile_thumb">
-											  <i class="fa fa-user green"></i>
-											</a>
-											<div class="media-body">
-											  <a class="title" href="#">Nhân viên yyy</a>
-											  <p><strong> Thử thai trong giờ</strong></p>
-											  <p> <small>27/6/2018 22:38</small>
-											  </p>
-											</div>
-										  </li>
-										  <li class="media event">
-											<a class="pull-left border-green profile_thumb">
-											  <i class="fa fa-user green"></i>
-											</a>
-											<div class="media-body">
-											  <a class="title" href="#">Nhân viên yyy</a>
-											  <p><strong> Thử thai trong giờ</strong></p>
-											  <p> <small>27/6/2018 22:38</small>
-											  </p>
-											</div>
-										  </li>
-										  <li class="media event">
-											<a class="pull-left border-green profile_thumb">
-											  <i class="fa fa-user green"></i>
-											</a>
-											<div class="media-body">
-											  <a class="title" href="#">Nhân viên yyy</a>
-											  <p><strong> Thử thai trong giờ</strong></p>
-											  <p> <small>27/6/2018 22:38</small>
-											  </p>
-											</div>
-										  </li>
-										  <li class="media event">
-											<a class="pull-left border-green profile_thumb">
-											  <i class="fa fa-user green"></i>
-											</a>
-											<div class="media-body">
-											  <a class="title" href="#">Nhân viên yyy</a>
-											  <p><strong> Thử thai trong giờ</strong></p>
-											  <p> <small>27/6/2018 22:38</small>
-											  </p>
-											</div>
-										  </li>
-										  <li class="media event">
-											<a class="pull-left border-green profile_thumb">
-											  <i class="fa fa-user green"></i>
-											</a>
-											<div class="media-body">
-											  <a class="title" href="#">Nhân viên yyy</a>
-											  <p><strong> Thử thai trong giờ</strong></p>
-											  <p> <small>27/6/2018 22:38</small>
-											  </p>
-											</div>
-										  </li><li class="media event">
-											<a class="pull-left border-green profile_thumb">
-											  <i class="fa fa-user green"></i>
-											</a>
-											<div class="media-body">
-											  <a class="title" href="#">Nhân viên yyy</a>
-											  <p><strong> Thử thai trong giờ</strong></p>
-											  <p> <small>27/6/2018 22:38</small>
-											  </p>
-											</div>
-										  </li>
+										  <%} %>
 										  
 										</ul>
 									  </div>
@@ -197,7 +165,12 @@
 			    
 			    <%@include file="/template/footer.jsp"%>
 				<%@include file="/template/footname.jsp"%>
-			
+			<%
+				} catch (Exception ex) {
+		            response.getWriter().print(ex.getMessage());
+		            
+		        }
+			%>
 		      </div>
 		    </div>
     	</div>
